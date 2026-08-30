@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pavitra Designers - Control Panel Dashboards</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard-main-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .tab-pane-content {
+            display: none;
+        }
+        .tab-pane-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Persistent Interactive Role Switcher for Demos -->
+    <div id="demo-role-bar-container"></div>
+
+    <div class="dashboard-main-container">
+        <!-- 1. DYNAMIC SIDEBAR -->
+        <aside class="sidebar-pavitra">
+            <div class="sidebar-logo">
+                <a href="index.html">
+                    <img src="logo.png" alt="Pavitra Designers logo" style="height: 105px; width: auto; max-width: 320px; object-fit: contain;">
+                </a>
+            </div>
+
+            <!-- Profile Card (Marketplace style) -->
+            <div class="sidebar-profile card" aria-label="Account summary">
+                <div class="profile-top">
+                    <div class="profile-avatar" aria-hidden="true"><i class="fas fa-user"></i></div>
+                    <div>
+                        <div class="profile-name" id="sidebar-user-name">Priya Sharma</div>
+                        <div class="profile-role" id="sidebar-user-role">Retailer</div>
+                        <div class="profile-meta" id="sidebar-user-company">Pavitra Boutique, Jaipur • Member since Jun 2024</div>
+                        <div class="profile-meta" id="sidebar-user-contact">priya@pavitradesigns.com • +91 98765 43210</div>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <a href="orders.html" title="Orders"><strong id="stat-orders">12</strong><small>Orders</small></a>
+                    <a href="wallet.html" title="Wallet"><strong id="stat-wallet">₹10,200</strong><small>Wallet</small></a>
+                    <a href="returns.html" title="Returns"><strong id="stat-returns">2</strong><small>Returns</small></a>
+                </div>
+                <hr class="my-2">
+                <div class="profile-links">
+                    <a href="profile.html">Account Settings</a>
+                    <a href="addresses.html">Manage Addresses</a>
+                    <a href="wishlist.html">Wishlist</a>
+                    <a href="#" onclick="handleLogout()">Sign Out</a>
+                </div>
+            </div>
+
+            <!-- Dynamically Injected Navigation List based on active role -->
+            <ul class="sidebar-menu" id="sidebar-navigation-menu">
+                <!-- Loaded dynamically by JS -->
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="#" onclick="handleLogout()" class="text-danger small"><i class="fas fa-sign-out-alt me-1"></i> Sign Out Profile</a>
+            </div>
+        </aside>
+
+        <!-- 2. MAIN CONTENT AREA -->
+        <main class="dashboard-content-area">
+            
+            <!-- Dashboard Page Header -->
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                <div>
+                    <h2 class="m-0 text-maroon" id="dashboard-main-heading">Role Dashboard</h2>
+                    <p class="text-muted mb-0 small" id="dashboard-sub-heading">Subhead information</p>
+                </div>
+                <div>
+                    <a href="index.html" class="btn btn-pavitra-outline btn-sm"><i class="fas fa-store me-1"></i> Visit Storefront</a>
+                </div>
+            </div>
+
+            <!-- DYNAMIC DASHBOARD SECTIONS -->
+            <!-- A. SUPER ADMIN VIEWS -->
+            <div class="role-view-section d-none" id="section-super-admin">
+                <!-- 1. Admin System Config -->
+                <div class="tab-pane-content" id="admin-config">
+                    <div class="dashboard-card">
+                        <h4 class="text-maroon border-bottom pb-2 mb-4"><i class="fas fa-cogs me-2"></i> Company & Gateway Configurations</h4>
+                        <form onsubmit="saveAdminConfig(event)">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">Company Name</label>
+                                    <input type="text" class="form-control border-gold" id="conf-company-name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">Brand Name</label>
+                                    <input type="text" class="form-control border-gold" id="conf-brand-name">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label small fw-bold">GST Number</label>
+                                    <input type="text" class="form-control border-gold" id="conf-gst">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label small fw-bold">CIN Number</label>
+                                    <input type="text" class="form-control border-gold" id="conf-cin">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label small fw-bold">PAN Number</label>
+                                    <input type="text" class="form-control border-gold" id="conf-pan">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">Support Email</label>
+                                    <input type="email" class="form-control border-gold" id="conf-email">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">Support Mobile</label>
+                                    <input type="text" class="form-control border-gold" id="conf-mobile">
+                                </div>
+                                <div class="col-12">
+                                    <h5 class="text-maroon mt-4 border-bottom pb-2">Third-Party Gateway API Tokens</h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">Razorpay Key ID</label>
+                                    <input type="text" class="form-control" id="conf-razorpay" value="rzp_test_pavitra123">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">Cloudflare Zone Token</label>
+                                    <input type="password" class="form-control" id="conf-cloudflare" value="cf-zone-889922">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">Google Maps API Key</label>
+                                    <input type="text" class="form-control" id="conf-maps" value="AIzaSyD-mockmapskey123">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-bold">WhatsApp API Configuration Endpoint</label>
+                                    <input type="text" class="form-control" id="conf-whatsapp" value="https://api.whatsapp.com/send">
+                                </div>
+                                <div class="col-12 mt-4 text-end">
+                                    <button type="submit" class="btn btn-pavitra">Save Settings</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 2. Admin RBAC system -->
+                <div class="tab-pane-content" id="admin-rbac">
+                    <div class="dashboard-card">
+                        <h4 class="text-maroon border-bottom pb-2 mb-3"><i class="fas fa-user-shield me-2"></i> Role-Based Access Control Matrix (RBAC)</h4>
+                        <p class="text-muted small mb-4">Dynamically adjust active permissions for platform system groups.</p>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Role Group</th>
+                                        <th class="text-center">Manage Settings</th>
+                                        <th class="text-center">Verify KYC docs</th>
+                                        <th class="text-center">Products & Stock</th>
+                                        <th class="text-center">Fulfill Orders</th>
+                                        <th class="text-center">CMS Page Builder</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rbac-matrix-body">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-end mt-3">
+                            <button class="btn btn-pavitra" onclick="saveRBACMatrix()">Save Permission Changes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Admin KYC verification queue -->
+                <div class="tab-pane-content" id="admin-kyc">
+                    <div class="dashboard-card">
+                        <h4 class="text-maroon border-bottom pb-2 mb-3"><i class="fas fa-id-card me-2"></i> KYC Document Verification Center</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Submitted By</th>
+                                        <th>Role</th>
+                                        <th>Aadhaar / PAN</th>
+                                        <th>GST / License</th>
+                                        <th>Bank Details</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-kyc-tbody">
+                                    <!-- KYC list -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. CMS page builder -->
+                <div class="tab-pane-content" id="admin-cms">
+                    <div class="dashboard-card">
+                        <h4 class="text-maroon border-bottom pb-2 mb-4"><i class="fas fa-edit me-2"></i> Dynamic CMS Page Builder</h4>
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold">Select Page To Edit</label>
+                            <select class="form-select w-auto" id="cms-page-selector" onchange="loadCMSPageContent()">
+                                <option value="home">Home Storefront Banner</option>
+                                <option value="about">About Us Page Content</option>
+                                <option value="contact">Contact Us Details</option>
+                            </select>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-12" id="cms-editor-fields">
+                                <!-- Fields load dynamically -->
+                            </div>
+                            <div class="col-12 text-end">
+                                <button class="btn btn-pavitra" onclick="saveCMSContent()">Publish Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. System Error log panel -->
+                <div class="tab-pane-content" id="admin-errors">
+                    <div class="dashboard-card">
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                            <h4 class="text-maroon m-0"><i class="fas fa-exclamation-triangle me-2"></i> System Error Logs console</h4>
+                            <a href="php-error.html" target="_blank" class="btn btn-sm btn-pavitra-outline">Test Redirect Page</a>
+                        </div>
+                        <p class="text-muted small">Fatal errors and application exceptions are recorded here for system audit.</p>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped border align-middle small">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Error Exception Details</th>
+                                        <th>Script File / Line</th>
+                                        <th>Path URL</th>
+                                        <th>IP & Browser Client</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-errors-tbody">
+                                    <!-- Logs -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Sales Reports -->
+                <div class="tab-pane-content" id="admin-reports">
+                    <div class="dashboard-card">
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-4">
+                            <h4 class="text-maroon m-0"><i class="fas fa-chart-line me-2"></i> Sales & GST Audits Reports</h4>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-pavitra" onclick="exportReport('Excel')"><i class="fas fa-file-excel me-1"></i> Excel</button>
+                                <button class="btn btn-sm btn-pavitra-outline" onclick="exportReport('CSV')"><i class="fas fa-file-csv me-1"></i> CSV</button>
+                                <button class="btn btn-sm btn-pavitra-gold text-dark" onclick="exportReport('PDF')"><i class="fas fa-file-pdf me-1"></i> PDF</button>
+                            </div>
+                        </div>
+
+                        <!-- Report Summary charts simulated -->
+                        <div class="row g-3 mb-4 text-center">
+                            <div class="col-md-3">
+                                <div class="p-3 border bg-light">
+                                    <h6 class="text-muted m-0">Total Sales Turnover</h6>
+                                    <h4 class="text-maroon mt-2 fw-bold" id="rep-total-sales">₹0.00</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 border bg-light">
+                                    <h6 class="text-muted m-0">Total IGST/CGST Collected</h6>
+                                    <h4 class="text-maroon mt-2 fw-bold" id="rep-total-gst">₹0.00</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 border bg-light">
+                                    <h6 class="text-muted m-0">Super Admin Commission</h6>
+                                    <h4 class="text-maroon mt-2 fw-bold" id="rep-total-comm">₹0.00</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 border bg-light">
+                                    <h6 class="text-muted m-0">Unique Transactions</h6>
+                                    <h4 class="text-maroon mt-2 fw-bold" id="rep-tx-count">0</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5>Ledger Audit Log</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Reference ID</th>
+                                        <th>User Account</th>
+                                        <th>Transaction Particulars</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rep-ledger-tbody">
+                                    <!-- Ledgers -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- B. SELLER VIEWS -->
+            <div class="role-view-section d-none" id="section-seller">
+                <!-- 1. Seller Product Management -->
+                <div class="tab-pane-content" id="seller-products">
+                    <div class="row g-4">
+                        <div class="col-lg-5">
+                            <div class="dashboard-card">
+                                <h5 class="text-maroon border-bottom pb-2 mb-3">Add Product Variant</h5>
+                                <form onsubmit="saveSellerProduct(event)">
+                                    <div class="row g-2">
+                                        <div class="col-12">
+                                            <label class="form-label small fw-bold m-0">Product Title</label>
+                                            <input type="text" class="form-control form-control-sm border-gold" id="sp-title" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">Category</label>
+                                            <select class="form-select form-select-sm" id="sp-cat">
+                                                <option value="Sarees">Sarees</option>
+                                                <option value="Lehengas">Lehengas</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">Subcategory</label>
+                                            <input type="text" class="form-control form-control-sm" id="sp-subcat" placeholder="Banarasi" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">Retail Price (B2C)</label>
+                                            <input type="number" class="form-control form-control-sm" id="sp-retail" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">Wholesale Price (B2B)</label>
+                                            <input type="number" class="form-control form-control-sm" id="sp-b2b" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">Retail MOQ</label>
+                                            <input type="number" class="form-control form-control-sm" id="sp-moq" value="1" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">B2B MOQ</label>
+                                            <input type="number" class="form-control form-control-sm" id="sp-moq-b2b" value="5" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">SKU Code</label>
+                                            <input type="text" class="form-control form-control-sm" id="sp-sku" placeholder="PAV-SKU-01" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">HSN Code</label>
+                                            <input type="text" class="form-control form-control-sm" id="sp-hsn" placeholder="52081190" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">GST Percentage</label>
+                                            <select class="form-select form-select-sm" id="sp-gst">
+                                                <option value="5">5%</option>
+                                                <option value="12" selected>12%</option>
+                                                <option value="18">18%</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">Initial Stock</label>
+                                            <input type="number" class="form-control form-control-sm" id="sp-stock" value="10" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">Warehouse</label>
+                                            <select class="form-select form-select-sm" id="sp-warehouse">
+                                                <option value="Jaipur Main">Jaipur Main</option>
+                                                <option value="Surat Hub">Surat Hub</option>
+                                                <option value="Delhi Outer">Delhi Outer</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold m-0">Color Accent</label>
+                                            <input type="text" class="form-control form-control-sm" id="sp-color" placeholder="Red" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label small fw-bold m-0">Image URL</label>
+                                            <input type="text" class="form-control form-control-sm" id="sp-image" value="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=600">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label small fw-bold m-0">Description Details</label>
+                                            <textarea class="form-control form-control-sm" id="sp-desc" rows="2"></textarea>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <button type="submit" class="btn btn-pavitra w-100 btn-sm">Add Product to Store</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="dashboard-card mt-3">
+                                <h5 class="text-maroon border-bottom pb-2 mb-3">CSV Bulk Upload Mockup</h5>
+                                <form onsubmit="handleCSVBulkUpload(event)">
+                                    <div class="mb-2">
+                                        <label class="form-label small">Paste CSV Text (Format: title,sku,retailPrice,stock)</label>
+                                        <textarea class="form-control font-monospace small" id="csv-text-input" rows="4" placeholder="Gold Organza,PAV-ORG-GOL,4500,20&#10;Zari Lehenga,PAV-LEH-ZAR,18000,5"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-pavitra-outline btn-sm w-100">Upload Inventory CSV</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            <div class="dashboard-card h-100">
+                                <h5 class="text-maroon border-bottom pb-2 mb-3">Your Product Collection & Variants</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm align-middle small">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Code/SKU</th>
+                                                <th>Title</th>
+                                                <th>Price (B2C/B2B)</th>
+                                                <th>Stock</th>
+                                                <th>Warehouse</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="sp-products-tbody">
+                                            <!-- Products loaded dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Seller Inventory logs -->
+                <div class="tab-pane-content" id="seller-inventory">
+                    <div class="dashboard-card">
+                        <h4 class="text-maroon border-bottom pb-2 mb-3"><i class="fas fa-boxes me-2"></i> Inventory Multi-Warehouse Control & Stock Audit Logs</h4>
+                        
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <div class="p-3 border bg-light h-100">
+                                    <h5>Quick Stock Adjustment</h5>
+                                    <form onsubmit="handleStockAdjust(event)">
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <label class="form-label small">Select Product</label>
+                                                <select class="form-select form-select-sm" id="adjust-prod-id" required>
+                                                    <!-- Loaded dynamically -->
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small">Warehouse Location</label>
+                                                <select class="form-select form-select-sm" id="adjust-warehouse">
+                                                    <option value="Jaipur Main">Jaipur Main</option>
+                                                    <option value="Surat Hub">Surat Hub</option>
+                                                    <option value="Delhi Outer">Delhi Outer</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small">Adjustment Action</label>
+                                                <select class="form-select form-select-sm" id="adjust-action">
+                                                    <option value="in">Stock IN (Receive)</option>
+                                                    <option value="out">Stock OUT (Sell/Write-off)</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small">Quantity</label>
+                                                <input type="number" class="form-control form-control-sm" id="adjust-qty" value="5" min="1" required>
+                                            </div>
+                                            <div class="col-12 mt-2">
+                                                <button type="submit" class="btn btn-pavitra btn-sm w-100">Update Stock Level</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 border border-danger bg-light h-100">
+                                    <h5 class="text-danger"><i class="fas fa-bell me-1"></i> Low Stock Alert Queue</h5>
+                                    <p class="small text-muted">The following items are running low (stock &le; 5 units) and require immediate replenishment to fulfill MOQ limits.</p>
+                                    <ul class="list-group list-group-flush" id="seller-low-stock-list">
+                                        <!-- Items loaded dynamically -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5>Inventory Audit Logs</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-sm border align-middle small">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Product SKU</th>
+                                        <th>Action</th>
+                                        <th>Quantity Changed</th>
+                                        <th>Warehouse</th>
+                                        <th>Performed By</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="seller-inventory-logs-tbody">
+                                    <!-- Logs dynamically injected -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Seller Fulfill Orders -->
+                <div class="tab-pane-content" id="seller-orders">
+                    <div class="dashboard-card">
+                        <h4 class="text-maroon border-bottom pb-2 mb-3"><i class="fas fa-shipping-fast me-2"></i> Order Fulfillment Queue</h4>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle small">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Retailer Details</th>
+                                        <th>Items Purchased</th>
+                                        <th>Total Invoice</th>
+                                        <th>Fulfillment Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="seller-orders-tbody">
+                                    <!-- Orders loaded dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Seller Return approvals -->
+                <div class="tab-pane-content" id="seller-returns">
+                    <div class="dashboard-card">
+                        <h4 class="text-maroon border-bottom pb-2 mb-3"><i class="fas fa-undo-alt me-2"></i> Return & Replacement Requests</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Request ID</th>
+                                        <th>Order Reference</th>
+                                        <th>Customer Details</th>
+                                        <th>Product Variant</th>
+                                        <th>Return Reason</th>
+                                        <th>Fulfillment Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="seller-returns-tbody">
+                                    <!-- Returns loaded dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Seller Wallet Ledger & settlements -->
+                <div class="tab-pane-content" id="seller-wallet">
+                    <div class="dashboard-card">
+                        <h4 class="text-maroon border-bottom pb-2 mb-4"><i class="fas fa-wallet me-2"></i> Seller Earnings & Settlement Configurations</h4>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="p-3 border bg-light h-100">
+                                    <h5>Settlement Engine Settings</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold">Settlement Schedule Cycle</label>
+                                        <select class="form-select border-gold" id="settlement-cycle-select" onchange="saveSettlementCycle()">
+                                            <option value="T+1" selected>T+1 (Next business day payouts)</option>
+                                            <option value="T+3">T+3 (Payouts in 3 working days)</option>
+                                            <option value="T+7">T+7 (Weekly payouts every Friday)</option>
+                                        </select>
+                                    </div>
+                                    <div class="alert alert-warning py-2 small">
+                                        <i class="fas fa-info-circle me-1"></i> Commission rates: 15% system fee + GST deduction. Payouts are made directly to the bank verified during KYC.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 border bg-light h-100 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h5>Current Verified Bank</h5>
+                                        <div class="p-2 border bg-white font-monospace small" id="seller-bank-info-box">
+                                            IFSC: SBIN0000021, A/C: 98765432101
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <button class="btn btn-pavitra btn-sm w-100" onclick="alert('Settlement payout request triggered! Funds will arrive according to the schedule.')">Request Manual Settlement Payout</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5>Wallet Ledger & Audit Trial</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm align-middle small">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Transaction Ref</th>
+                                        <th>Transaction Description</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="seller-wallet-tbody">
+                                    <!-- Wallet items -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- C. RETAILER VIEWS -->
+            <div class="role-view-section d-none" id="section-retailer">
+                <!-- 1. B2B Fast Ordering Matrix -->
+                <div class="tab-pane-content" id="retailer-ordering">
+                    <div class="dashboard-card">
+                        <h4 class="text-maroon border-bottom pb-2 mb-3"><i class="fas fa-shopping-cart me-2"></i> B2B Wholesaler Fast Order Matrix</h4>
+                        <p class="text-muted small">Unlock discounted bulk pricing by ordering product packages that meet MOQ limits.</p>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle small">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>SKU / Product Variant</th>
+                                        <th>Wholesale Price</th>
+                                        <th>Retail Price</th>
+                                        <th>MOQ</th>
+                                        <th>Order Qty</th>
+                                        <th>Cart Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ret-b2b-tbody">
+                                    <!-- Injected dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Retailer Order History & status tracker -->
+                <div class="tab-pane-content" id="retailer-history">
+                    <div class="dashboard-card">
+                        <h4 class="text-maroon border-bottom pb-2 mb-4"><i class="fas fa-history me-2"></i> B2B Order Tracking & History</h4>
+                        <div id="retailer-orders-list-box">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Retailer Wallet Ledger -->
+                <div class="tab-pane-content" id="retailer-wallet">
+                    <div class="dashboard-card">
+                        <div class="row g-4 mb-4 text-center">
+                            <div class="col-md-6">
+                                <div class="p-3 border bg-light rounded shadow-sm">
+                                    <h6 class="text-muted m-0">Ledger Wallet Balance</h6>
+                                    <h3 class="text-maroon fw-bold mt-2" id="ret-wallet-bal">₹0.00</h3>
+                                    <button class="btn btn-sm btn-pavitra mt-2" onclick="rechargeRetailerWallet()">Recharge Wallet Funds</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 border bg-light rounded shadow-sm">
+                                    <h6 class="text-muted m-0">Available B2B Trade Credit Limit</h6>
+                                    <h3 class="text-gold fw-bold mt-2" id="ret-credit-bal">₹0.00</h3>
+                                    <span class="small text-muted">Approved by admin on verification</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5>Retailer Wallet Ledger (Immutable Entries)</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm align-middle small">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Transaction Ref</th>
+                                        <th>Transaction Particulars</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="retailer-ledger-tbody">
+                                    <!-- Ledgers dynamic -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D. DELIVERY PARTNER VIEWS -->
+            <div class="role-view-section d-none" id="section-delivery-partner">
+                <!-- 1. Delivery Assigned Orders -->
+                <div class="tab-pane-content" id="delivery-orders">
+                    <div class="dashboard-card">
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                            <h4 class="text-maroon m-0"><i class="fas fa-route me-2"></i> Active Delivery Shipments Queue</h4>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="delivery-attendance-toggle" checked onchange="toggleDutyAttendance()">
+                                <label class="form-check-label fw-bold text-success small" for="delivery-attendance-toggle" id="duty-status-label">Duty Status: ON</label>
+                            </div>
+                        </div>
+                        <p class="text-muted small">Update packages from Picked Up to Delivered. Verification OTP code must be checked upon drop-off.</p>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle small">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Shipment ID</th>
+                                        <th>Customer Info</th>
+                                        <th>Drop-off Address</th>
+                                        <th>Payment Type</th>
+                                        <th>Status</th>
+                                        <th>OTP Confirm</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="delivery-orders-tbody">
+                                    <!-- Delivery orders injected here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- WhatsApp floating chat button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core State Javascript -->
+    <script src="app.js"></script>
+    <!-- Dashboard Controller script -->
+    <script>
+        let currentActiveSectionId = "";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentUser = PavitraDB.getCurrentUser();
+            if (!currentUser) {
+                alert("Unauthorized Access. Redirecting to login.");
+                window.location.href = "auth.html";
+                return;
+            }
+
+            // Sync user headers
+            document.getElementById("sidebar-user-name").textContent = currentUser.name;
+            document.getElementById("sidebar-user-role").textContent = currentUser.role;
+
+            // Initalize dashboard views
+            renderSidebarMenu(currentUser.role);
+            activateDashboardView(currentUser.role);
+        });
+
+        function handleLogout() {
+            PavitraDB.setCurrentUser(null);
+            alert("Signed out successfully.");
+            window.location.href = "index.html";
+        }
+
+        // SIDEBAR MENUS INJECTION
+        function renderSidebarMenu(role) {
+            const menu = document.getElementById("sidebar-navigation-menu");
+            if (!menu) return;
+
+            let html = "";
+            if (role === "Super Admin") {
+                html = `
+                    <li><a href="#" class="sidebar-menu-link active" onclick="switchDashboardTab('admin-config', this)"><i class="fas fa-cogs"></i> System Settings</a></li>
+                    <li><a href="#" class="sidebar-menu-link" onclick="switchDashboardTab('admin-rbac', this)"><i class="fas fa-user-shield"></i> RBAC Permissions</a></li>
+                    <li><a href="#" class="sidebar-menu-link" onclick="switchDashboardTab('admin-kyc', this)"><i class="fas fa-id-card"></i> KYC Approvals</a></li>
+                    <li><a href="#" class="sidebar-menu-link" onclick="switchDashboardTab('admin-cms', this)"><i class="fas fa-edit"></i> CMS Page Builder</a></li>
+                    <li><a href="#" class="sidebar-menu-link" onclick="switchDashboardTab('admin-errors', this)"><i class="fas fa-exclamation-triangle"></i> Error Logs</a></li>
+                    <li><a href="#" class="sidebar-menu-link" onclick="switchDashboardTab('admin-reports', this)"><i class="fas fa-chart-line"></i> Sales Reports</a></li>
+                `;
+            } else if (role === "Seller") {
+                html = `
+                    <li><a href="#" class="sidebar-menu-link active" onclick="switchDashboardTab('seller-products', this)"><i class="fas fa-tshirt"></i> Product Manager</a></li>
+                    <li><a href="#" class="sidebar-menu-link" onclick="switchDashboardTab('seller-inventory', this)"><i class="fas fa-boxes"></i> Inventory Control</a></li>
+                    <li><a href="#" class="sidebar-menu-link" onclick="switchDashboardTab('seller-orders', this)"><i class="fas fa-shipping-fast"></i> Fulfill Orders</a></li>
+                    <li><a href="#" class="sidebar-menu-link" onclick="switchDashboardTab('seller-returns', this)"><i class="fas fa-undo-alt"></i> Return Requests</a></li>
+                    <li><a href="#" class="sidebar-menu-link" onclick="switchDashboardTab('seller-wallet', this)"><i class="fas fa-wallet"></i> Earnings Ledger</a></li>
+                `;
+            } else if (role === "Retailer") {
+                html = `
+                    <li><a href="#" class="sidebar-menu-link active" onclick="switchDashboardTab('retailer-ordering', this)"><i class="fas fa-shopping-basket"></i> B2B Fast Ordering</a></li>
+                    <li><a href="#" class="sidebar-menu-link" onclick="switchDashboardTab('retailer-history', this)"><i class="fas fa-history"></i> B2B Order Status</a></li>
+                    <li><a href="#" class="sidebar-menu-link" onclick="switchDashboardTab('retailer-wallet', this)"><i class="fas fa-wallet"></i> Wallet Transactions</a></li>
+                `;
+            } else if (role === "Delivery Partner") {
+                html = `
+                    <li><a href="#" class="sidebar-menu-link active" onclick="switchDashboardTab('delivery-orders', this)"><i class="fas fa-route"></i> Delivery Shipments</a></li>
+                `;
+            }
+
+            menu.innerHTML = html;
+        }
+
+        // ROLE TAB ROUTER
+        function activateDashboardView(role) {
+            // Hide all views first
+            document.querySelectorAll(".role-view-section").forEach(s => s.classList.add("d-none"));
+            
+            if (role === "Super Admin") {
+                document.getElementById("section-super-admin").classList.remove("d-none");
+                switchDashboardTab('admin-config');
+            } else if (role === "Seller") {
+                document.getElementById("section-seller").classList.remove("d-none");
+                switchDashboardTab('seller-products');
+            } else if (role === "Retailer") {
+                document.getElementById("section-retailer").classList.remove("d-none");
+                switchDashboardTab('retailer-ordering');
+            } else if (role === "Delivery Partner") {
+                document.getElementById("section-delivery-partner").classList.remove("d-none");
+                switchDashboardTab('delivery-orders');
+            }
+        }
+
+        function switchDashboardTab(tabId, anchorElem = null) {
+            currentActiveSectionId = tabId;
+            
+            // Hide all tab panes within the active view
+            document.querySelectorAll(".tab-pane-content").forEach(p => p.classList.remove("active"));
+            document.getElementById(tabId).classList.add("active");
+
+            // Update active menu link
+            if (anchorElem) {
+                document.querySelectorAll(".sidebar-menu-link").forEach(l => l.classList.remove("active"));
+                anchorElem.classList.add("active");
+            }
+
+            // Heading Updates
+            const head = document.getElementById("dashboard-main-heading");
+            const sub = document.getElementById("dashboard-sub-heading");
+
+            if (tabId === 'admin-config') {
+                head.textContent = "Platform System Config";
+                sub.textContent = "Manage company metadata, keys, payments, maps, cloudflare zones";
+                loadAdminConfigForm();
+            } else if (tabId === 'admin-rbac') {
+                head.textContent = "Dynamic Permission Matrix";
+                sub.textContent = "Control active functional rights for all system groups";
+                loadRBACMatrix();
+            } else if (tabId === 'admin-kyc') {
+                head.textContent = "KYC Approvals Queue";
+                sub.textContent = "Audit identity & business documents submitted by wholesalers and manufacturers";
+                loadKYCApprovalQueue();
+            } else if (tabId === 'admin-cms') {
+                head.textContent = "CMS Dynamic Page Builder";
+                sub.textContent = "Modify frontend templates content and banner promotions dynamically";
+                loadCMSPageContent();
+            } else if (tabId === 'admin-errors') {
+                head.textContent = "Developer Exception Terminal";
+                sub.textContent = "Logs fatal script exceptions and warning alerts redirect trace";
+                loadErrorLogs();
+            } else if (tabId === 'admin-reports') {
+                head.textContent = "B2B Transaction Reports";
+                sub.textContent = "Audit Sales, commission earnings, ledger balance and GST reports";
+                loadReportsSummary();
+            } else if (tabId === 'seller-products') {
+                head.textContent = "Product Variant Manager";
+                sub.textContent = "Publish styles, colors, dimensions, bulk MOQ wholesale pricing";
+                loadSellerProducts();
+            } else if (tabId === 'seller-inventory') {
+                head.textContent = "Multi-Warehouse Stock Logs";
+                sub.textContent = "Receive goods, check audit logs, review low stock notifications";
+                loadSellerInventory();
+            } else if (tabId === 'seller-orders') {
+                head.textContent = "Fulfillment Center Queue";
+                sub.textContent = "Review orders from B2B Wholesalers, verify payments and ship items";
+                loadSellerOrders();
+            } else if (tabId === 'seller-returns') {
+                head.textContent = "Refund & Replacement Approvals";
+                sub.textContent = "Review return inquiries and approve automated wallet refunds";
+                loadSellerReturns();
+            } else if (tabId === 'seller-wallet') {
+                head.textContent = "Earnings Wallet Settlements";
+                sub.textContent = "Audit commission fees, configure schedules, request bank payouts";
+                loadSellerWallet();
+            } else if (tabId === 'retailer-ordering') {
+                head.textContent = "B2B Wholesale Hub";
+                sub.textContent = "Add products to shopping bag directly using wholesale prices and style MOQs";
+                loadRetailerOrdering();
+            } else if (tabId === 'retailer-history') {
+                head.textContent = "Purchase Orders History";
+                sub.textContent = "Track shipment statuses, download GST tax invoices, trigger returns";
+                loadRetailerHistory();
+            } else if (tabId === 'retailer-wallet') {
+                head.textContent = "Ledger Balance & Trade Limits";
+                sub.textContent = "Immutable transaction ledger entries tracking credits, debits, refunds";
+                loadRetailerWallet();
+            } else if (tabId === 'delivery-orders') {
+                head.textContent = "Deliveries & Pickup Center";
+                sub.textContent = "Accept route tasks, confirm shipping drop-off using customer OTP codes";
+                loadDeliveryOrders();
+            }
+        }
+
+        // --- SUB VIEWS LOADING LOGIC ---
+        // A. ADMIN SUBVIEWS
+        function loadAdminConfigForm() {
+            const config = PavitraDB.getConfig();
+            document.getElementById("conf-company-name").value = config.companyName;
+            document.getElementById("conf-brand-name").value = config.brandName;
+            document.getElementById("conf-gst").value = config.gstNumber;
+            document.getElementById("conf-cin").value = config.cinNumber;
+            document.getElementById("conf-pan").value = config.panNumber;
+            document.getElementById("conf-email").value = config.supportEmail;
+            document.getElementById("conf-mobile").value = config.supportMobile;
+        }
+
+        function saveAdminConfig(e) {
+            e.preventDefault();
+            const config = PavitraDB.getConfig();
+            config.companyName = document.getElementById("conf-company-name").value;
+            config.brandName = document.getElementById("conf-brand-name").value;
+            config.gstNumber = document.getElementById("conf-gst").value;
+            config.cinNumber = document.getElementById("conf-cin").value;
+            config.panNumber = document.getElementById("conf-pan").value;
+            config.supportEmail = document.getElementById("conf-email").value;
+            config.supportMobile = document.getElementById("conf-mobile").value;
+            PavitraDB.saveConfig(config);
+            alert("Settings updated successfully!");
+        }
+
+        function loadRBACMatrix() {
+            const rbac = PavitraDB.getRbac();
+            const tbody = document.getElementById("rbac-matrix-body");
+            if (!tbody) return;
+
+            tbody.innerHTML = Object.keys(rbac).map(role => {
+                const p = rbac[role];
+                return `
+                    <tr>
+                        <td class="fw-bold">${role}</td>
+                        <td class="text-center"><input type="checkbox" class="form-check-input" ${p.manage_settings || p.all ? 'checked' : ''}></td>
+                        <td class="text-center"><input type="checkbox" class="form-check-input" ${p.verify_kyc || p.all ? 'checked' : ''}></td>
+                        <td class="text-center"><input type="checkbox" class="form-check-input" ${p.manage_products || p.all ? 'checked' : ''}></td>
+                        <td class="text-center"><input type="checkbox" class="form-check-input" ${p.fulfill_orders || p.all ? 'checked' : ''}></td>
+                        <td class="text-center"><input type="checkbox" class="form-check-input" ${p.cms_edit || p.all ? 'checked' : ''}></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function saveRBACMatrix() {
+            alert("RBAC modifications saved. Role functional policies updated.");
+        }
+
+        function loadKYCApprovalQueue() {
+            const kycs = PavitraDB.getKyc();
+            const tbody = document.getElementById("admin-kyc-tbody");
+            if (!tbody) return;
+
+            if (kycs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4">No KYC applications submitted.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = kycs.map(k => {
+                let badge = "";
+                if (k.status === "Pending") badge = `<span class="badge-pavitra-pending">Pending</span>`;
+                else if (k.status === "Verified") badge = `<span class="badge-pavitra-success">Verified</span>`;
+                else badge = `<span class="badge-pavitra-danger">Rejected</span>`;
+
+                return `
+                    <tr>
+                        <td>
+                            <strong>${k.userName}</strong><br>
+                            <span class="small text-muted">ID: ${k.userId}</span>
+                        </td>
+                        <td><span class="badge bg-secondary">${k.userRole}</span></td>
+                        <td>
+                            <div class="small">Aadhaar: <strong>${k.aadhaar}</strong></div>
+                            <div class="small">PAN: <strong>${k.pan}</strong></div>
+                        </td>
+                        <td>
+                            <div class="small">GST: <strong>${k.gst}</strong></div>
+                            <div class="small">MSME UDYAM: <strong>${k.msme ? k.msme.substring(0,10)+'...' : 'N/A'}</strong></div>
+                        </td>
+                        <td class="small font-monospace">${k.bankPassbook}</td>
+                        <td>${badge}</td>
+                        <td>
+                            ${k.status === 'Pending' ? `
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-success btn-sm" onclick="approveKycRequest('${k.id}')">Verify</button>
+                                    <button class="btn btn-danger btn-sm" onclick="rejectKycRequest('${k.id}')">Reject</button>
+                                </div>
+                            ` : `<span class="text-muted small">Reviewed</span>`}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function approveKycRequest(kycId) {
+            const kycs = PavitraDB.getKyc();
+            const k = kycs.find(item => item.id === kycId);
+            if (k) {
+                k.status = "Verified";
+                PavitraDB.saveKyc(kycs);
+                
+                // Update User Status
+                const users = PavitraDB.getUsers();
+                const u = users.find(user => user.id === k.userId);
+                if (u) {
+                    u.kycStatus = "Verified";
+                    PavitraDB.saveUsers(users);
+                }
+                
+                alert("KYC application verified successfully!");
+                loadKYCApprovalQueue();
+            }
+        }
+
+        function rejectKycRequest(kycId) {
+            const kycs = PavitraDB.getKyc();
+            const k = kycs.find(item => item.id === kycId);
+            if (k) {
+                k.status = "Rejected";
+                PavitraDB.saveKyc(kycs);
+                
+                const users = PavitraDB.getUsers();
+                const u = users.find(user => user.id === k.userId);
+                if (u) {
+                    u.kycStatus = "Rejected";
+                    PavitraDB.saveUsers(users);
+                }
+                
+                alert("KYC application rejected.");
+                loadKYCApprovalQueue();
+            }
+        }
+
+        function loadCMSPageContent() {
+            const cms = PavitraDB.getCms();
+            const page = document.getElementById("cms-page-selector").value;
+            const editor = document.getElementById("cms-editor-fields");
+            if (!editor) return;
+
+            if (page === "home") {
+                editor.innerHTML = `
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Hero Announcement Banner Title</label>
+                        <input type="text" class="form-control border-gold" id="cms-banner-title" value="${cms.home.bannerTitle}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Hero Subtitle</label>
+                        <input type="text" class="form-control border-gold" id="cms-banner-sub" value="${cms.home.bannerSub}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Top Promo text</label>
+                        <input type="text" class="form-control border-gold" id="cms-promo-text" value="${cms.home.promoText}">
+                    </div>
+                `;
+            } else if (page === "about") {
+                editor.innerHTML = `
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">About Us Section Title</label>
+                        <input type="text" class="form-control border-gold" id="cms-about-title" value="${cms.about.title}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Company History & Mission Body Content</label>
+                        <textarea class="form-control border-gold" id="cms-about-body" rows="6">${cms.about.content}</textarea>
+                    </div>
+                `;
+            } else {
+                editor.innerHTML = `
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Contact Page Title</label>
+                        <input type="text" class="form-control border-gold" id="cms-contact-title" value="${cms.contact.title}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Support Email ID</label>
+                        <input type="email" class="form-control border-gold" id="cms-contact-email" value="${cms.contact.email}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Support Phone</label>
+                        <input type="text" class="form-control border-gold" id="cms-contact-phone" value="${cms.contact.phone}">
+                    </div>
+                `;
+            }
+        }
+
+        function saveCMSContent() {
+            const cms = PavitraDB.getCms();
+            const page = document.getElementById("cms-page-selector").value;
+
+            if (page === "home") {
+                cms.home.bannerTitle = document.getElementById("cms-banner-title").value;
+                cms.home.bannerSub = document.getElementById("cms-banner-sub").value;
+                cms.home.promoText = document.getElementById("cms-promo-text").value;
+            } else if (page === "about") {
+                cms.about.title = document.getElementById("cms-about-title").value;
+                cms.about.content = document.getElementById("cms-about-body").value;
+            } else {
+                cms.contact.title = document.getElementById("cms-contact-title").value;
+                cms.contact.email = document.getElementById("cms-contact-email").value;
+                cms.contact.phone = document.getElementById("cms-contact-phone").value;
+            }
+
+            PavitraDB.saveCms(cms);
+            alert("CMS published successfully!");
+        }
+
+        function loadErrorLogs() {
+            const errors = PavitraDB.getErrors();
+            const tbody = document.getElementById("admin-errors-tbody");
+            if (!tbody) return;
+
+            tbody.innerHTML = errors.map(err => {
+                return `
+                    <tr>
+                        <td class="font-monospace small text-muted">${new Date(err.timestamp).toLocaleTimeString()}</td>
+                        <td>
+                            <strong class="text-danger small">${err.message}</strong>
+                        </td>
+                        <td>
+                            <span class="small font-monospace">${err.fileName}</span><br>
+                            <span class="badge bg-warning text-dark">Line: ${err.lineNumber}</span>
+                        </td>
+                        <td><span class="small">${err.url}</span></td>
+                        <td>
+                            <span class="small">${err.ipAddress}</span><br>
+                            <span class="small text-muted font-monospace">${err.browser.substring(0,25)}...</span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function loadReportsSummary() {
+            const orders = PavitraDB.getOrders();
+            const ledger = PavitraDB.getWallet();
+            
+            // Total B2B order sales
+            const sales = orders.reduce((sum, o) => sum + o.subtotal, 0);
+            const gst = orders.reduce((sum, o) => sum + o.taxes, 0);
+            
+            // Commission count
+            const adminComm = ledger
+                .filter(tx => tx.userId === "u-admin" && tx.description.includes("Commission"))
+                .reduce((sum, tx) => sum + tx.amount, 0);
+
+            document.getElementById("rep-total-sales").textContent = "₹" + sales.toLocaleString('en-IN') + ".00";
+            document.getElementById("rep-total-gst").textContent = "₹" + gst.toLocaleString('en-IN') + ".00";
+            document.getElementById("rep-total-comm").textContent = "₹" + adminComm.toLocaleString('en-IN') + ".00";
+            document.getElementById("rep-tx-count").textContent = ledger.length;
+
+            const tbody = document.getElementById("rep-ledger-tbody");
+            if (tbody) {
+                tbody.innerHTML = ledger.map(tx => {
+                    return `
+                        <tr>
+                            <td><span class="small text-muted">${new Date(tx.timestamp).toLocaleString()}</span></td>
+                            <td><span class="small font-monospace">${tx.id}</span></td>
+                            <td><span class="small">${tx.userId}</span></td>
+                            <td><span class="small">${tx.description}</span></td>
+                            <td><span class="badge bg-${tx.type === 'Credit' ? 'success' : 'danger'}">${tx.type}</span></td>
+                            <td class="fw-bold">₹${tx.amount.toLocaleString()}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+
+        function exportReport(format) {
+            alert(`Generating ${format} Document... Download completed successfully.`);
+        }
+
+        // B. SELLER SUBVIEWS
+        function loadSellerProducts() {
+            const products = PavitraDB.getProducts();
+            const tbody = document.getElementById("sp-products-tbody");
+            if (!tbody) return;
+
+            tbody.innerHTML = products.map(p => {
+                return `
+                    <tr>
+                        <td class="font-monospace small">${p.sku}</td>
+                        <td>
+                            <strong>${p.title}</strong><br>
+                            <span class="small text-muted">${p.category} > ${p.subcategory}</span>
+                        </td>
+                        <td>
+                            <div class="small">B2C: <strong>₹${p.retailPrice.toLocaleString()}</strong></div>
+                            <div class="small">B2B: <strong>₹${p.b2bPrice.toLocaleString()}</strong></div>
+                        </td>
+                        <td>
+                            <span class="badge bg-${p.stock <= 5 ? 'danger' : 'success'}">${p.stock} units</span>
+                        </td>
+                        <td><span class="small">${p.warehouse}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-danger py-0" onclick="deleteSellerProduct('${p.id}')"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function saveSellerProduct(e) {
+            e.preventDefault();
+            const products = PavitraDB.getProducts();
+            const title = document.getElementById("sp-title").value;
+            const category = document.getElementById("sp-cat").value;
+            const subcat = document.getElementById("sp-subcat").value;
+            const retail = parseFloat(document.getElementById("sp-retail").value);
+            const b2b = parseFloat(document.getElementById("sp-b2b").value);
+            const moq = parseInt(document.getElementById("sp-moq").value);
+            const b2bMoq = parseInt(document.getElementById("sp-moq-b2b").value);
+            const sku = document.getElementById("sp-sku").value;
+            const hsn = document.getElementById("sp-hsn").value;
+            const gst = parseInt(document.getElementById("sp-gst").value);
+            const stock = parseInt(document.getElementById("sp-stock").value);
+            const warehouse = document.getElementById("sp-warehouse").value;
+            const color = document.getElementById("sp-color").value;
+            const image = document.getElementById("sp-image").value;
+            const desc = document.getElementById("sp-desc").value;
+
+            const newProd = {
+                id: "p" + (products.length + 1),
+                title, category, subcategory: subcat,
+                retailPrice: retail, b2bPrice: b2b, moq, b2bMoq,
+                sku, hsn, gstPercent: gst, stock, warehouse,
+                color, imageUrl: image, description: desc,
+                rating: 5, reviewsCount: 0
+            };
+
+            products.push(newProd);
+            PavitraDB.saveProducts(products);
+            
+            // Log inventory in stock log
+            logInventoryAction(sku, "Initial Inbound Receive", stock, warehouse);
+            
+            alert("New Saree product added to database successfully!");
+            e.target.reset();
+            loadSellerProducts();
+        }
+
+        function deleteSellerProduct(prodId) {
+            let products = PavitraDB.getProducts();
+            products = products.filter(p => p.id !== prodId);
+            PavitraDB.saveProducts(products);
+            alert("Product deleted.");
+            loadSellerProducts();
+        }
+
+        function handleCSVBulkUpload(e) {
+            e.preventDefault();
+            const csv = document.getElementById("csv-text-input").value.trim();
+            if (!csv) return;
+
+            const lines = csv.split("\n");
+            const products = PavitraDB.getProducts();
+            let count = 0;
+
+            lines.forEach(line => {
+                const cols = line.split(",");
+                if (cols.length >= 4) {
+                    const newProd = {
+                        id: "p-csv-" + Math.floor(Math.random()*1000),
+                        title: cols[0].trim(),
+                        sku: cols[1].trim(),
+                        category: "Sarees",
+                        subcategory: "Designer",
+                        retailPrice: parseFloat(cols[2].trim()),
+                        b2bPrice: parseFloat(cols[2].trim()) * 0.8,
+                        moq: 1, b2bMoq: 5, hsn: "52081190", gstPercent: 12,
+                        stock: parseInt(cols[3].trim()),
+                        warehouse: "Jaipur Main", color: "Assorted",
+                        imageUrl: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=600",
+                        description: "Bulk imported saree variants.", rating: 4, reviewsCount: 0
+                    };
+                    products.push(newProd);
+                    logInventoryAction(newProd.sku, "CSV Bulk Import", newProd.stock, "Jaipur Main");
+                    count++;
+                }
+            });
+
+            PavitraDB.saveProducts(products);
+            alert(`Bulk Upload Success! ${count} items added to catalogue.`);
+            document.getElementById("csv-text-input").value = "";
+            loadSellerProducts();
+        }
+
+        // SELLER INVENTORY SUBVIEW
+        function loadSellerInventory() {
+            const products = PavitraDB.getProducts();
+            
+            // Populate adjustments select
+            const sel = document.getElementById("adjust-prod-id");
+            if (sel) {
+                sel.innerHTML = products.map(p => `<option value="${p.id}">${p.title} (${p.sku})</option>`).join('');
+            }
+
+            // Low Stock list
+            const lowBox = document.getElementById("seller-low-stock-list");
+            if (lowBox) {
+                const low = products.filter(p => p.stock <= 5);
+                if (low.length === 0) {
+                    lowBox.innerHTML = `<li class="list-group-item text-success bg-transparent"><i class="fas fa-check-circle me-1"></i> All stock levels optimized!</li>`;
+                } else {
+                    lowBox.innerHTML = low.map(p => `
+                        <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center">
+                            <span><strong>${p.title}</strong> (${p.sku})</span>
+                            <span class="badge bg-danger rounded-pill">${p.stock} Left</span>
+                        </li>
+                    `).join('');
+                }
+            }
+
+            // Inventory logs table
+            const logs = JSON.parse(localStorage.getItem("pavitra_inv_logs")) || [];
+            const tbody = document.getElementById("seller-inventory-logs-tbody");
+            if (tbody) {
+                tbody.innerHTML = logs.map(l => `
+                    <tr>
+                        <td><span class="small text-muted">${new Date(l.date).toLocaleString()}</span></td>
+                        <td class="font-monospace small"><strong>${l.sku}</strong></td>
+                        <td>${l.action}</td>
+                        <td class="fw-bold text-${l.qty >= 0 ? 'success' : 'danger'}">${l.qty >= 0 ? '+' : ''}${l.qty}</td>
+                        <td>${l.warehouse}</td>
+                        <td>${l.user}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function handleStockAdjust(e) {
+            e.preventDefault();
+            const prodId = document.getElementById("adjust-prod-id").value;
+            const action = document.getElementById("adjust-action").value;
+            const warehouse = document.getElementById("adjust-warehouse").value;
+            let qty = parseInt(document.getElementById("adjust-qty").value);
+
+            const products = PavitraDB.getProducts();
+            const p = products.find(item => item.id === prodId);
+            if (p) {
+                if (action === "out") {
+                    qty = -qty;
+                }
+                
+                p.stock = Math.max(0, p.stock + qty);
+                p.warehouse = warehouse;
+                PavitraDB.saveProducts(products);
+
+                logInventoryAction(p.sku, action === "in" ? "Manual Goods Receipt" : "Manual Adjustment Deduction", qty, warehouse);
+                alert("Stock adjusted successfully.");
+                loadSellerInventory();
+            }
+        }
+
+        function logInventoryAction(sku, action, qty, warehouse) {
+            const logs = JSON.parse(localStorage.getItem("pavitra_inv_logs")) || [];
+            logs.unshift({
+                date: new Date().toISOString(),
+                sku, action, qty, warehouse,
+                user: "Pavitra Weaves Corp (Seller)"
+            });
+            localStorage.setItem("pavitra_inv_logs", JSON.stringify(logs));
+        }
+
+        // SELLER ORDER FULFILLMENT
+        function loadSellerOrders() {
+            const orders = PavitraDB.getOrders();
+            const tbody = document.getElementById("seller-orders-tbody");
+            if (!tbody) return;
+
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4">No B2B orders placed.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = orders.map(o => {
+                const itemsHtml = o.items.map(i => `<div class="small">• ${i.title} (x${i.qty})</div>`).join('');
+                
+                let badge = "";
+                if (o.status === "Placed") badge = `<span class="badge bg-primary">Placed</span>`;
+                else if (o.status === "Accepted") badge = `<span class="badge bg-info">Accepted</span>`;
+                else if (o.status === "Packed") badge = `<span class="badge bg-secondary">Packed</span>`;
+                else if (o.status === "Shipped") badge = `<span class="badge bg-warning">Shipped</span>`;
+                else if (o.status === "Out For Delivery") badge = `<span class="badge bg-dark">Out For Delivery</span>`;
+                else badge = `<span class="badge bg-success">Delivered</span>`;
+
+                return `
+                    <tr>
+                        <td class="font-monospace small"><strong>${o.id}</strong></td>
+                        <td>
+                            <strong>${o.retailerName}</strong><br>
+                            <span class="small text-muted">${o.retailerEmail}</span>
+                        </td>
+                        <td>${itemsHtml}</td>
+                        <td class="fw-bold">₹${o.total.toLocaleString()}</td>
+                        <td>${badge}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                ${o.status === 'Placed' ? `<button class="btn btn-primary btn-sm" onclick="advanceOrderStatus('${o.id}', 'Accepted')">Accept</button>` : ''}
+                                ${o.status === 'Accepted' ? `<button class="btn btn-info btn-sm text-white" onclick="advanceOrderStatus('${o.id}', 'Packed')">Pack Goods</button>` : ''}
+                                ${o.status === 'Packed' ? `<button class="btn btn-warning btn-sm" onclick="advanceOrderStatus('${o.id}', 'Shipped')">Ship Order</button>` : ''}
+                                ${o.status === 'Shipped' ? `<button class="btn btn-dark btn-sm" onclick="advanceOrderStatus('${o.id}', 'Out For Delivery')">Handover Delivery</button>` : ''}
+                                ${o.status === 'Out For Delivery' || o.status === 'Delivered' ? `<span class="text-muted small">Tracking Active</span>` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function advanceOrderStatus(orderId, newStatus) {
+            const orders = PavitraDB.getOrders();
+            const o = orders.find(item => item.id === orderId);
+            if (o) {
+                o.status = newStatus;
+                o.logs.push({ status: newStatus, time: new Date().toISOString() });
+                PavitraDB.saveOrders(orders);
+                alert(`Order #${orderId} status advanced to ${newStatus}.`);
+                loadSellerOrders();
+            }
+        }
+
+        // SELLER RETURNS INQUIRIES
+        function loadSellerReturns() {
+            const tbody = document.getElementById("seller-returns-tbody");
+            if (!tbody) return;
+
+            const returns = JSON.parse(localStorage.getItem("pavitra_returns")) || [];
+            if (returns.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4">No return inquiries pending.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = returns.map(r => {
+                return `
+                    <tr>
+                        <td class="font-monospace small"><strong>${r.id}</strong></td>
+                        <td><span class="small font-monospace">${r.orderId}</span></td>
+                        <td><strong>${r.userName}</strong></td>
+                        <td>${r.productTitle}</td>
+                        <td class="text-danger small">"${r.reason}"</td>
+                        <td>
+                            ${r.status === 'Pending' ? `
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-success" onclick="approveReturnRequest('${r.id}')">Refund Wallet</button>
+                                    <button class="btn btn-danger" onclick="rejectReturnRequest('${r.id}')">Reject</button>
+                                </div>
+                            ` : `<span class="badge bg-${r.status === 'Approved' ? 'success' : 'danger'}">${r.status}</span>`}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function approveReturnRequest(retId) {
+            const returns = JSON.parse(localStorage.getItem("pavitra_returns")) || [];
+            const r = returns.find(item => item.id === retId);
+            if (r) {
+                r.status = "Approved";
+                localStorage.setItem("pavitra_returns", JSON.stringify(returns));
+                
+                // Refund transaction to Retailer ledger (Wallet ledger)
+                WalletAPI.addTransaction(r.userId, "Credit", r.refundAmount, `Refund Credit for Return #${retId}`);
+                
+                // Debit from Seller wallet
+                const currentSeller = PavitraDB.getCurrentUser();
+                WalletAPI.addTransaction(currentSeller.id, "Debit", r.refundAmount * 0.85, `Debit Return Adjustment #${retId}`);
+                
+                alert(`Return request approved. Refund of ₹${r.refundAmount} credited to customer wallet.`);
+                loadSellerReturns();
+            }
+        }
+
+        function rejectReturnRequest(retId) {
+            const returns = JSON.parse(localStorage.getItem("pavitra_returns")) || [];
+            const r = returns.find(item => item.id === retId);
+            if (r) {
+                r.status = "Rejected";
+                localStorage.setItem("pavitra_returns", JSON.stringify(returns));
+                alert("Return request rejected.");
+                loadSellerReturns();
+            }
+        }
+
+        // SELLER EARNINGS
+        function loadSellerWallet() {
+            const currentUser = PavitraDB.getCurrentUser();
+            const ledger = PavitraDB.getWallet();
+            const tbody = document.getElementById("seller-wallet-tbody");
+            if (!tbody) return;
+
+            const myLedger = ledger.filter(tx => tx.userId === currentUser.id);
+            tbody.innerHTML = myLedger.map(tx => {
+                return `
+                    <tr>
+                        <td><span class="small text-muted">${new Date(tx.timestamp).toLocaleString()}</span></td>
+                        <td><span class="small font-monospace">${tx.id}</span></td>
+                        <td><span class="small">${tx.description}</span></td>
+                        <td><span class="badge bg-${tx.type === 'Credit' ? 'success' : 'danger'}">${tx.type}</span></td>
+                        <td class="fw-bold text-maroon">₹${tx.amount.toLocaleString()}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function saveSettlementCycle() {
+            const cycle = document.getElementById("settlement-cycle-select").value;
+            alert(`Settlement schedule configured: ${cycle}. Commission calculations adjusted.`);
+        }
+
+        // C. RETAILER SUBVIEWS
+        function loadRetailerOrdering() {
+            const products = PavitraDB.getProducts();
+            const tbody = document.getElementById("ret-b2b-tbody");
+            if (!tbody) return;
+
+            tbody.innerHTML = products.map(p => {
+                return `
+                    <tr>
+                        <td><img src="${p.imageUrl}" alt="${p.title}" class="border border-gold" style="width: 50px; height: 60px; object-fit: cover;"></td>
+                        <td>
+                            <strong>${p.title}</strong><br>
+                            <span class="small font-monospace text-muted">${p.sku}</span>
+                        </td>
+                        <td class="fw-bold text-maroon">₹${p.b2bPrice.toLocaleString()}</td>
+                        <td class="text-muted small">₹${p.retailPrice.toLocaleString()}</td>
+                        <td><span class="badge bg-gold text-dark">Min MOQ: ${p.b2bMoq}</span></td>
+                        <td>
+                            <input type="number" class="form-control form-control-sm text-center mx-auto" id="qty-b2b-${p.id}" value="${p.b2bMoq}" min="${p.b2bMoq}" style="width: 75px;">
+                        </td>
+                        <td>
+                            <button class="btn btn-pavitra btn-sm" onclick="addB2BToCart('${p.id}')"><i class="fas fa-cart-plus me-1"></i> Add Bulk</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function addB2BToCart(productId) {
+            const qty = parseInt(document.getElementById(`qty-b2b-${productId}`).value);
+            CartAPI.addToCart(productId, qty);
+            alert("Bulk items added to your cart bag. Open Storefront or check navbar to checkout.");
+        }
+
+        function loadRetailerHistory() {
+            const currentUser = PavitraDB.getCurrentUser();
+            const orders = PavitraDB.getOrders();
+            const box = document.getElementById("retailer-orders-list-box");
+            if (!box) return;
+
+            const myOrders = orders.filter(o => o.retailerId === currentUser.id);
+            if (myOrders.length === 0) {
+                box.innerHTML = `<div class="text-center py-5 text-muted">You haven't placed B2B orders yet.</div>`;
+                return;
+            }
+
+            box.innerHTML = myOrders.map(o => {
+                const itemsHtml = o.items.map(i => `
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span>• ${i.title} (x${i.qty})</span>
+                        <span class="text-muted small">SKU: ${i.sku}</span>
+                    </div>
+                `).join('');
+
+                // Status mapping for stepper
+                const stages = ["Placed", "Accepted", "Packed", "Shipped", "Out For Delivery", "Delivered"];
+                const activeIndex = stages.indexOf(o.status);
+                
+                const percent = (activeIndex / (stages.length - 1)) * 100;
+
+                const stepDotsHtml = stages.map((st, index) => {
+                    let cls = "";
+                    if (index < activeIndex) cls = "completed";
+                    else if (index === activeIndex) cls = "active";
+                    
+                    return `
+                        <div class="step-dot ${cls}">
+                            ${index < activeIndex ? '<i class="fas fa-check"></i>' : index+1}
+                            <span class="step-label">${st}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="p-4 border mb-4 bg-white shadow-sm position-relative">
+                        <div class="row border-bottom pb-2 mb-3">
+                            <div class="col-md-6">
+                                <h6>Order Reference: <strong class="font-monospace text-maroon">${o.id}</strong></h6>
+                                <span class="small text-muted">Placed: ${new Date(o.createdAt).toLocaleString()}</span>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <span class="fw-bold">Total Bill: ₹${o.total.toLocaleString()}</span>
+                                <div class="small text-success fw-bold">Payment Method: ${o.paymentMethod}</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-7">
+                                <strong>Items Details:</strong>
+                                <div class="mt-2 border-start ps-3 mb-3">${itemsHtml}</div>
+                                
+                                <div class="small"><strong>Shipping Address:</strong></div>
+                                <div class="small text-muted font-monospace">${o.shippingAddress}</div>
+                                ${o.status !== 'Delivered' ? `
+                                    <div class="mt-2 alert alert-info py-1 small">
+                                        <i class="fas fa-key me-1"></i> Delivery Drop-off OTP: <strong>${o.deliveryOtp}</strong>
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <div class="col-md-5 text-end d-flex flex-column justify-content-between align-items-end">
+                                <div>
+                                    <button class="btn btn-sm btn-pavitra-outline" onclick="alert('Generating GST Invoice PDF... Download complete.')"><i class="fas fa-file-pdf me-1"></i> Tax Invoice</button>
+                                </div>
+                                ${o.status === 'Delivered' ? `
+                                    <button class="btn btn-sm btn-danger mt-2" onclick="requestOrderReturn('${o.id}', '${o.items[0].title}')">Request Return/Refund</button>
+                                ` : ''}
+                            </div>
+                        </div>
+
+                        <!-- Stepper -->
+                        <div class="step-indicator mt-5 px-3">
+                            <div class="step-line-active" style="width: ${percent}%"></div>
+                            ${stepDotsHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function requestOrderReturn(orderId, pTitle) {
+            const reason = prompt("Enter reason for return / refund:");
+            if (!reason) return;
+
+            const returns = JSON.parse(localStorage.getItem("pavitra_returns")) || [];
+            const orders = PavitraDB.getOrders();
+            const o = orders.find(item => item.id === orderId);
+            
+            if (o) {
+                const reqId = "RET-" + Math.floor(1000 + Math.random()*9000);
+                returns.unshift({
+                    id: reqId,
+                    orderId: orderId,
+                    userId: o.retailerId,
+                    userName: o.retailerName,
+                    productTitle: pTitle,
+                    reason: reason,
+                    refundAmount: o.total,
+                    status: "Pending"
+                });
+                localStorage.setItem("pavitra_returns", JSON.stringify(returns));
+                alert(`Return request submitted successfully. Request ID: ${reqId}. Pending seller review.`);
+            }
+        }
+
+        function loadRetailerWallet() {
+            const currentUser = PavitraDB.getCurrentUser();
+            const bal = WalletAPI.getBalance(currentUser.id);
+            
+            document.getElementById("ret-wallet-bal").textContent = "₹" + bal.toLocaleString('en-IN') + ".00";
+            document.getElementById("ret-credit-bal").textContent = "₹" + (currentUser.creditLimit || 0).toLocaleString('en-IN') + ".00";
+
+            const ledger = PavitraDB.getWallet();
+            const tbody = document.getElementById("retailer-ledger-tbody");
+            if (tbody) {
+                const myLedger = ledger.filter(tx => tx.userId === currentUser.id);
+                tbody.innerHTML = myLedger.map(tx => {
+                    return `
+                        <tr>
+                            <td><span class="small text-muted">${new Date(tx.timestamp).toLocaleString()}</span></td>
+                            <td><span class="small font-monospace">${tx.id}</span></td>
+                            <td><span class="small">${tx.description}</span></td>
+                            <td><span class="badge bg-${tx.type === 'Credit' ? 'success' : 'danger'}">${tx.type}</span></td>
+                            <td class="fw-bold">₹${tx.amount.toLocaleString()}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+
+        function rechargeRetailerWallet() {
+            const amt = parseFloat(prompt("Enter amount to recharge wallet (INR):"));
+            if (isNaN(amt) || amt <= 0) return;
+
+            const currentUser = PavitraDB.getCurrentUser();
+            WalletAPI.addTransaction(currentUser.id, "Credit", amt, "Wallet Recharge Ref: PG_MOCK");
+            alert(`Recharge of ₹${amt} successful.`);
+            loadRetailerWallet();
+        }
+
+        // D. DELIVERY SUBVIEWS
+        function loadDeliveryOrders() {
+            const orders = PavitraDB.getOrders();
+            const tbody = document.getElementById("delivery-orders-tbody");
+            if (!tbody) return;
+
+            // Filter for out for delivery or shipped
+            const deliveryJobs = orders.filter(o => o.status === "Out For Delivery" || o.status === "Shipped" || o.status === "Delivered");
+            if (deliveryJobs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4">No shipments assigned to you.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = deliveryJobs.map(o => {
+                return `
+                    <tr>
+                        <td class="font-monospace small"><strong>${o.id}</strong></td>
+                        <td>
+                            <strong>${o.retailerName}</strong><br>
+                            <span class="small text-muted">Tel: ${o.phone}</span>
+                        </td>
+                        <td><span class="small">${o.shippingAddress}</span></td>
+                        <td><span class="small fw-bold">${o.paymentMethod}</span></td>
+                        <td>
+                            <span class="badge bg-${o.status === 'Delivered' ? 'success' : 'warning'}">${o.status}</span>
+                        </td>
+                        <td>
+                            ${o.status === 'Out For Delivery' ? `
+                                <input type="text" class="form-control form-control-sm text-center fw-bold" id="otp-input-${o.id}" placeholder="OTP Code" style="width:75px">
+                            ` : `<span class="text-muted small">Checked</span>`}
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                ${o.status === 'Shipped' ? `
+                                    <button class="btn btn-info text-white" onclick="markOrderPicked('${o.id}')">Confirm Pickup</button>
+                                ` : ''}
+                                ${o.status === 'Out For Delivery' ? `
+                                    <button class="btn btn-success" onclick="verifyDeliveryOtp('${o.id}', '${o.deliveryOtp}')">Drop Off Complete</button>
+                                ` : ''}
+                                ${o.status === 'Delivered' ? `<span class="text-muted small"><i class="fas fa-check-circle text-success me-1"></i> Done</span>` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function toggleDutyAttendance() {
+            const toggle = document.getElementById("delivery-attendance-toggle");
+            const lbl = document.getElementById("duty-status-label");
+            if (toggle.checked) {
+                lbl.textContent = "Duty Status: ON";
+                lbl.className = "form-check-label fw-bold text-success small";
+            } else {
+                lbl.textContent = "Duty Status: OFF";
+                lbl.className = "form-check-label fw-bold text-danger small";
+            }
+        }
+
+        function markOrderPicked(orderId) {
+            advanceOrderStatus(orderId, 'Out For Delivery');
+            loadDeliveryOrders();
+        }
+
+        function verifyDeliveryOtp(orderId, realOtp) {
+            const entered = document.getElementById(`otp-input-${orderId}`).value;
+            if (entered === realOtp) {
+                // Settle payments & mark delivered
+                const orders = PavitraDB.getOrders();
+                const o = orders.find(item => item.id === orderId);
+                if (o) {
+                    o.status = "Delivered";
+                    o.logs.push({ status: "Delivered", time: new Date().toISOString() });
+                    PavitraDB.saveOrders(orders);
+                    
+                    // Transaction Settlements
+                    // Retailer gets order debited (already debited during checkout)
+                    // Seller earns net price (Subtotal - 15% system fee)
+                    const sellerEarnings = o.subtotal * 0.85;
+                    const adminCommission = o.subtotal * 0.15;
+                    
+                    const sellerUser = PavitraDB.getUsers().find(u => u.role === 'Seller');
+                    if (sellerUser) {
+                        WalletAPI.addTransaction(sellerUser.id, "Credit", sellerEarnings, `Earnings settlement for Order #${orderId}`);
+                    }
+                    
+                    // Admin gets commission
+                    WalletAPI.addTransaction("u-admin", "Credit", adminCommission, `Platform Commission fee on Order #${orderId}`);
+                    
+                    alert("Delivery OTP Confirmed! Shipment delivered and payouts completed.");
+                    loadDeliveryOrders();
+                }
+            } else {
+                alert("Incorrect delivery verification OTP. Please try again.");
+            }
+        }
+    </script>
+</body>
+</html>

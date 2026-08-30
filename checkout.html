@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <div class="luxury-spinner"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container my-5 py-4">
+        <div class="row g-5">
+            <!-- Left Form Column -->
+            <div class="col-lg-7">
+                <div class="p-4 bg-white border border-gold shadow-sm">
+                    <!-- Checkout Header -->
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                        <h2 class="m-0 text-maroon display-font">Pavitra Designers</h2>
+                        <a href="cart.html" class="small text-muted"><i class="fas fa-arrow-left me-1"></i> Return to bag</a>
+                    </div>
+                    
+                    <!-- Account Details -->
+                    <div class="mb-4">
+                        <h5 class="mb-3 text-uppercase small fw-bold text-maroon">Customer Contact</h5>
+                        <div class="form-group mb-2">
+                            <input type="email" class="form-control" id="checkout-email" placeholder="Email Address" required>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Methods -->
+                    <div class="mb-4">
+                        <h5 class="mb-3 text-uppercase small fw-bold text-maroon">Shipping Method</h5>
+                        
+                        <!-- Ship / Pickup Toggles -->
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <input type="radio" class="btn-check" name="ship-type" id="ship-delivery" checked>
+                                <label class="btn btn-outline-secondary w-100 rounded-0 py-2" for="ship-delivery"><i class="fas fa-truck me-2"></i> Ship to address</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="radio" class="btn-check" name="ship-type" id="ship-pickup">
+                                <label class="btn btn-outline-secondary w-100 rounded-0 py-2" for="ship-pickup"><i class="fas fa-store me-2"></i> Boutique Pickup</label>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Form -->
+                        <div id="shipping-address-form-box">
+                            <h5 class="mb-3 text-uppercase small fw-bold text-muted">Ship to Address</h5>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="checkout-name" placeholder="Full Name" required>
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="checkout-address" placeholder="Address Details" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="checkout-city" placeholder="City" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="checkout-postal" placeholder="Pin code" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="checkout-state" placeholder="State" required>
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="checkout-country" value="India" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Rates -->
+                    <div class="mb-4 p-3 bg-light border border-gold-light">
+                        <h5 class="mb-3 text-uppercase small fw-bold text-maroon">Shipping Carrier Options</h5>
+                        
+                        <div class="form-check p-3 border mb-2 bg-white d-flex justify-content-between align-items-center">
+                            <div>
+                                <input class="form-check-input ms-0 me-2" type="radio" name="shipping-rate" id="rate-local" value="0" checked onchange="updateCheckoutTotals()">
+                                <label class="form-check-label fw-bold" for="rate-local">Local delivery (Jaipur region)</label>
+                                <div class="small text-muted ms-4">WhatsApp notification will trigger</div>
+                                <div class="mt-2 ms-4" id="local-phone-box">
+                                    <input type="tel" class="form-control form-control-sm w-75" id="checkout-phone" placeholder="Mobile Number (+91)" required>
+                                </div>
+                            </div>
+                            <span class="fw-bold text-success">FREE</span>
+                        </div>
+
+                        <div class="form-check p-3 border bg-white d-flex justify-content-between align-items-center">
+                            <div>
+                                <input class="form-check-input ms-0 me-2" type="radio" name="shipping-rate" id="rate-india" value="300" onchange="updateCheckoutTotals()">
+                                <label class="form-check-label fw-bold" for="rate-india">Pan India Shipping (Courier)</label>
+                            </div>
+                            <span class="fw-bold">₹300.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Settings -->
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="news-offers" checked>
+                            <label class="form-check-label small" for="news-offers">Email me with custom designer lookbook updates</label>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="mb-4">
+                        <h5 class="mb-3 text-uppercase small fw-bold text-maroon">Secure Payment Gateway</h5>
+                        <div class="border">
+                            <div class="p-3 border-bottom bg-light">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="payment-method" id="pay-razorpay" checked>
+                                    <label class="form-check-label fw-bold" for="pay-razorpay">Razorpay Gateway (UPI, Cards, Netbanking)</label>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-white">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="payment-method" id="pay-cod">
+                                    <label class="form-check-label fw-bold" for="pay-cod">Cash on Delivery (COD)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-pavitra btn-lg w-100 py-3 mt-3" onclick="submitCheckoutPageOrder()">Complete Secure Checkout</button>
+                </div>
+            </div>
+
+            <!-- Right Side Summary -->
+            <div class="col-lg-5">
+                <div class="p-4 bg-light border border-gold sticky-top" style="top:100px; z-index: 10;">
+                    <h4 class="border-bottom pb-3 mb-4 display-font text-maroon">Order Details</h4>
+                    
+                    <!-- Items List -->
+                    <div id="checkout-items-list" class="mb-4">
+                        <!-- Items load dynamically -->
+                    </div>
+
+                    <!-- Calc breakdown -->
+                    <div class="border-top pt-3 mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal</span>
+                            <span id="checkout-subtotal">₹0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2 text-success" id="checkout-discount-row" style="display:none">
+                            <span>Discount Applied</span>
+                            <span id="checkout-discount">-₹0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Shipping</span>
+                            <span id="checkout-shipping">FREE</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2 align-items-center">
+                            <span>Estimated taxes (GST)</span>
+                            <span id="checkout-taxes">₹0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between border-top pt-3 fw-bold fs-5">
+                            <span>Total</span>
+                            <span id="checkout-total" class="text-maroon">₹0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Trust Badge -->
+                    <div class="text-center mt-4 border-top pt-3">
+                        <div class="text-muted small mb-2"><i class="fas fa-lock me-1"></i>SSL Encrypted checkout protection</div>
+                        <div class="d-flex justify-content-center gap-2 flex-wrap" style="opacity: 0.8">
+                            <span class="badge bg-secondary p-2"><i class="fab fa-cc-visa"></i> VISA</span>
+                            <span class="badge bg-secondary p-2"><i class="fab fa-cc-mastercard"></i> MC</span>
+                            <span class="badge bg-secondary p-2"><i class="fab fa-cc-paypal"></i> PayPal</span>
+                            <span class="badge bg-secondary p-2"><i class="fas fa-mobile-alt"></i> UPI / GPay</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp floating chat button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core State JavaScript -->
+    <script src="app.js"></script>
+    <script>
+        let discountVal = 0;
+        let couponName = "";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Load customer context from logged in user if available
+            const currentUser = PavitraDB.getCurrentUser();
+            if (currentUser) {
+                document.getElementById("checkout-email").value = currentUser.email;
+                document.getElementById("checkout-name").value = currentUser.name;
+                document.getElementById("checkout-phone").value = currentUser.phone || "";
+                
+                // If Retailer, try loading profile address info
+                if (currentUser.role === "Retailer") {
+                    document.getElementById("checkout-address").value = "Badi Chopad J.D.A. Market Pink City";
+                    document.getElementById("checkout-city").value = "Jaipur";
+                    document.getElementById("checkout-postal").value = "302003";
+                    document.getElementById("checkout-state").value = "RJ";
+                }
+            }
+
+            // Read discounts applied from sessionStorage
+            discountVal = parseFloat(sessionStorage.getItem("pavitra_applied_discount")) || 0;
+            couponName = sessionStorage.getItem("pavitra_applied_coupon") || "";
+
+            updateCheckoutTotals();
+        });
+
+        function updateCheckoutTotals() {
+            const cart = PavitraDB.getCart();
+            const currentUser = PavitraDB.getCurrentUser();
+            const isB2B = currentUser && currentUser.role === "Retailer";
+            
+            const summaryBox = document.getElementById("checkout-items-list");
+            if (!summaryBox) return;
+
+            if (cart.length === 0) {
+                window.location.href = "cart.html";
+                return;
+            }
+            
+            summaryBox.innerHTML = cart.map(item => {
+                const price = isB2B ? item.b2bPrice : item.retailPrice;
+                return `
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center position-relative">
+                            <span class="badge bg-secondary position-absolute start-0 top-0 translate-middle rounded-pill" style="z-index:2">${item.qty}</span>
+                            <img src="${item.imageUrl}" alt="${item.title}" class="me-3 border bg-white" style="width: 50px; height: 65px; object-fit: cover;">
+                            <div>
+                                <h6 class="m-0 fw-bold small text-truncate" style="max-width: 180px;">${item.title}</h6>
+                                <span class="text-muted small" style="font-size:0.75rem">${item.sku}</span>
+                            </div>
+                        </div>
+                        <span class="fw-bold">₹${(price * item.qty).toLocaleString('en-IN')}.00</span>
+                    </div>
+                `;
+            }).join('');
+            
+            const calc = CartAPI.getTotals(isB2B);
+            const shipRate = parseFloat(document.querySelector('input[name="shipping-rate"]:checked').value);
+            
+            document.getElementById("checkout-subtotal").textContent = "₹" + calc.subtotal.toLocaleString('en-IN') + ".00";
+            
+            if (discountVal > 0) {
+                document.getElementById("checkout-discount-row").style.display = "flex";
+                document.getElementById("checkout-discount").textContent = "-₹" + discountVal.toLocaleString('en-IN') + ".00";
+            } else {
+                document.getElementById("checkout-discount-row").style.display = "none";
+            }
+
+            document.getElementById("checkout-shipping").textContent = shipRate === 0 ? "FREE" : "₹" + shipRate.toLocaleString('en-IN') + ".00";
+            document.getElementById("checkout-taxes").textContent = "₹" + calc.taxes.toLocaleString('en-IN') + ".00";
+            
+            const finalTotal = (calc.subtotal - discountVal) + calc.taxes + shipRate;
+            document.getElementById("checkout-total").textContent = "₹" + finalTotal.toLocaleString('en-IN') + ".00";
+        }
+
+        function submitCheckoutPageOrder() {
+            const cart = PavitraDB.getCart();
+            const currentUser = PavitraDB.getCurrentUser();
+            const isB2B = currentUser && currentUser.role === "Retailer";
+            const email = document.getElementById("checkout-email").value;
+            const name = document.getElementById("checkout-name").value;
+            const address = document.getElementById("checkout-address").value;
+            const city = document.getElementById("checkout-city").value;
+            const postal = document.getElementById("checkout-postal").value;
+            const state = document.getElementById("checkout-state").value;
+            const phone = document.getElementById("checkout-phone").value;
+            
+            if (!email || !name || !address || !city || !postal || !phone) {
+                alert("Please fill all customer contact and delivery address fields.");
+                return;
+            }
+            
+            const calc = CartAPI.getTotals(isB2B);
+            const shipRate = parseFloat(document.querySelector('input[name="shipping-rate"]:checked').value);
+            const finalTotal = (calc.subtotal - discountVal) + calc.taxes + shipRate;
+            
+            // Credit validation check for Wholesaler
+            if (isB2B) {
+                const balance = WalletAPI.getBalance(currentUser.id);
+                const limit = currentUser.creditLimit || 0;
+                if (balance + limit < finalTotal) {
+                    alert(`Insufficient wholesale credits. Order total: ₹${finalTotal.toLocaleString()}, Available Balance: ₹${balance.toLocaleString()}, Credit Limit: ₹${limit.toLocaleString()}.`);
+                    return;
+                }
+            }
+
+            const orders = PavitraDB.getOrders();
+            const orderId = "ORD-" + Math.floor(1000 + Math.random() * 9000);
+            
+            const newOrder = {
+                id: orderId,
+                retailerId: currentUser ? currentUser.id : "u-guest",
+                retailerName: name,
+                retailerEmail: email,
+                items: cart,
+                shippingMethod: document.getElementById("rate-local").checked ? "Local delivery" : "Pan India Shipping",
+                shippingCost: shipRate,
+                taxes: calc.taxes,
+                subtotal: calc.subtotal - discountVal,
+                total: finalTotal,
+                status: "Placed",
+                paymentStatus: "Paid",
+                paymentMethod: document.getElementById("pay-razorpay").checked ? "Razorpay Gateway" : "Cash on Delivery",
+                shippingAddress: `${name}, ${address} ${postal} ${city} ${state}, India`,
+                phone: phone,
+                createdAt: new Date().toISOString(),
+                logs: [{ status: "Placed", time: new Date().toISOString() }],
+                deliveryPartnerId: "u-delivery",
+                deliveryOtp: Math.floor(1000 + Math.random() * 9000).toString()
+            };
+            
+            orders.push(newOrder);
+            PavitraDB.saveOrders(orders);
+            
+            if (currentUser) {
+                WalletAPI.addTransaction(
+                    currentUser.id, 
+                    "Debit", 
+                    finalTotal, 
+                    `Payment for Order #${orderId}`
+                );
+            }
+            
+            // Clear cart & variables
+            CartAPI.clearCart();
+            sessionStorage.removeItem("pavitra_applied_discount");
+            sessionStorage.removeItem("pavitra_applied_coupon");
+
+            window.location.href = `success.html?orderId=${orderId}&otp=${newOrder.deliveryOtp}`;
+        }
+    </script>
+</body>
+</html>

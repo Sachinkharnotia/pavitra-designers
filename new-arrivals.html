@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Arrivals | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Premium Editorial Overrides -->
+    <link rel="stylesheet" href="editorial-saree.css">
+</head>
+<body class="saree-editorial-theme">
+
+    <!-- Page Loader -->
+    <div id="page-loader" style="display: none; opacity: 0; transition: opacity 0.3s ease;">
+        <div class="luxury-spinner"></div>
+    </div>
+
+    <!-- Reusable Site Header Component -->
+    <site-header active-tab="new-arrivals"></site-header>
+
+    <!-- Main Content Container for PJAX Swap -->
+    <div id="main-content">
+        <!-- Breadcrumbs -->
+        <div class="container-fluid px-lg-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-pavitra">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">New Arrivals</li>
+                </ol>
+            </nav>
+        </div>
+
+        <!-- Premium Hero -->
+        <header class="hero-editorial-subpage">
+            <div class="hero-bg-wrapper">
+                <img src="assets/product-images/organza_silk.jpg" alt="New Arrivals Saree Collection" class="hero-bg-image">
+            </div>
+            <div class="hero-overlay-editorial"></div>
+            <div class="container-fluid px-lg-5 position-relative">
+                <div class="hero-content-box">
+                    <span class="hero-overline">Fresh In Store</span>
+                    <h1 class="hero-main-title">New Arrivals Collection</h1>
+                    <p class="hero-description">Be the first to wear the latest design drafts from our luxury master artisans.</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Product Grid -->
+        <div class="container-fluid px-lg-5 my-5">
+            <div class="section-editorial-header text-center mb-5">
+                <span class="section-editorial-overline">Curated Collection</span>
+                <h2 class="section-editorial-title">Newest Additions</h2>
+            </div>
+            <div class="row g-4" id="arrivals-grid-row">
+                <!-- Dynamic products loaded by script -->
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-notif" class="toast-saree">
+            <i class="fas fa-check-circle" style="color: var(--color-gold);"></i>
+            <span id="toast-text">Product added to bag.</span>
+        </div>
+
+        <!-- Quick View Modal -->
+        <div class="modal fade modal-editorial" id="quickViewModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content modal-content-editorial p-0">
+                    <button type="button" class="modal-close-editorial" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="modal-body p-0">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-6 p-0">
+                                    <div class="quickview-gallery">
+                                        <img id="qv-img" src="" alt="Saree Quickview">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 p-lg-5 p-4 d-flex flex-column justify-content-between">
+                                    <div class="quickview-details-box">
+                                        <span class="product-meta-type mb-1 d-block" id="qv-type">Saree</span>
+                                        <h2 class="quickview-title" id="qv-title">Royal Saree</h2>
+                                        <div class="quickview-price" id="qv-price">₹12,000</div>
+                                        <p class="quickview-desc" id="qv-desc">Beautiful drape and zari details.</p>
+                                        
+                                        <hr class="border-secondary my-4">
+                                        
+                                        <div class="quickview-meta-row"><span class="quickview-meta-label">SKU:</span> <span id="qv-sku" class="ms-2">PAV-102</span></div>
+                                        <div class="quickview-meta-row"><span class="quickview-meta-label">Fabric:</span> <span id="qv-fabric" class="ms-2">Pure Mulberry Silk</span></div>
+                                        <div class="quickview-meta-row"><span class="quickview-meta-label">Dimensions:</span> <span id="qv-dimensions" class="ms-2">5.5m Saree + 0.8m Blouse</span></div>
+                                    </div>
+                                    
+                                    <div class="quickview-action-row align-items-center">
+                                        <div class="d-flex align-items-center border" style="background:var(--color-white); padding: 0 5px;">
+                                            <button class="btn btn-sm px-3 py-2 border-0" onclick="adjustQty(-1)"><i class="fas fa-minus"></i></button>
+                                            <input type="number" id="qv-qty" class="quickview-qty-input border-0" value="1" min="1" readonly style="width: 50px;">
+                                            <button class="btn btn-sm px-3 py-2 border-0" onclick="adjustQty(1)"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                        <button class="btn-quickview-add" id="qv-add-btn">Add to Bag</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reusable Site Footer Component -->
+    <site-footer></site-footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+    <script src="theme-components.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            initPage();
+            window.addEventListener("page_loaded", initPage);
+        });
+
+        function initPage() {
+            renderNewArrivals();
+        }
+
+        function renderNewArrivals() {
+            if (!window.PavitraDB) return;
+            const products = PavitraDB.getProducts() || [];
+            // Filter by featured and category
+            const list = products.filter(p => p.featured === true && p.category === "Sarees");
+
+            const row = document.getElementById("arrivals-grid-row");
+            if (!row) return;
+
+            const currentUser = PavitraDB.getCurrentUser();
+            const isB2B = currentUser && currentUser.role === "Retailer";
+            const wishlist = PavitraDB.getWishlist() || [];
+
+            if (list.length === 0) {
+                row.innerHTML = `<div class="col-12 text-center py-5"><p class="text-muted lead" style="font-family: var(--font-heading);">No new arrivals found.</p></div>`;
+                return;
+            }
+
+            row.innerHTML = list.map(p => {
+                const price = isB2B ? p.b2bPrice : p.retailPrice;
+                const isWishlisted = wishlist.includes(p.id);
+                const wishClass = isWishlisted ? "active" : "";
+
+                return `
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="product-editorial-card" data-product-id="${p.id}">
+                            <div class="product-img-wrapper">
+                                <button class="product-card-wishlist ${wishClass}" onclick="toggleWishlistItem('${p.id}')" title="Add to Wishlist">
+                                    <i class="${isWishlisted ? 'fas' : 'far'} fa-heart"></i>
+                                </button>
+                                <img src="${p.imageUrl}" alt="${p.title}" class="product-img-saree">
+                                <div class="product-hover-actions">
+                                    <button class="btn-hover-action btn-action-view" onclick="openQuickView('${p.id}')">Quick View</button>
+                                    <button class="btn-hover-action btn-action-add" onclick="CartAPI.addToCart('${p.id}', ${isB2B ? p.b2bMoq : p.moq}); showToast('${p.title.replace(/'/g, "\\'")} added to bag.');">Add to Bag</button>
+                                </div>
+                            </div>
+                            <div class="product-info-wrapper">
+                                <span class="product-meta-type">${p.subcategory || p.category}</span>
+                                <h3 class="product-name-title"><a href="product-details.html?id=${p.id}">${p.title}</a></h3>
+                                <span class="product-price-editorial">₹${price.toLocaleString('en-IN')}.00</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleWishlistItem(id) {
+            if (window.CartAPI) {
+                CartAPI.toggleWishlist(id);
+                renderNewArrivals();
+                updateNavbarBadges();
+            }
+        }
+
+        function openQuickView(id) {
+            if (!window.PavitraDB) return;
+            const products = PavitraDB.getProducts() || [];
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+            
+            const currentUser = PavitraDB.getCurrentUser();
+            const isB2B = currentUser && currentUser.role === "Retailer";
+            const price = isB2B ? p.b2bPrice : p.retailPrice;
+            
+            document.getElementById("qv-img").src = p.imageUrl;
+            document.getElementById("qv-title").innerText = p.title;
+            document.getElementById("qv-type").innerText = p.subcategory || p.category || "Premium Saree";
+            document.getElementById("qv-price").innerText = "₹" + price.toLocaleString("en-IN");
+            document.getElementById("qv-desc").innerText = p.description;
+            document.getElementById("qv-sku").innerText = p.sku || "N/A";
+            document.getElementById("qv-fabric").innerText = p.fabric || "Pure Mulberry Silk";
+            document.getElementById("qv-dimensions").innerText = p.dimensions || "5.5m Saree + 0.8m Blouse";
+            document.getElementById("qv-qty").value = isB2B ? p.b2bMoq : p.moq;
+            document.getElementById("qv-qty").min = isB2B ? p.b2bMoq : p.moq;
+
+            const btn = document.getElementById("qv-add-btn");
+            btn.onclick = function() {
+                const qty = parseInt(document.getElementById("qv-qty").value) || 1;
+                if(window.CartAPI) {
+                    window.CartAPI.addToCart(p.id, qty);
+                    const modalEl = document.getElementById("quickViewModal");
+                    const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                    modal.hide();
+                    showToast(`${p.title} added to bag.`);
+                }
+            };
+
+            const modal = new bootstrap.Modal(document.getElementById("quickViewModal"));
+            modal.show();
+        }
+
+        function adjustQty(amount) {
+            const input = document.getElementById("qv-qty");
+            if(input) {
+                let min = parseInt(input.min) || 1;
+                let val = parseInt(input.value) + amount;
+                if (val < min) val = min;
+                input.value = val;
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast-notif");
+            const text = document.getElementById("toast-text");
+            if(toast && text) {
+                text.innerText = message;
+                toast.classList.add("show");
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Premium Editorial Overrides -->
+    <link rel="stylesheet" href="editorial-saree.css">
+</head>
+<body class="saree-editorial-theme">
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <div class="luxury-spinner"></div>
+    </div>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-prev"><i class="fas fa-chevron-left"></i></button>
+            <span id="announcement-text" class="mx-2"><i class="fas fa-truck me-2"></i> FREE SHIPPING ACROSS INDIA ON ALL ORDERS</span>
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Reusable Site Header Component -->
+    <site-header active-tab="wishlist"></site-header>
+
+    <div id="main-content">
+
+    <!-- Breadcrumbs -->
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-pavitra">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">My Wishlist</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Page Banner -->
+    <div class="page-banner-luxury text-center">
+        <div class="container position-relative z-2">
+            <h1 class="page-banner-title"><i class="fas fa-heart me-2"></i>My Private Collection</h1>
+            <p class="mb-0 text-gold-light">Your saved luxury ethnic designs ready to claim</p>
+        </div>
+    </div>
+
+    <!-- Wishlist Grid -->
+    <div class="container my-5">
+        <div class="row g-4" id="wishlist-grid-row">
+            <!-- Dynamically loaded -->
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Reusable Site Footer Component -->
+    <site-footer></site-footer>
+
+    <!-- WhatsApp floating chat button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core State JavaScript -->
+    <script src="app.js"></script>
+    <script src="theme-components.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            renderWishlistPage();
+            
+            // Listen to updates
+            window.addEventListener("wishlist_updated", renderWishlistPage);
+        });
+
+        function renderWishlistPage() {
+            const row = document.getElementById("wishlist-grid-row");
+            const wishlist = PavitraDB.getWishlist();
+            const products = PavitraDB.getProducts();
+
+            // Filter products in wishlist
+            const list = products.filter(p => wishlist.includes(p.id));
+
+            if (list.length === 0) {
+                row.innerHTML = `
+                    <div class="col-12 text-center py-5 text-muted">
+                        <i class="far fa-heart display-3 mb-3 text-gold" style="opacity:0.5; color: var(--color-gold) !important;"></i>
+                        <h5 style="font-family: var(--font-heading);">Your wishlist is empty.</h5>
+                        <p class="small">Browse our designer collections and save outfits you love!</p>
+                        <a href="sarees.html" class="btn btn-editorial-primary mt-3">Browse Products</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const currentUser = PavitraDB.getCurrentUser();
+            const isB2B = currentUser && currentUser.role === "Retailer";
+
+            row.innerHTML = list.map(p => {
+                const price = isB2B ? p.b2bPrice : p.retailPrice;
+                const moq = isB2B ? p.b2bMoq : p.moq;
+
+                return `
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="product-editorial-card animate-on-scroll" data-product-id="${p.id}">
+                            <div class="product-img-wrapper">
+                                <button class="product-card-wishlist active" onclick="removeFromWishlist('${p.id}')" title="Remove from Wishlist">
+                                    <i class="fas fa-heart text-danger"></i>
+                                </button>
+                                <img src="${p.imageUrl}" alt="${p.title}" class="product-img-saree" onclick="window.location.href='product-details.html?id=${p.id}'" style="cursor:pointer;">
+                                <div class="product-hover-actions">
+                                    <button class="btn-hover-action btn-action-add w-100" onclick="moveToBag('${p.id}', ${moq})"><i class="fas fa-shopping-bag me-1"></i>Move To Bag</button>
+                                </div>
+                            </div>
+                            <div class="product-info-wrapper">
+                                <span class="product-meta-type">${p.subcategory || p.category}</span>
+                                <h3 class="product-name-title"><a href="product-details.html?id=${p.id}">${p.title}</a></h3>
+                                <span class="product-price-editorial">₹${price.toLocaleString('en-IN')}.00</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function removeFromWishlist(id) {
+            CartAPI.toggleWishlist(id);
+            renderWishlistPage();
+            updateNavbarBadges();
+        }
+
+        function moveToBag(id, qty) {
+            CartAPI.addToCart(id, qty);
+            CartAPI.toggleWishlist(id); // remove from wishlist
+            renderWishlistPage();
+            updateNavbarBadges();
+            alert("Outfit moved to Shopping Bag!");
+        }
+    </script>
+</body>
+</html>

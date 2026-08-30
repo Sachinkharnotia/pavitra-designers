@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <div class="luxury-spinner"></div>
+    </div>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-prev"><i class="fas fa-chevron-left"></i></button>
+            <span id="announcement-text" class="mx-2"><i class="fas fa-truck me-2"></i> FREE SHIPPING ACROSS INDIA ON ALL ORDERS</span>
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-pavitra sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="logo.png" alt="Pavitra Designers logo" class="me-2" style="height: 105px; width: auto; max-width: 320px; object-fit: contain;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="new-arrivals.html">New Arrivals</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-link-pavitra dropdown-toggle" href="#" id="nav-sarees" data-bs-toggle="dropdown">Sarees</a>
+                        <ul class="dropdown-menu border-gold bg-cream">
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Banarasi">Banarasi Silk</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Kanjeevaram">Kanjeevaram Gold</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Organza">Organza Floral</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees">View All Sarees</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="products.html?category=Lehengas">Lehengas</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="collections.html">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="customize.html">Customize Saree</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra active" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="auth.html" class="navbar-icon-btn" title="My Account"><i class="fas fa-user-circle"></i></a>
+                    <a href="wishlist.html" class="navbar-icon-btn" title="Wishlist">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="nav-wishlist-count" style="display:none">0</span>
+                    </a>
+                    <a href="cart.html" class="navbar-icon-btn text-maroon" title="Shopping Cart">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge" id="nav-cart-count" style="display:none">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Banner -->
+    <div class="page-banner-luxury text-center">
+        <div class="container position-relative z-2 py-4">
+            <a href="index.html" class="page-banner-back"><i class="fas fa-chevron-left"></i> Back to Home</a>
+            <h1 class="page-banner-title display-font">Connect With Us</h1>
+            <p class="mb-0 text-gold-light">For manufacturing orders, custom wholesale queries, or customer support</p>
+        </div>
+    </div>
+
+    <!-- Contact Form & Address -->
+    <div class="container my-5 py-4">
+        <div class="row g-5">
+            <!-- Left Info Block -->
+            <div class="col-md-5">
+                <div class="p-4 bg-white border border-gold h-100 shadow-sm">
+                    <h3 class="mb-4 display-font text-maroon">Head Office</h3>
+                    <p><i class="fas fa-map-marker-alt text-maroon me-2"></i> 102, Badi Chopad J.D.A. Market, Pink City, Jaipur, Rajasthan - 302003</p>
+                    <p><i class="fas fa-phone-alt text-maroon me-2"></i> +91 98765 43210</p>
+                    <p><i class="fas fa-envelope text-maroon me-2"></i> support@pavitradesigners.com</p>
+                    
+                    <h3 class="mt-5 mb-4 display-font text-maroon">Design Studio</h3>
+                    <p><i class="fas fa-building text-maroon me-2"></i> 4th Floor, Jewels Heights, Tonk Road, Jaipur, Rajasthan - 302015</p>
+                    <p><i class="fas fa-headset text-maroon me-2"></i> Wholesale Care: +91 98765 43211</p>
+
+                    <h4 class="mt-5 display-font text-maroon">Follow Our Lookbook</h4>
+                    <div class="footer-social-icons mt-3">
+                        <a href="#" class="text-maroon me-3 fs-4"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-maroon me-3 fs-4"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-maroon me-3 fs-4"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="text-maroon fs-4"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right form -->
+            <div class="col-md-7">
+                <div class="p-4 bg-white border border-gold shadow-sm">
+                    <h3 class="display-font text-maroon">Inquire Boutique Designs</h3>
+                    <p class="text-muted small">Submit manufacturing enquiries. Wholesale MOQ holds a 100 piece minimum order cap.</p>
+                    <form onsubmit="event.preventDefault(); alert('Your message was registered. Customer service will contact you inside 24 hours.'); this.reset();">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Your Name</label>
+                                <input type="text" class="form-control border-gold" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Email ID</label>
+                                <input type="email" class="form-control border-gold" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small fw-bold">WhatsApp Mobile Number</label>
+                                <input type="tel" class="form-control border-gold" placeholder="+91" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small fw-bold font-semibold">Message Enquiries</label>
+                                <textarea class="form-control border-gold" rows="5" required placeholder="Outline product code, sizes or customization queries here..."></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-pavitra py-3 px-4">Send Enquiry</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom links -->
+    <footer class="footer-pavitra">
+        <div class="container text-center">
+            <p class="small text-muted m-0">&copy; 2026 Pavitra Designer Saree. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp floating chat button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

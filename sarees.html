@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saree Collection | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Standard Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Premium Editorial Styles -->
+    <link rel="stylesheet" href="editorial-saree.css">
+</head>
+<body class="saree-editorial-theme">
+
+    <!-- Page Loader -->
+    <div id="page-loader" style="display: none; opacity: 0; transition: opacity 0.3s ease;">
+        <div class="luxury-spinner"></div>
+    </div>
+
+    <!-- Reusable Site Header Component -->
+    <site-header active-tab="sarees"></site-header>
+
+    <!-- Main Content Container for PJAX Swap -->
+    <div id="main-content">
+        <!-- Breadcrumb -->
+        <div class="container-fluid px-lg-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-pavitra">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Sarees</li>
+                </ol>
+            </nav>
+        </div>
+
+        <!-- Editorial Page Hero -->
+        <header class="hero-editorial-subpage">
+            <div class="hero-bg-wrapper">
+                <img src="assets/product-images/kanchipuram_silk.jpg" alt="Timeless Royal Saree Drape" class="hero-bg-image">
+            </div>
+            <div class="hero-overlay-editorial"></div>
+            <div class="container-fluid px-lg-5 position-relative">
+                <div class="hero-content-box">
+                    <span class="hero-overline">Saree Collection</span>
+                    <h1 class="hero-main-title">Timeless Sarees,<br><em>Beautifully Woven</em></h1>
+                    <p class="hero-description">Explore our curated collection of traditional and contemporary sarees crafted for every occasion.</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Saree Type Horizontal Filters -->
+        <div class="container-fluid px-lg-5">
+            <div class="section-editorial-header">
+                <span class="section-editorial-overline">Weave Styles</span>
+                <h2 class="section-editorial-title" style="font-size: 1.8rem; margin-bottom: 1.5rem;">Shop By Weave</h2>
+            </div>
+            <div class="saree-types-filter-scroll" id="saree-types-scroll">
+                <div class="saree-type-filter-card active" onclick="filterByWeave('', this)">All Sarees</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Kanjeevaram', this)">Kanchipuram Silk</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Banarasi', this)">Banarasi Silk</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Organza', this)">Organza</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Linen', this)">Linen</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Cotton', this)">Cotton</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Chiffon', this)">Chiffon</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Georgette', this)">Georgette</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Tussar Silk', this)">Tussar Silk</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Mysore Silk', this)">Mysore Silk</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Paithani', this)">Paithani</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Chanderi', this)">Chanderi</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Kalamkari', this)">Kalamkari</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Patola', this)">Patola</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Chikankari', this)">Chikankari</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Maheshwari', this)">Maheshwari</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Bandhani', this)">Bandhani</div>
+                <div class="saree-type-filter-card" onclick="filterByWeave('Ikat', this)">Ikat</div>
+            </div>
+        </div>
+
+        <!-- Product Listing & Filter Layout -->
+        <div class="container-fluid px-lg-5 my-5">
+            <div class="row g-5">
+                <!-- Sidebar Filters -->
+                <div class="col-lg-3">
+                    <div class="filter-sidebar shadow-sm">
+                        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                            <h5 class="m-0 fw-bold" style="font-family: var(--font-heading); color: var(--color-dark-brown);"><i class="fas fa-sliders-h me-2"></i>Filters</h5>
+                            <button class="btn btn-sm btn-link text-maroon p-0 text-decoration-none fw-bold" onclick="resetAllFilters()">Clear All</button>
+                        </div>
+
+                        <!-- Price Filter -->
+                        <div class="mb-4">
+                            <div class="filter-group-title">Price Range</div>
+                            <input type="range" class="form-range" min="1000" max="40000" step="1000" id="filter-price" value="40000" oninput="updatePriceLabel(this.value)" onchange="applySidebarFilters()">
+                            <div class="d-flex justify-content-between small text-muted mt-2">
+                                <span>Min: ₹1,000</span>
+                                <span class="fw-bold text-maroon" id="price-slider-val">Max: ₹40,000</span>
+                            </div>
+                        </div>
+
+                        <!-- Fabric Filters -->
+                        <div class="mb-4">
+                            <div class="filter-group-title">Fabric</div>
+                            <div id="fabric-filters-box">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="filter-fabric" value="Banarasi Silk" id="fab-banarasi" onchange="applySidebarFilters()">
+                                    <label class="form-check-label small" for="fab-banarasi">Banarasi Silk</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="filter-fabric" value="Kanjeevaram" id="fab-kanjeevaram" onchange="applySidebarFilters()">
+                                    <label class="form-check-label small" for="fab-kanjeevaram">Kanjeevaram Silk</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="filter-fabric" value="Organza" id="fab-organza" onchange="applySidebarFilters()">
+                                    <label class="form-check-label small" for="fab-organza">Floral Organza</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="filter-fabric" value="Linen" id="fab-linen" onchange="applySidebarFilters()">
+                                    <label class="form-check-label small" for="fab-linen">Linen Silk</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="filter-fabric" value="Georgette" id="fab-georgette" onchange="applySidebarFilters()">
+                                    <label class="form-check-label small" for="fab-georgette">Georgette</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="filter-fabric" value="Cotton" id="fab-cotton" onchange="applySidebarFilters()">
+                                    <label class="form-check-label small" for="fab-cotton">Handloom Cotton</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Color Palette -->
+                        <div class="mb-4">
+                            <div class="filter-group-title">Shop By Color</div>
+                            <div class="d-flex flex-wrap gap-2" id="color-filter-palette">
+                                <!-- Populated dynamically by script -->
+                            </div>
+                        </div>
+
+                        <!-- Occasions -->
+                        <div class="mb-4">
+                            <div class="filter-group-title">Occasion</div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="filter-occasion" value="Bridal" id="occ-bridal" onchange="applySidebarFilters()">
+                                    <label class="form-check-label small" for="occ-bridal">Bridal Wear</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="filter-occasion" value="Wedding" id="occ-wedding" onchange="applySidebarFilters()">
+                                <label class="form-check-label small" for="occ-wedding">Wedding/Ceremony</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="filter-occasion" value="Festival" id="occ-festive" onchange="applySidebarFilters()">
+                                <label class="form-check-label small" for="occ-festive">Festive Celebration</label>
+                            </div>
+                        </div>
+
+                        <!-- Availability -->
+                        <div>
+                            <div class="filter-group-title">Availability</div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="filter-stock" value="all" id="stock-all" checked onchange="applySidebarFilters()">
+                                <label class="form-check-label small" for="stock-all">All Products</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="filter-stock" value="in" id="stock-in" onchange="applySidebarFilters()">
+                                <label class="form-check-label small" for="stock-in">In Stock Only</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Grid and Sorting -->
+                <div class="col-lg-9">
+                    <!-- Sorting & Toolbar -->
+                    <div class="catalog-toolbar-saree">
+                        <span class="small text-muted" id="products-count-label" style="font-family: var(--font-body); font-weight: 500;">Showing 0 product(s)</span>
+                        <div class="d-flex align-items-center gap-2">
+                            <label class="small text-nowrap d-none d-sm-block m-0" style="font-family: var(--font-body);">Sort By:</label>
+                            <select class="form-select-saree" id="sort-select" onchange="applySidebarFilters()">
+                                <option value="newest">Newest Arrivals</option>
+                                <option value="popularity">Popularity</option>
+                                <option value="low-high">Price: Low to High</option>
+                                <option value="high-low">Price: High to Low</option>
+                                <option value="rating">Customer Rating</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="row g-4" id="products-grid-row">
+                        <!-- Dynamically Rendered using the product-editorial-card template -->
+                    </div>
+
+                    <!-- Pagination -->
+                    <div id="pagination-controls"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-notif" class="toast-saree">
+            <i class="fas fa-check-circle" style="color: var(--color-gold);"></i>
+            <span id="toast-text">Product added to bag.</span>
+        </div>
+
+        <!-- Quick View Modal -->
+        <div class="modal fade modal-editorial" id="quickViewModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content modal-content-editorial p-0">
+                    <button type="button" class="modal-close-editorial" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="modal-body p-0">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-6 p-0">
+                                    <div class="quickview-gallery">
+                                        <img id="qv-img" src="" alt="Saree Quickview">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 p-lg-5 p-4 d-flex flex-column justify-content-between">
+                                    <div class="quickview-details-box">
+                                        <span class="product-meta-type mb-1 d-block" id="qv-type">Saree</span>
+                                        <h2 class="quickview-title" id="qv-title">Royal Saree</h2>
+                                        <div class="quickview-price" id="qv-price">₹12,000</div>
+                                        <p class="quickview-desc" id="qv-desc">Beautiful drape and zari details.</p>
+                                        
+                                        <hr class="border-secondary my-4">
+                                        
+                                        <div class="quickview-meta-row"><span class="quickview-meta-label">SKU:</span> <span id="qv-sku" class="ms-2">PAV-102</span></div>
+                                        <div class="quickview-meta-row"><span class="quickview-meta-label">Fabric:</span> <span id="qv-fabric" class="ms-2">Pure Mulberry Silk</span></div>
+                                        <div class="quickview-meta-row"><span class="quickview-meta-label">Dimensions:</span> <span id="qv-dimensions" class="ms-2">5.5m Saree + 0.8m Blouse</span></div>
+                                    </div>
+                                    
+                                    <div class="quickview-action-row align-items-center">
+                                        <div class="d-flex align-items-center border" style="background:var(--color-white); padding: 0 5px;">
+                                            <button class="btn btn-sm px-3 py-2 border-0" onclick="adjustQty(-1)"><i class="fas fa-minus"></i></button>
+                                            <input type="number" id="qv-qty" class="quickview-qty-input border-0" value="1" min="1" readonly style="width: 50px;">
+                                            <button class="btn btn-sm px-3 py-2 border-0" onclick="adjustQty(1)"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                        <button class="btn-quickview-add" id="qv-add-btn">Add to Bag</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reusable Site Footer Component -->
+    <site-footer></site-footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core State engine -->
+    <script src="app.js"></script>
+    <!-- Custom UI Interaction scripts -->
+    <script src="theme-components.js"></script>
+
+    <script>
+        // Page State
+        let currentPage = 1;
+        const productsPerPage = 9;
+        let allFilteredProducts = [];
+        let activeColorFilter = "";
+        let activeWeaveFilter = "";
+
+        // Parse search/category options from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        let searchParam = urlParams.get("search") || "";
+        let subcatParam = urlParams.get("subcategory") || "";
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initPage();
+            window.addEventListener("page_loaded", initPage);
+        });
+
+        function initPage() {
+            // Render Color Palette
+            renderColorPalette();
+            // Sync search bar input
+            const searchInput = document.getElementById("search-input");
+            if (searchInput && searchParam) {
+                searchInput.value = searchParam;
+            }
+
+            // Sync weave active state from URL params
+            if (subcatParam) {
+                activeWeaveFilter = subcatParam;
+                const cards = document.querySelectorAll(".saree-type-filter-card");
+                cards.forEach(card => {
+                    const text = card.textContent.toLowerCase();
+                    if (text.includes(subcatParam.toLowerCase())) {
+                        cards.forEach(c => c.classList.remove("active"));
+                        card.classList.add("active");
+                    }
+                });
+            }
+
+            // Apply Filters and Render Page
+            applySidebarFilters();
+        }
+
+        function renderColorPalette() {
+            const colors = ["Crimson Red", "Royal Purple", "Ivory White", "Deep Gold", "Mint Green", "Mustard Yellow", "Pastel Pink", "Wine Burgundy"];
+            const colorPalette = document.getElementById("color-filter-palette");
+            if (!colorPalette) return;
+
+            colorPalette.innerHTML = colors.map(c => {
+                let hex = "#000";
+                if(c === "Crimson Red") hex = "#8a0303";
+                else if(c === "Royal Purple") hex = "#501d5c";
+                else if(c === "Ivory White") hex = "#fffff0";
+                else if(c === "Deep Gold") hex = "#daa520";
+                else if(c === "Mint Green") hex = "#aaf0d1";
+                else if(c === "Mustard Yellow") hex = "#e1ad01";
+                else if(c === "Pastel Pink") hex = "#ffc0cb";
+                else if(c === "Wine Burgundy") hex = "#722f37";
+                
+                const border = c === "Ivory White" ? "border: 1px solid #757575;" : "";
+                return `<button class="btn btn-sm p-0 rounded-circle" style="width: 25px; height: 25px; background-color:${hex}; ${border}; transition: all 0.2s;" title="${c}" onclick="toggleColorFilter('${c}', this)"></button>`;
+            }).join('');
+        }
+
+        function toggleColorFilter(color, btn) {
+            document.querySelectorAll("#color-filter-palette button").forEach(b => b.classList.remove("active-border"));
+            if (activeColorFilter === color) {
+                activeColorFilter = "";
+            } else {
+                activeColorFilter = color;
+                btn.classList.add("active-border");
+            }
+            applySidebarFilters();
+        }
+
+        function filterByWeave(weave, btn) {
+            document.querySelectorAll('.saree-type-filter-card').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeWeaveFilter = weave;
+            applySidebarFilters();
+        }
+
+        function updatePriceLabel(val) {
+            document.getElementById("price-slider-val").textContent = `Max: ₹${parseFloat(val).toLocaleString('en-IN')}`;
+        }
+
+        function applySidebarFilters() {
+            if (!window.PavitraDB) return;
+            let products = PavitraDB.getProducts() || [];
+
+            // 1. Force Category to Sarees
+            products = products.filter(p => p.category === "Sarees");
+
+            // 2. Weave Filter (from horizontal buttons)
+            if (activeWeaveFilter) {
+                products = products.filter(p => p.subcategory && p.subcategory.toLowerCase().includes(activeWeaveFilter.toLowerCase()));
+            }
+
+            // 3. Search query filter (synced with both inputs)
+            const searchVal = document.getElementById("search-input") ? document.getElementById("search-input").value.trim().toLowerCase() : "";
+            if (searchVal) {
+                products = products.filter(p => 
+                    p.title.toLowerCase().includes(searchVal) || 
+                    (p.subcategory && p.subcategory.toLowerCase().includes(searchVal)) ||
+                    (p.fabric && p.fabric.toLowerCase().includes(searchVal))
+                );
+            }
+
+            // 4. Price Filter
+            const priceSlider = document.getElementById("filter-price");
+            if (priceSlider) {
+                const maxPrice = parseFloat(priceSlider.value);
+                const currentUser = PavitraDB.getCurrentUser();
+                const isB2B = currentUser && currentUser.role === "Retailer";
+                products = products.filter(p => (isB2B ? p.b2bPrice : p.retailPrice) <= maxPrice);
+            }
+
+            // 5. Fabric Filters
+            const selectedFabrics = Array.from(document.querySelectorAll('input[name="filter-fabric"]:checked')).map(el => el.value);
+            if (selectedFabrics.length > 0) {
+                products = products.filter(p => {
+                    return selectedFabrics.some(fab => p.fabric.toLowerCase().includes(fab.toLowerCase()) || p.subcategory.toLowerCase().includes(fab.toLowerCase()));
+                });
+            }
+
+            // 6. Color Filter
+            if (activeColorFilter) {
+                products = products.filter(p => p.color.includes(activeColorFilter) || p.title.includes(activeColorFilter));
+            }
+
+            // 7. Occasion Filters
+            const selectedOccasions = Array.from(document.querySelectorAll('input[name="filter-occasion"]:checked')).map(el => el.value);
+            if (selectedOccasions.length > 0) {
+                products = products.filter(p => selectedOccasions.includes(p.occasion));
+            }
+
+            // 8. Availability stock filter
+            const stockCheck = document.querySelector('input[name="filter-stock"]:checked');
+            if (stockCheck) {
+                const stockVal = stockCheck.value;
+                if (stockVal === "in") {
+                    products = products.filter(p => p.stock > 0);
+                }
+            }
+
+            // 9. Sorting
+            const sortSelect = document.getElementById("sort-select");
+            if (sortSelect) {
+                const sortVal = sortSelect.value;
+                const currentUser = PavitraDB.getCurrentUser();
+                const isB2B = currentUser && currentUser.role === "Retailer";
+                
+                if (sortVal === "low-high") {
+                    products.sort((a, b) => (isB2B ? a.b2bPrice : a.retailPrice) - (isB2B ? b.b2bPrice : b.retailPrice));
+                } else if (sortVal === "high-low") {
+                    products.sort((a, b) => (isB2B ? b.b2bPrice : b.retailPrice) - (isB2B ? a.b2bPrice : a.retailPrice));
+                } else if (sortVal === "popularity") {
+                    products.sort((a, b) => b.reviewsCount - a.reviewsCount);
+                } else if (sortVal === "rating") {
+                    products.sort((a, b) => b.rating - a.rating);
+                }
+            }
+
+            renderCatalog(products);
+        }
+
+        function renderCatalog(products) {
+            allFilteredProducts = products;
+            
+            const grid = document.getElementById("products-grid-row");
+            const countLabel = document.getElementById("products-count-label");
+            if (!grid || !countLabel) return;
+            
+            countLabel.textContent = `Showing ${products.length} saree(s)`;
+
+            if (products.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-search-minus text-muted display-4 mb-3" style="color: var(--color-gold) !important;"></i>
+                        <p class="lead" style="font-family: var(--font-heading);">No luxury sarees found matching active filters.</p>
+                    </div>
+                `;
+                document.getElementById("pagination-controls").innerHTML = "";
+                return;
+            }
+
+            const totalPages = Math.ceil(products.length / productsPerPage);
+            const startIndex = (currentPage - 1) * productsPerPage;
+            const endIndex = startIndex + productsPerPage;
+            const paginatedProducts = products.slice(startIndex, endIndex);
+
+            const currentUser = PavitraDB.getCurrentUser();
+            const isB2B = currentUser && currentUser.role === "Retailer";
+            const wishlist = PavitraDB.getWishlist() || [];
+
+            grid.innerHTML = paginatedProducts.map(p => {
+                const priceToShow = isB2B ? p.b2bPrice : p.retailPrice;
+                const isWishlisted = wishlist.includes(p.id);
+                const isWishlistedClass = isWishlisted ? "active" : "";
+
+                return `
+                    <div class="col-sm-6 col-md-4">
+                        <div class="product-editorial-card" data-product-id="${p.id}">
+                            <div class="product-img-wrapper">
+                                <button class="product-card-wishlist ${isWishlistedClass}" onclick="toggleWishlistItem('${p.id}')" title="Add to Wishlist">
+                                    <i class="${isWishlisted ? 'fas' : 'far'} fa-heart"></i>
+                                </button>
+                                <img src="${p.imageUrl}" alt="${p.title}" class="product-img-saree">
+                                <div class="product-hover-actions">
+                                    <button class="btn-hover-action btn-action-view" onclick="openQuickView('${p.id}')">Quick View</button>
+                                    <button class="btn-hover-action btn-action-add" onclick="CartAPI.addToCart('${p.id}', ${isB2B ? p.b2bMoq : p.moq}); showToast('${p.title.replace(/'/g, "\\'")} added to bag.');">Add to Bag</button>
+                                </div>
+                            </div>
+                            <div class="product-info-wrapper">
+                                <span class="product-meta-type">${p.subcategory || p.category}</span>
+                                <h3 class="product-name-title"><a href="product-details.html?id=${p.id}">${p.title}</a></h3>
+                                <span class="product-price-editorial">₹${priceToShow.toLocaleString('en-IN')}.00</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            renderPaginationControls(totalPages);
+        }
+
+        function renderPaginationControls(totalPages) {
+            const paginationDiv = document.getElementById("pagination-controls");
+            if (!paginationDiv) return;
+            
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = "";
+                return;
+            }
+
+            let paginationHTML = `
+                <div class="d-flex justify-content-center align-items-center gap-2 mt-5 pt-4 border-top">
+                    <button class="btn btn-sm btn-editorial-secondary" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+            `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const isActiveClass = i === currentPage ? 'active' : '';
+                const btnClass = i === currentPage ? 'btn-editorial-primary' : 'btn-editorial-secondary';
+                paginationHTML += `<button class="btn btn-sm ${btnClass}" onclick="goToPage(${i})">${i}</button>`;
+            }
+
+            paginationHTML += `
+                    <button class="btn btn-sm btn-editorial-secondary" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <span class="text-muted small ms-3">Page ${currentPage} of ${totalPages}</span>
+                </div>
+            `;
+
+            paginationDiv.innerHTML = paginationHTML;
+        }
+
+        function goToPage(pageNum) {
+            const totalPages = Math.ceil(allFilteredProducts.length / productsPerPage);
+            if (pageNum >= 1 && pageNum <= totalPages) {
+                currentPage = pageNum;
+                renderCatalog(allFilteredProducts);
+                document.getElementById("products-grid-row").scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function toggleWishlistItem(id) {
+            if (window.CartAPI) {
+                CartAPI.toggleWishlist(id);
+                applySidebarFilters();
+                updateNavbarBadges();
+            }
+        }
+
+        function resetAllFilters() {
+            const priceSlider = document.getElementById("filter-price");
+            if (priceSlider) {
+                priceSlider.value = 40000;
+                document.getElementById("price-slider-val").textContent = "Max: ₹40,000";
+            }
+            document.querySelectorAll('input[name="filter-fabric"]').forEach(el => el.checked = false);
+            document.querySelectorAll('input[name="filter-occasion"]').forEach(el => el.checked = false);
+            const stockAll = document.getElementById("stock-all");
+            if (stockAll) stockAll.checked = true;
+            
+            activeColorFilter = "";
+            activeWeaveFilter = "";
+            
+            document.querySelectorAll("#color-filter-palette button").forEach(b => b.classList.remove("active-border"));
+            document.querySelectorAll(".saree-type-filter-card").forEach(b => b.classList.remove("active"));
+            const allBtn = document.querySelector(".saree-type-filter-card[onclick*=\"filterByWeave('',\"]");
+            if (allBtn) allBtn.classList.add("active");
+
+            applySidebarFilters();
+        }
+
+        function openQuickView(id) {
+            if (!window.PavitraDB) return;
+            const products = PavitraDB.getProducts() || [];
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+            
+            const currentUser = PavitraDB.getCurrentUser();
+            const isB2B = currentUser && currentUser.role === "Retailer";
+            
+            const price = isB2B ? p.b2bPrice : p.retailPrice;
+            
+            document.getElementById("qv-img").src = p.imageUrl;
+            document.getElementById("qv-title").innerText = p.title;
+            document.getElementById("qv-type").innerText = p.subcategory || p.category || "Premium Saree";
+            document.getElementById("qv-price").innerText = "₹" + price.toLocaleString("en-IN");
+            document.getElementById("qv-desc").innerText = p.description;
+            document.getElementById("qv-sku").innerText = p.sku || "N/A";
+            document.getElementById("qv-fabric").innerText = p.fabric || "Pure Mulberry Silk";
+            document.getElementById("qv-dimensions").innerText = p.dimensions || "5.5m Saree + 0.8m Blouse";
+            document.getElementById("qv-qty").value = isB2B ? p.b2bMoq : p.moq;
+            document.getElementById("qv-qty").min = isB2B ? p.b2bMoq : p.moq;
+
+            const btn = document.getElementById("qv-add-btn");
+            btn.onclick = function() {
+                const qty = parseInt(document.getElementById("qv-qty").value) || 1;
+                if(window.CartAPI) {
+                    window.CartAPI.addToCart(p.id, qty);
+                    const modalEl = document.getElementById("quickViewModal");
+                    const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                    modal.hide();
+                    showToast(`${p.title} added to bag.`);
+                }
+            };
+
+            const modal = new bootstrap.Modal(document.getElementById("quickViewModal"));
+            modal.show();
+        }
+
+        function adjustQty(amount) {
+            const input = document.getElementById("qv-qty");
+            if(input) {
+                let min = parseInt(input.min) || 1;
+                let val = parseInt(input.value) + amount;
+                if (val < min) val = min;
+                input.value = val;
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast-notif");
+            const text = document.getElementById("toast-text");
+            if(toast && text) {
+                text.innerText = message;
+                toast.classList.add("show");
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>

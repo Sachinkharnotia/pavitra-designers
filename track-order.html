@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <div class="luxury-spinner"></div>
+    </div>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-prev"><i class="fas fa-chevron-left"></i></button>
+            <span id="announcement-text" class="mx-2"><i class="fas fa-truck me-2"></i> FREE SHIPPING ACROSS INDIA ON ALL ORDERS</span>
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-pavitra sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="logo.png" alt="Pavitra Designers logo" class="me-2" style="height: 105px; width: auto; max-width: 320px; object-fit: contain;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="new-arrivals.html">New Arrivals</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-link-pavitra dropdown-toggle" href="#" id="nav-sarees" data-bs-toggle="dropdown">Sarees</a>
+                        <ul class="dropdown-menu border-gold bg-cream">
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Banarasi">Banarasi Silk</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Kanjeevaram">Kanjeevaram Gold</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Organza">Organza Floral</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees">View All Sarees</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="products.html?category=Lehengas">Lehengas</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="collections.html">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="customize.html">Customize Saree</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="auth.html" class="navbar-icon-btn" title="My Account"><i class="fas fa-user-circle"></i></a>
+                    <a href="wishlist.html" class="navbar-icon-btn" title="Wishlist">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="nav-wishlist-count" style="display:none">0</span>
+                    </a>
+                    <a href="cart.html" class="navbar-icon-btn text-maroon" title="Shopping Cart">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge" id="nav-cart-count" style="display:none">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-pavitra">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Track Order</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Tracking Checker Form -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center mb-5">
+                <h2 class="text-maroon display-font">Track Your Outfit Delivery</h2>
+                <p class="text-muted">Enter your Pavitra Designers Order ID (e.g. ORD-9982) to view transit updates.</p>
+                
+                <div class="input-group w-75 mx-auto mt-4 shadow-sm">
+                    <input type="text" class="form-control border-gold" placeholder="Enter Order ID Reference" id="track-id-input">
+                    <button class="btn btn-pavitra px-4" onclick="triggerTrackSearch()">Track Status</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracking Visual Timeline -->
+        <div class="row justify-content-center d-none" id="tracking-visual-box">
+            <div class="col-lg-8">
+                <div class="p-4 bg-white border border-gold shadow-sm mb-4">
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4 flex-wrap gap-2">
+                        <div>
+                            <span class="small text-muted text-uppercase fw-bold">Active Tracking ID:</span>
+                            <h5 class="m-0 text-maroon fw-bold" id="track-order-heading">ORD-XXXX</h5>
+                        </div>
+                        <div class="text-end">
+                            <span class="small text-muted d-block" id="tracking-eta">Est Delivery: 2-3 Days</span>
+                            <span class="badge bg-gold text-chocolate fw-bold" id="tracking-status-badge">Placed</span>
+                        </div>
+                    </div>
+
+                    <!-- Progress bar -->
+                    <div class="progress mb-4 rounded-0" style="height: 8px;">
+                        <div class="progress-bar bg-maroon" role="progressbar" style="width: 20%" id="track-progress-bar"></div>
+                    </div>
+
+                    <!-- Timeline details -->
+                    <div class="tracker-timeline ms-3 mt-4" id="timeline-events-box">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Recipient Info card -->
+                <div class="p-4 bg-light border border-gold-light">
+                    <h5 class="text-maroon fw-bold mb-3">Delivery Information</h5>
+                    <div class="row g-3 small">
+                        <div class="col-sm-6">
+                            <span class="text-muted d-block">Recipient Name:</span>
+                            <strong id="track-recipient-name">Ravina Sharma</strong>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="text-muted d-block">Phone Number:</span>
+                            <strong id="track-recipient-phone">+91 99887 76655</strong>
+                        </div>
+                        <div class="col-12">
+                            <span class="text-muted d-block">Shipping Address:</span>
+                            <strong id="track-recipient-address">Badi Chopad, Jaipur, RJ</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Not Found -->
+        <div class="row justify-content-center d-none text-center py-5" id="tracking-error-box">
+            <div class="col-md-6">
+                <i class="fas fa-exclamation-triangle text-warning display-4 mb-3"></i>
+                <h5 class="fw-bold">Order Reference Not Found</h5>
+                <p class="text-muted">Please check the ID reference code or visit your Dashboard to check order history.</p>
+                <a href="dashboard.html" class="btn btn-pavitra-outline btn-sm">Go to Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom links -->
+    <footer class="footer-pavitra mt-5">
+        <div class="container text-center">
+            <p class="small text-muted m-0">&copy; 2026 Pavitra Designer Saree. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp floating chat button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const orderId = FrontendHelpers.getQueryParam("orderId");
+            if (orderId) {
+                document.getElementById("track-id-input").value = orderId;
+                trackOrder(orderId);
+            }
+        });
+
+        function triggerTrackSearch() {
+            const id = document.getElementById("track-id-input").value.trim();
+            if (id) {
+                trackOrder(id);
+            }
+        }
+
+        function trackOrder(id) {
+            const orders = PavitraDB.getOrders();
+            const order = orders.find(o => o.id === id);
+            
+            const visualBox = document.getElementById("tracking-visual-box");
+            const errorBox = document.getElementById("tracking-error-box");
+            
+            visualBox.classList.add("d-none");
+            errorBox.classList.add("d-none");
+
+            if (!order) {
+                errorBox.classList.remove("d-none");
+                return;
+            }
+
+            visualBox.classList.remove("d-none");
+
+            // Info details
+            document.getElementById("track-order-heading").textContent = order.id;
+            document.getElementById("tracking-status-badge").textContent = order.status;
+            document.getElementById("track-recipient-name").textContent = order.retailerName;
+            document.getElementById("track-recipient-phone").textContent = order.phone || "+91 99887 76655";
+            document.getElementById("track-recipient-address").textContent = order.shippingAddress;
+
+            // Date ETA
+            const orderDate = new Date(order.createdAt);
+            orderDate.setDate(orderDate.getDate() + 3);
+            document.getElementById("tracking-eta").textContent = `Est Delivery: ${orderDate.toLocaleDateString('en-IN', {day:'numeric', month:'short'})}`;
+
+            // Status Progress Percentages
+            const progressMap = {
+                "Placed": 20,
+                "Accepted": 40,
+                "Packed": 60,
+                "Shipped": 80,
+                "Out For Delivery": 90,
+                "Delivered": 100
+            };
+            const pct = progressMap[order.status] || 20;
+            document.getElementById("track-progress-bar").style.width = pct + "%";
+
+            // Event Logs
+            const timelineEvents = [
+                { key: "Placed", label: "Order Placed", desc: "Order details received in Jaipur Main system." },
+                { key: "Accepted", label: "Order Accepted", desc: "Wholesaler accepted payment invoice ledger." },
+                { key: "Packed", label: "Packed & Prepared", desc: "Saree checked, custom packaging sealed." },
+                { key: "Shipped", label: "Package Shipped", desc: "Dispatched from Jaipur central hub." },
+                { key: "Out For Delivery", label: "Out for Delivery", desc: "Package reached destination logistics hub." },
+                { key: "Delivered", label: "Delivered", desc: "Package hand-receipt confirmed with OTP security code." }
+            ];
+
+            const currentIdx = timelineEvents.findIndex(e => e.key === order.status);
+
+            const timelineHtml = timelineEvents.map((evt, idx) => {
+                let cls = "";
+                let logTimeText = "";
+                
+                if (idx < currentIdx) {
+                    cls = "completed";
+                } else if (idx === currentIdx) {
+                    cls = "active";
+                }
+
+                // Check if order log exists
+                const log = order.logs ? order.logs.find(l => l.status === evt.key) : null;
+                if (log) {
+                    logTimeText = new Date(log.time).toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
+                }
+
+                return `
+                    <div class="tracker-timeline-item ${cls}">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="fw-bold m-0 text-maroon">${evt.label}</h6>
+                            <span class="small text-muted">${logTimeText}</span>
+                        </div>
+                        <p class="small text-muted mb-0">${evt.desc}</p>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById("timeline-events-box").innerHTML = timelineHtml;
+        }
+    </script>
+</body>
+</html>

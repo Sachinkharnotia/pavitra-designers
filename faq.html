@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ Helpdesk | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <div class="luxury-spinner"></div>
+    </div>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-prev"><i class="fas fa-chevron-left"></i></button>
+            <span id="announcement-text" class="mx-2"><i class="fas fa-truck me-2"></i> FREE SHIPPING ACROSS INDIA ON ALL ORDERS</span>
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-pavitra sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="logo.png" alt="Pavitra Designers logo" class="me-2" style="height: 105px; width: auto; max-width: 320px; object-fit: contain;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="new-arrivals.html">New Arrivals</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-link-pavitra dropdown-toggle" href="#" id="nav-sarees" data-bs-toggle="dropdown">Sarees</a>
+                        <ul class="dropdown-menu border-gold bg-cream">
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Banarasi">Banarasi Silk</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Kanjeevaram">Kanjeevaram Gold</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Organza">Organza Floral</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees">View All Sarees</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="products.html?category=Lehengas">Lehengas</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="collections.html">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="customize.html">Customize Saree</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="auth.html" class="navbar-icon-btn" title="My Account"><i class="fas fa-user-circle"></i></a>
+                    <a href="wishlist.html" class="navbar-icon-btn" title="Wishlist">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="nav-wishlist-count" style="display:none">0</span>
+                    </a>
+                    <a href="cart.html" class="navbar-icon-btn text-maroon" title="Shopping Cart">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge" id="nav-cart-count" style="display:none">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Banner -->
+    <div class="page-banner-luxury text-center">
+        <div class="container position-relative z-2 py-4">
+            <h1 class="page-banner-title display-font">Frequently Asked Questions</h1>
+            <p class="mb-0 text-gold-light">Help topic details regarding custom drapes, shipping, and credit limits</p>
+        </div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="container my-5 py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="accordion accordion-pavitra" id="faq-accordions">
+                    <!-- Q1 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                What is your return policy on luxury sarees?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faq-accordions">
+                            <div class="accordion-body small text-muted">
+                                We offer replacement or full refund claims within 7 days of package delivery. Pre-paid pickup labels will be simulated and sent to your registered address for returns.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Do you support express shipping across India?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faq-accordions">
+                            <div class="accordion-body small text-muted">
+                                Yes. All retail and wholesale orders qualify for FREE express courier delivery via Delhivery or Bluedart Premium. Shipping transits take 2-4 business days.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                How do I register a B2B wholesaler business account?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faq-accordions">
+                            <div class="accordion-body small text-muted">
+                                Wholesalers can navigate to the "Sign In/Register" portal, choose the "Retailer" account type, verify their mobile/email OTP, and complete the 3-step KYC documents upload (PAN, GST, Shop licenses). Once approved by our Super Admin, wholesale pricing MOQs are unlocked.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                Do you provide custom boutique sewing sizes?
+                            </h2>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faq-accordions">
+                            <div class="accordion-body small text-muted">
+                                Yes. On the product details page, users can select the "Frequently Bought Together" blouse sewing add-on or submit custom inquiries directly to our Tonk Road design studio via our Contact form.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom links -->
+    <footer class="footer-pavitra">
+        <div class="container text-center">
+            <p class="small text-muted m-0">&copy; 2026 Pavitra Designer Saree. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp floating chat button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

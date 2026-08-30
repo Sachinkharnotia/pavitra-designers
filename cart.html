@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Premium Editorial Overrides -->
+    <link rel="stylesheet" href="editorial-saree.css">
+</head>
+<body class="saree-editorial-theme">
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <div class="luxury-spinner"></div>
+    </div>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-prev"><i class="fas fa-chevron-left"></i></button>
+            <span id="announcement-text" class="mx-2"><i class="fas fa-truck me-2"></i> FREE SHIPPING ACROSS INDIA ON ALL ORDERS</span>
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Reusable Site Header Component -->
+    <site-header active-tab="cart"></site-header>
+
+    <div id="main-content">
+
+    <!-- Breadcrumbs -->
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-pavitra">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Shopping Bag</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Main Cart Layout -->
+    <div class="container my-5">
+        <h2 class="text-maroon display-font mb-4"><i class="fas fa-shopping-bag me-2"></i>My Shopping Bag</h2>
+        
+        <div class="row g-5">
+            <!-- Items Column -->
+            <div class="col-lg-8">
+                <div class="p-4 bg-white border border-gold-light shadow-sm mb-4">
+                    <div id="cart-table-wrapper">
+                        <!-- Loaded dynamically -->
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                        <a href="sarees.html" class="btn btn-editorial-secondary btn-sm"><i class="fas fa-arrow-left me-1"></i>Continue Shopping</a>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="clearFullCart()">Clear Shopping Bag</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Column -->
+            <div class="col-lg-4">
+                <!-- Promo Code -->
+                <div class="p-4 bg-white border border-gold-light shadow-sm mb-4">
+                    <h5 class="fw-bold text-maroon border-bottom pb-2 mb-3"><i class="fas fa-percent me-2"></i>Coupon Code / Gift Card</h5>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control form-control-sm" placeholder="Enter coupon (e.g. FESTIVE10)" id="cart-coupon-input">
+                        <button class="btn btn-pavitra btn-sm" type="button" onclick="applyCartCoupon()">Apply</button>
+                    </div>
+                    <div class="small text-muted" id="coupon-feedback-msg">Use coupon 'FESTIVE10' (10% off) or 'GIFT500' (flat ₹500 off).</div>
+                </div>
+
+                <!-- Shipping Calculator -->
+                <div class="p-4 bg-white border border-gold-light shadow-sm mb-4">
+                    <h5 class="fw-bold text-maroon border-bottom pb-2 mb-3"><i class="fas fa-truck me-2"></i>Shipping Cost Calculator</h5>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control form-control-sm" placeholder="Pin code (e.g. 302003)" id="shipping-calc-pincode">
+                        <button class="btn btn-pavitra btn-sm" type="button" onclick="calcCartShipping()">Calculate</button>
+                    </div>
+                    <div class="small text-muted" id="shipping-calc-msg">Input ZIP pincode to estimate transit cost.</div>
+                </div>
+
+                <!-- Order Calculations -->
+                <div class="p-4 bg-light border border-gold shadow-sm">
+                    <h5 class="fw-bold text-maroon border-bottom pb-2 mb-3">Order Summary</h5>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Cart Subtotal</span>
+                        <span id="summary-subtotal">₹0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2" id="coupon-row" style="display:none !important">
+                        <span class="text-success fw-bold">Discount</span>
+                        <span class="text-success fw-bold" id="summary-discount">-₹0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Estimated Shipping</span>
+                        <span id="summary-shipping">Calculated in checkout</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 align-items-center">
+                        <span>Estimated Taxes (GST)</span>
+                        <span id="summary-taxes">₹0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between border-top pt-3 fw-bold fs-5 mb-4">
+                        <span>Total (Est)</span>
+                        <span class="text-maroon" id="summary-total">₹0.00</span>
+                    </div>
+                    
+                    <button class="btn btn-pavitra btn-lg w-100 py-3" onclick="goToCheckoutPage()">Proceed to Checkout</button>
+                    
+                    <div class="text-center mt-3 text-muted small">
+                        <i class="fas fa-shield-alt me-1"></i>Secure checkout & easy refunds
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommended Products Grid -->
+        <div class="mt-5 pt-3">
+            <h3 class="text-maroon display-font mb-4 text-center">Recommended For You</h3>
+            <div class="row g-4" id="recommended-products-row">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Reusable Site Footer Component -->
+    <site-footer></site-footer>
+
+    <!-- WhatsApp floating chat button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core State JavaScript -->
+    <script src="app.js"></script>
+    <script src="theme-components.js"></script>
+    <script>
+        let appliedCoupon = null;
+        let estimatedShippingVal = 0;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderCartPage();
+            renderRecommended();
+            
+            // Listen to updates
+            window.addEventListener("cart_updated", renderCartPage);
+        });
+
+        function renderCartPage() {
+            const wrapper = document.getElementById("cart-table-wrapper");
+            const cart = PavitraDB.getCart();
+            const currentUser = PavitraDB.getCurrentUser();
+            const isB2B = currentUser && currentUser.role === "Retailer";
+
+            if (cart.length === 0) {
+                wrapper.innerHTML = `
+                    <div class="text-center py-5 text-muted">
+                        <i class="fas fa-shopping-bag display-3 mb-3 text-gold" style="opacity:0.5; color: var(--color-gold) !important;"></i>
+                        <h5 style="font-family: var(--font-heading);">Your shopping cart is empty.</h5>
+                        <p class="small">Add some beautiful designer sarees to get started!</p>
+                        <a href="sarees.html" class="btn btn-editorial-primary mt-3">Shop Collections</a>
+                    </div>
+                `;
+                updateTotalsBlock(0, 0, 0);
+                return;
+            }
+
+            let html = `
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr class="text-muted small">
+                                <th>Product Details</th>
+                                <th>Price</th>
+                                <th class="text-center">Quantity</th>
+                                <th class="text-end">Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            html += cart.map(item => {
+                const price = isB2B ? item.b2bPrice : item.retailPrice;
+                const total = price * item.qty;
+                return `
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="${item.imageUrl}" alt="${item.title}" class="border me-3" style="width: 60px; height: 80px; object-fit: cover;">
+                                <div>
+                                    <h6 class="m-0 fw-bold small text-truncate" style="max-width:200px;">${item.title}</h6>
+                                    <span class="text-muted small" style="font-size:0.75rem">SKU: ${item.sku}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>₹${price.toLocaleString('en-IN')}.00</td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <div class="input-group input-group-sm" style="width: 100px;">
+                                    <button class="btn btn-outline-secondary" onclick="CartAPI.updateQty('${item.id}', ${item.qty - 1})">-</button>
+                                    <input type="text" class="form-control text-center p-0" value="${item.qty}" readonly>
+                                    <button class="btn btn-outline-secondary" onclick="CartAPI.updateQty('${item.id}', ${item.qty + 1})">+</button>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-end fw-bold">₹${total.toLocaleString('en-IN')}.00</td>
+                        <td class="text-end">
+                            <button class="btn btn-sm text-danger border-0" onclick="CartAPI.removeFromCart('${item.id}')"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            wrapper.innerHTML = html;
+            
+            const calc = CartAPI.getTotals(isB2B);
+            updateTotalsBlock(calc.subtotal, calc.taxes, calc.total);
+        }
+
+        function updateTotalsBlock(subtotal, taxes, total) {
+            let discount = 0;
+            const discountRow = document.getElementById("coupon-row");
+
+            if (appliedCoupon === "FESTIVE10") {
+                discount = subtotal * 0.1;
+            } else if (appliedCoupon === "GIFT500" && subtotal >= 2000) {
+                discount = 500;
+            }
+
+            if (discount > 0) {
+                discountRow.style.setProperty("display", "flex", "important");
+                document.getElementById("summary-discount").textContent = `-₹${discount.toLocaleString('en-IN')}.00`;
+            } else {
+                discountRow.style.setProperty("display", "none", "important");
+            }
+
+            const grandTotal = (subtotal - discount) + taxes + estimatedShippingVal;
+
+            document.getElementById("summary-subtotal").textContent = "₹" + subtotal.toLocaleString('en-IN') + ".00";
+            document.getElementById("summary-shipping").textContent = estimatedShippingVal === 0 ? "FREE" : "₹" + estimatedShippingVal.toLocaleString('en-IN') + ".00";
+            document.getElementById("summary-taxes").textContent = "₹" + taxes.toLocaleString('en-IN') + ".00";
+            document.getElementById("summary-total").textContent = "₹" + grandTotal.toLocaleString('en-IN') + ".00";
+
+            // Save variables for checkout redirect
+            sessionStorage.setItem("pavitra_applied_discount", discount);
+            sessionStorage.setItem("pavitra_applied_coupon", appliedCoupon || "");
+        }
+
+        function applyCartCoupon() {
+            const input = document.getElementById("cart-coupon-input").value.trim().toUpperCase();
+            const feedback = document.getElementById("coupon-feedback-msg");
+            const subtotal = CartAPI.getTotals(PavitraDB.getCurrentUser() && PavitraDB.getCurrentUser().role === "Retailer").subtotal;
+
+            if (input === "FESTIVE10") {
+                appliedCoupon = "FESTIVE10";
+                feedback.textContent = "✓ Coupon FESTIVE10 applied! 10% discount subtracted.";
+                feedback.className = "small text-success fw-bold";
+            } else if (input === "GIFT500") {
+                if (subtotal < 2000) {
+                    feedback.textContent = "✗ Coupon GIFT500 is only valid on subtotal >= ₹2,000.";
+                    feedback.className = "small text-danger fw-bold";
+                    appliedCoupon = null;
+                } else {
+                    appliedCoupon = "GIFT500";
+                    feedback.textContent = "✓ Coupon GIFT500 applied! Flat ₹500 discount subtracted.";
+                    feedback.className = "small text-success fw-bold";
+                }
+            } else {
+                feedback.textContent = "✗ Invalid coupon code entered.";
+                feedback.className = "small text-danger fw-bold";
+                appliedCoupon = null;
+            }
+
+            renderCartPage();
+        }
+
+        function calcCartShipping() {
+            const pin = document.getElementById("shipping-calc-pincode").value.trim();
+            const msg = document.getElementById("shipping-calc-msg");
+
+            if (pin.length === 6 && !isNaN(pin)) {
+                estimatedShippingVal = pin.startsWith("30") ? 0 : 250;
+                msg.textContent = estimatedShippingVal === 0 ? "✓ Local shipping (Jaipur region): FREE!" : "✓ National shipping: ₹250.00 applied.";
+                msg.className = "small text-success fw-bold";
+            } else {
+                msg.textContent = "✗ Invalid ZIP pin. Enter 6 digits.";
+                msg.className = "small text-danger fw-bold";
+                estimatedShippingVal = 0;
+            }
+
+            renderCartPage();
+        }
+
+        function clearFullCart() {
+            CartAPI.clearCart();
+            updateNavbarBadges();
+        }
+
+        function goToCheckoutPage() {
+            const cart = PavitraDB.getCart();
+            if (cart.length === 0) {
+                alert("Please add items to your shopping bag.");
+                return;
+            }
+            window.location.href = "checkout.html";
+        }
+
+        function renderRecommended() {
+            const products = PavitraDB.getProducts().slice(3, 7);
+            const row = document.getElementById("recommended-products-row");
+            row.innerHTML = products.map(p => {
+                const wishlist = PavitraDB.getWishlist() || [];
+                const isWish = wishlist.includes(p.id);
+                const wishClass = isWish ? 'active' : '';
+                return `
+                    <div class="col-sm-6 col-md-3">
+                        <div class="product-editorial-card animate-on-scroll" data-product-id="${p.id}">
+                            <div class="product-img-wrapper">
+                                <button class="product-card-wishlist ${wishClass}" onclick="CartAPI.toggleWishlist('${p.id}'); renderRecommended();" title="Add to Wishlist">
+                                    <i class="${isWish ? 'fas' : 'far'} fa-heart"></i>
+                                </button>
+                                <img src="${p.imageUrl}" alt="${p.title}" class="product-img-saree" onclick="window.location.href='product-details.html?id=${p.id}'" style="cursor:pointer;">
+                                <div class="product-hover-actions">
+                                    <button class="btn-hover-action btn-action-add w-100" onclick="CartAPI.addToCart('${p.id}'); alert('Added to Bag!'); renderCartPage();">Add to Bag</button>
+                                </div>
+                            </div>
+                            <div class="product-info-wrapper">
+                                <span class="product-meta-type">${p.subcategory || p.category}</span>
+                                <h3 class="product-name-title"><a href="product-details.html?id=${p.id}">${p.title}</a></h3>
+                                <span class="product-price-editorial">₹${p.retailPrice.toLocaleString('en-IN')}.00</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+</html>

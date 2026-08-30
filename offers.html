@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers & Coupons | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <div class="luxury-spinner"></div>
+    </div>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-prev"><i class="fas fa-chevron-left"></i></button>
+            <span id="announcement-text" class="mx-2"><i class="fas fa-truck me-2"></i> FREE SHIPPING ACROSS INDIA ON ALL ORDERS</span>
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-pavitra sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="logo.png" alt="Pavitra Designers logo" class="me-2" style="height: 105px; width: auto; max-width: 320px; object-fit: contain;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="new-arrivals.html">New Arrivals</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-link-pavitra dropdown-toggle" href="#" id="nav-sarees" data-bs-toggle="dropdown">Sarees</a>
+                        <ul class="dropdown-menu border-gold bg-cream">
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Banarasi">Banarasi Silk</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Kanjeevaram">Kanjeevaram Gold</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Organza">Organza Floral</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees">View All Sarees</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="products.html?category=Lehengas">Lehengas</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra active" href="collections.html">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="customize.html">Customize Saree</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="auth.html" class="navbar-icon-btn" title="My Account"><i class="fas fa-user-circle"></i></a>
+                    <a href="wishlist.html" class="navbar-icon-btn" title="Wishlist">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="nav-wishlist-count" style="display:none">0</span>
+                    </a>
+                    <a href="cart.html" class="navbar-icon-btn text-maroon" title="Shopping Cart">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge" id="nav-cart-count" style="display:none">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Banner -->
+    <div class="page-banner-luxury text-center">
+        <div class="container position-relative z-2 py-4">
+            <h1 class="page-banner-title display-font">Luxury Promotions & Vouchers</h1>
+            <p class="mb-0 text-gold-light">Claim seasonal discounts and boutique coupon credits</p>
+        </div>
+    </div>
+
+    <!-- Coupons List -->
+    <div class="container my-5 py-4">
+        <div class="row g-4">
+            <!-- Coupon Card 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="p-4 border border-gold bg-white shadow-sm text-center h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="display-font text-maroon fs-3 mb-2">10% OFF</div>
+                        <h5 class="fw-bold mb-3">FESTIVE10</h5>
+                        <p class="small text-muted">Get a flat 10% discount on all designer Banarasi silks, organzas, and bridal heavy lehengas. No minimum purchase required.</p>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn btn-pavitra btn-sm w-100" onclick="copyCouponCode('FESTIVE10')">Copy Code</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coupon Card 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="p-4 border border-gold bg-white shadow-sm text-center h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="display-font text-maroon fs-3 mb-2">₹500 OFF</div>
+                        <h5 class="fw-bold mb-3">GIFT500</h5>
+                        <p class="small text-muted">Claim a flat ₹500 discount on shopping bags with subtotal value starting at ₹2,000 or above. Perfect for festival styling edits.</p>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn btn-pavitra btn-sm w-100" onclick="copyCouponCode('GIFT500')">Copy Code</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coupon Card 3 (B2B Promotion) -->
+            <div class="col-md-6 col-lg-4">
+                <div class="p-4 border border-gold bg-white shadow-sm text-center h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="display-font text-maroon fs-3 mb-2">B2B Wholesale</div>
+                        <h5 class="fw-bold mb-3">Ledger Credits</h5>
+                        <p class="small text-muted">Verified retailers unlock wholesale pricing and credit limit ledger limits (up to 90 days credit lines) directly via the B2B Dashboard.</p>
+                    </div>
+                    <div class="mt-3">
+                        <a href="auth.html" class="btn btn-pavitra-outline btn-sm w-100">B2B Wholesaler Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom links -->
+    <footer class="footer-pavitra">
+        <div class="container text-center">
+            <p class="small text-muted m-0">&copy; 2026 Pavitra Designer Saree. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp floating chat button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+    <script>
+        function copyCouponCode(code) {
+            navigator.clipboard.writeText(code);
+            alert(`Coupon code "${code}" copied to clipboard! Paste it inside your Shopping Bag code checks.`);
+        }
+    </script>
+</body>
+</html>

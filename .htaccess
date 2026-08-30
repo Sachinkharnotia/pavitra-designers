@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Keep static files and existing HTML pages directly accessible.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# JSON API endpoint.
+RewriteRule ^api/?(.*)$ api/index.php?route=$1 [QSA,L]

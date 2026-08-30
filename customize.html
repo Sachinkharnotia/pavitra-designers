@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Saree | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .customizer-container {
+            min-height: calc(100vh - 178px);
+            background: linear-gradient(135deg, #FFF8F2 0%, #FFFFFF 100%);
+            padding: 3rem 0;
+        }
+        .customizer-layout {
+            display: grid;
+            grid-template-columns: 10fr 14fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        /* Sticky Live Preview Panel */
+        .preview-panel {
+            position: sticky;
+            top: 180px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(230, 126, 34, 0.15);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--pavitra-shadow);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .saree-canvas-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1/1.2;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px dashed rgba(230, 126, 34, 0.2);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.02);
+        }
+        .saree-svg {
+            width: 85%;
+            height: 85%;
+            transition: all 0.5s ease;
+        }
+        
+        /* Step Progress Styles */
+        .customizer-wizard {
+            background: #ffffff;
+            border: 1px solid rgba(230, 126, 34, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--pavitra-shadow);
+        }
+        .wizard-step {
+            display: none;
+        }
+        .wizard-step.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        /* Option Cards Grid */
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .option-card {
+            border: 2px solid rgba(230, 126, 34, 0.08);
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .option-card:hover {
+            border-color: rgba(230, 126, 34, 0.4);
+            transform: translateY(-2px);
+        }
+        .option-card.active {
+            border-color: var(--pavitra-maroon);
+            background: #FFFBF7;
+            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.08);
+        }
+        .option-card i {
+            font-size: 1.8rem;
+            color: var(--pavitra-maroon);
+            margin-bottom: 0.5rem;
+        }
+        .option-card .option-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--pavitra-chocolate);
+        }
+        .option-card .option-price {
+            font-size: 0.75rem;
+            color: var(--pavitra-gray);
+            margin-top: 0.2rem;
+        }
+        
+        /* Color Picker Customization */
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .color-swatch {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+        .color-swatch.active {
+            box-shadow: 0 0 0 2px var(--pavitra-maroon);
+            transform: scale(1.1);
+        }
+        .color-swatch.active::after {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: #ffffff;
+            font-size: 0.8rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        /* Dynamic Estimations Box */
+        .pricing-summary {
+            background: #FFF8F2;
+            border-left: 4px solid var(--pavitra-maroon);
+            border-radius: 0 12px 12px 0;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        
+        /* Dropzone Upload */
+        .upload-zone {
+            border: 2px dashed rgba(230, 126, 34, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            background: #FFFBF9;
+            transition: all 0.3s ease;
+        }
+        .upload-zone:hover {
+            border-color: var(--pavitra-maroon);
+            background: #FFF8F2;
+        }
+        
+        /* Wizard Navigation Footer */
+        .wizard-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(230, 126, 34, 0.1);
+            padding-top: 1.5rem;
+        }
+        
+        /* AI Suggestions Box */
+        .ai-suggestions-box {
+            background: #FFF9F3;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+        .ai-suggestions-box i {
+            color: var(--pavitra-gold);
+            font-size: 1.25rem;
+            margin-top: 0.15rem;
+        }
+        
+        /* Admin Section Toggle */
+        .admin-toggle-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            background: var(--pavitra-chocolate);
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .admin-toggle-btn:hover {
+            transform: translateY(-2px);
+            background: #111111;
+        }
+        
+        .admin-panel-card {
+            background: #ffffff;
+            border: 1px solid rgba(230, 126, 34, 0.15);
+            border-radius: 20px;
+            box-shadow: var(--pavitra-shadow);
+            margin-top: 3rem;
+            padding: 2rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 991.98px) {
+            .customizer-layout {
+                grid-template-columns: 1fr;
+            }
+            .preview-panel {
+                position: relative;
+                top: 0;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <div class="luxury-spinner"></div>
+    </div>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-prev"><i class="fas fa-chevron-left"></i></button>
+            <span id="announcement-text" class="mx-2"><i class="fas fa-truck me-2"></i> FREE SHIPPING ACROSS INDIA ON ALL ORDERS</span>
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-pavitra sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="logo.png" alt="Pavitra Designers logo" class="me-2" style="height: 105px; width: auto; max-width: 320px; object-fit: contain;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="new-arrivals.html">New Arrivals</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-link-pavitra dropdown-toggle" href="#" id="nav-sarees" data-bs-toggle="dropdown">Sarees</a>
+                        <ul class="dropdown-menu border-gold bg-cream">
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Banarasi">Banarasi Silk</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Kanjeevaram">Kanjeevaram Gold</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Organza">Organza Floral</a></li>
+                            <li><a class="dropdown-item" href="products.html">View All Sarees</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="products.html?category=Lehengas">Lehengas</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="collections.html">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra active" href="customize.html">Customize Saree</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="auth.html" class="navbar-icon-btn" title="My Account"><i class="fas fa-user-circle"></i></a>
+                    <a href="wishlist.html" class="navbar-icon-btn" title="Wishlist">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="nav-wishlist-count" style="display:none">0</span>
+                    </a>
+                    <a href="cart.html" class="navbar-icon-btn text-maroon" title="Shopping Cart">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge" id="nav-cart-count" style="display:none">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Title Banner -->
+    <div class="page-banner-luxury text-center">
+        <div class="container position-relative z-2 py-4">
+            <span class="text-uppercase small text-gold-light fw-bold tracking-wider">Couture Customization</span>
+            <h1 class="page-banner-title display-font text-white">Design Your Custom Saree</h1>
+            <p class="mb-0 text-gold-light">Co-create your dream saree with our skilled master artisans and designers.</p>
+        </div>
+    </div>
+
+    <!-- Main Customizer Section -->
+    <div class="customizer-container">
+        <div class="container">
+            <div class="customizer-layout">
+                
+                <!-- Left Sticky Preview Panel -->
+                <div class="preview-panel">
+                    <h4 class="display-font text-maroon mb-1">Live Saree Blueprint</h4>
+                    <p class="small text-muted mb-4">Observe selections render in real time</p>
+                    
+                    <div class="saree-canvas-wrapper">
+                        <!-- Dynamic Saree SVG Outline representing fabric, color and border layers -->
+                        <svg class="saree-svg" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background base structure -->
+                            <rect width="200" height="240" fill="none"/>
+                            
+                            <!-- Saree Blouse segment -->
+                            <path id="svg-blouse" d="M 40,80 Q 55,60 70,80 Q 70,110 40,110 Z" fill="#E67E22" stroke="#D4AF37" stroke-width="1.5" />
+                            
+                            <!-- Saree Shoulder Drape (Pallu) -->
+                            <path id="svg-pallu" d="M 45,95 Q 85,140 60,220 L 30,220 Z" fill="#E67E22" opacity="0.9" />
+                            
+                            <!-- Saree Lower Body pleats -->
+                            <path id="svg-body" d="M 60,220 Q 95,110 135,110 L 170,220 Z" fill="#E67E22" />
+                            
+                            <!-- Detailed Zari/Border overlays -->
+                            <path id="svg-border" d="M 135,110 L 170,220 M 60,220 Q 95,110 135,110" stroke="#D4AF37" stroke-width="5" fill="none" stroke-linecap="round" />
+                            
+                            <!-- Small mandala motifs for Heavy/Embroidery indicator -->
+                            <g id="svg-motifs" display="none" fill="#D4AF37">
+                                <circle cx="100" cy="140" r="3" />
+                                <circle cx="120" cy="160" r="3" />
+                                <circle cx="150" cy="180" r="3" />
+                                <circle cx="50" cy="180" r="2" />
+                            </g>
+                        </svg>
+                    </div>
+                    
+                    <!-- Configured features highlights list -->
+                    <div class="mt-4 pt-3 border-top border-light">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="small text-muted">Fabric:</span>
+                            <span id="preview-fabric-val" class="small fw-semibold text-chocolate">Silk</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="small text-muted">Color Accent:</span>
+                            <span id="preview-color-val" class="small fw-semibold text-chocolate">Saffron Orange</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="small text-muted">Border Trim:</span>
+                            <span id="preview-border-val" class="small fw-semibold text-chocolate">Zari Border</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="small text-muted">Embroidery:</span>
+                            <span id="preview-emb-val" class="small fw-semibold text-chocolate">Minimal</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Dynamic Price Bar -->
+                    <div class="pricing-summary mt-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="small text-uppercase tracking-wider text-muted">Estimated Price</span>
+                                <h3 class="text-maroon m-0 fw-bold" id="est-price">₹12,500.00</h3>
+                            </div>
+                            <div class="text-end">
+                                <span class="small text-muted d-block">Expected Stitching</span>
+                                <span class="badge bg-gold text-dark font-poppins" id="est-days">14 Days</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Consultation and WhatsApp share links -->
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary btn-sm w-50" onclick="bookConsultation()"><i class="fas fa-calendar-alt me-1"></i> Book consultation</button>
+                        <button class="btn btn-outline-secondary btn-sm w-50" onclick="shareDesignWhatsApp()"><i class="fab fa-whatsapp me-1"></i> Share Design</button>
+                    </div>
+                </div>
+                
+                <!-- Right Steps Wizard Form -->
+                <div class="customizer-wizard">
+                    
+                    <!-- AI Design Recommendations box -->
+                    <div class="ai-suggestions-box">
+                        <i class="fas fa-magic"></i>
+                        <div>
+                            <h6 class="m-0 fw-bold text-chocolate">AI Smart Suggestion</h6>
+                            <p class="small text-muted m-0" id="ai-suggestion-text">Organza fabric pairs best with temple borders and hand embroidery for an elegant festive look.</p>
+                        </div>
+                    </div>
+                    
+                    <form id="customSareeForm" onsubmit="submitCustomSaree(event)">
+                        
+                        <!-- STEP 1: Fabric Selection -->
+                        <div class="wizard-step active" id="step-1">
+                            <h4 class="display-font text-maroon mb-2">1. Select Saree Fabric</h4>
+                            <p class="small text-muted mb-4">Select the premium base fabric for your customized masterpiece.</p>
+                            
+                            <div class="option-grid">
+                                <div class="option-card active" data-fabric="Silk" data-price="8000" onclick="selectFabric(this)">
+                                    <i class="fas fa-layer-group"></i>
+                                    <span class="option-title">Pure Silk</span>
+                                    <span class="option-price">+₹8,000</span>
+                                </div>
+                                <div class="option-card" data-fabric="Cotton" data-price="2500" onclick="selectFabric(this)">
+                                    <i class="fas fa-leaf"></i>
+                                    <span class="option-title">Fine Cotton</span>
+                                    <span class="option-price">+₹2,500</span>
+                                </div>
+                                <div class="option-card" data-fabric="Linen" data-price="3500" onclick="selectFabric(this)">
+                                    <i class="fas fa-wind"></i>
+                                    <span class="option-title">Pure Linen</span>
+                                    <span class="option-price">+₹3,500</span>
+                                </div>
+                                <div class="option-card" data-fabric="Chiffon" data-price="4000" onclick="selectFabric(this)">
+                                    <i class="fas fa-water"></i>
+                                    <span class="option-title">Chiffon</span>
+                                    <span class="option-price">+₹4,000</span>
+                                </div>
+                                <div class="option-card" data-fabric="Organza" data-price="4500" onclick="selectFabric(this)">
+                                    <i class="fas fa-snowflake"></i>
+                                    <span class="option-title">Organza</span>
+                                    <span class="option-price">+₹4,500</span>
+                                </div>
+                                <div class="option-card" data-fabric="Georgette" data-price="4200" onclick="selectFabric(this)">
+                                    <i class="fas fa-fill-drip"></i>
+                                    <span class="option-title">Georgette</span>
+                                    <span class="option-price">+₹4,200</span>
+                                </div>
+                                <div class="option-card" data-fabric="Banarasi Silk" data-price="9500" onclick="selectFabric(this)">
+                                    <i class="fas fa-crown"></i>
+                                    <span class="option-title">Banarasi Silk</span>
+                                    <span class="option-price">+₹9,500</span>
+                                </div>
+                                <div class="option-card" data-fabric="Kanchipuram" data-price="11000" onclick="selectFabric(this)">
+                                    <i class="fas fa-certificate"></i>
+                                    <span class="option-title">Kanchipuram</span>
+                                    <span class="option-price">+₹11,000</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- STEP 2: Color Configuration -->
+                        <div class="wizard-step" id="step-2">
+                            <h4 class="display-font text-maroon mb-2">2. Color Customization</h4>
+                            <p class="small text-muted mb-4">Choose from curated traditional colors or pick a custom dye shade.</p>
+                            
+                            <label class="small fw-semibold text-muted d-block mb-2">Curated Popular Palettes</label>
+                            <div class="color-palette">
+                                <div class="color-swatch active" style="background-color: #E67E22;" data-hex="#E67E22" data-name="Saffron Orange" onclick="selectColorSwatch(this)"></div>
+                                <div class="color-swatch" style="background-color: #D35400;" data-hex="#D35400" data-name="Deep Saffron" onclick="selectColorSwatch(this)"></div>
+                                <div class="color-swatch" style="background-color: #C0392B;" data-hex="#C0392B" data-name="Crimson Red" onclick="selectColorSwatch(this)"></div>
+                                <div class="color-swatch" style="background-color: #9B59B6;" data-hex="#9B59B6" data-name="Royal Plum" onclick="selectColorSwatch(this)"></div>
+                                <div class="color-swatch" style="background-color: #F1C40F;" data-hex="#F1C40F" data-name="Marigold Yellow" onclick="selectColorSwatch(this)"></div>
+                                <div class="color-swatch" style="background-color: #2ECC71;" data-hex="#2ECC71" data-name="Mint Emerald" onclick="selectColorSwatch(this)"></div>
+                                <div class="color-swatch" style="background-color: #1ABC9C;" data-hex="#1ABC9C" data-name="Teal Blue" onclick="selectColorSwatch(this)"></div>
+                                <div class="color-swatch" style="background-color: #FFF8F2;" data-hex="#FFF8F2" data-name="Ivory Cream" onclick="selectColorSwatch(this)"></div>
+                            </div>
+                            
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <label class="small fw-semibold text-muted d-block mb-2">Custom Color Picker</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="color" class="form-control form-control-color border-gold" id="custom-color-picker" value="#E67E22" onchange="pickCustomColor(this.value)">
+                                        <span class="small text-muted" id="selected-hex-lbl">#E67E22</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small fw-semibold text-muted d-block mb-2">Color Style</label>
+                                    <select class="form-select border-gold" id="color-style" onchange="updatePrice()">
+                                        <option value="solid" data-price="0">Solid Base Shade</option>
+                                        <option value="ombre" data-price="1500">Ombre Dual Gradient (+₹1,500)</option>
+                                        <option value="contrast" data-price="1000">Contrast Border/Body Dye (+₹1,000)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- STEP 3: Border Style -->
+                        <div class="wizard-step" id="step-3">
+                            <h4 class="display-font text-maroon mb-2">3. Saree Border trims</h4>
+                            <p class="small text-muted mb-4">Choose the weave style and embellishments for the saree margins.</p>
+                            
+                            <div class="option-grid">
+                                <div class="option-card active" data-border="Zari Border" data-price="2500" onclick="selectBorder(this)">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <span class="option-title">Zari Border</span>
+                                    <span class="option-price">+₹2,500</span>
+                                </div>
+                                <div class="option-card" data-border="Temple Border" data-price="1800" onclick="selectBorder(this)">
+                                    <i class="fas fa-mountain"></i>
+                                    <span class="option-title">Temple Border</span>
+                                    <span class="option-price">+₹1,800</span>
+                                </div>
+                                <div class="option-card" data-border="Embroidered" data-price="3200" onclick="selectBorder(this)">
+                                    <i class="fas fa-square-full"></i>
+                                    <span class="option-title">Embroidered</span>
+                                    <span class="option-price">+₹3,200</span>
+                                </div>
+                                <div class="option-card" data-border="Stone Work" data-price="4000" onclick="selectBorder(this)">
+                                    <i class="fas fa-gem"></i>
+                                    <span class="option-title">Stone Work</span>
+                                    <span class="option-price">+₹4,000</span>
+                                </div>
+                                <div class="option-card" data-border="Minimalist" data-price="800" onclick="selectBorder(this)">
+                                    <i class="fas fa-minus"></i>
+                                    <span class="option-title">Minimalist</span>
+                                    <span class="option-price">+₹800</span>
+                                </div>
+                                <div class="option-card" data-border="No Border" data-price="0" onclick="selectBorder(this)">
+                                    <i class="fas fa-ban"></i>
+                                    <span class="option-title">Plain Trim</span>
+                                    <span class="option-price">+₹0</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- STEP 4: Pallu Design -->
+                        <div class="wizard-step" id="step-4">
+                            <h4 class="display-font text-maroon mb-2">4. Pallu (Shoulder Drape) Design</h4>
+                            <p class="small text-muted mb-4">Choose the weaving pattern for the endpiece drape of the saree.</p>
+                            
+                            <div class="option-grid">
+                                <div class="option-card active" data-pallu="Heavy Designer" data-price="3500" onclick="selectPallu(this)">
+                                    <i class="fas fa-images"></i>
+                                    <span class="option-title">Heavy Designer</span>
+                                    <span class="option-price">+₹3,500</span>
+                                </div>
+                                <div class="option-card" data-pallu="Traditional" data-price="2000" onclick="selectPallu(this)">
+                                    <i class="fas fa-landmark"></i>
+                                    <span class="option-title">Traditional</span>
+                                    <span class="option-price">+₹2,000</span>
+                                </div>
+                                <div class="option-card" data-pallu="Floral Motif" data-price="2500" onclick="selectPallu(this)">
+                                    <i class="fas fa-spa"></i>
+                                    <span class="option-title">Floral Motif</span>
+                                    <span class="option-price">+₹2,500</span>
+                                </div>
+                                <div class="option-card" data-pallu="Peacock Weave" data-price="3000" onclick="selectPallu(this)">
+                                    <i class="fas fa-feather-alt"></i>
+                                    <span class="option-title">Peacock Weave</span>
+                                    <span class="option-price">+₹3,000</span>
+                                </div>
+                                <div class="option-card" data-pallu="Modern Geometric" data-price="1800" onclick="selectPallu(this)">
+                                    <i class="fas fa-shapes"></i>
+                                    <span class="option-title">Modern Geo</span>
+                                    <span class="option-price">+₹1,800</span>
+                                </div>
+                                <div class="option-card" data-pallu="Plain Bordered" data-price="500" onclick="selectPallu(this)">
+                                    <i class="fas fa-bars"></i>
+                                    <span class="option-title">Plain Bordered</span>
+                                    <span class="option-price">+₹500</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- STEP 5: Blouse Customization -->
+                        <div class="wizard-step" id="step-5">
+                            <h4 class="display-font text-maroon mb-2">5. Custom Designer Blouse</h4>
+                            <p class="small text-muted mb-4">Choose neck cuts and sleeve lengths for custom boutique blouse tailoring.</p>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="small fw-semibold text-muted d-block mb-1">Neck Line Design</label>
+                                    <select class="form-select border-gold" id="blouse-neck" onchange="updatePrice()">
+                                        <option value="round" data-price="800">Round Neck (+₹800)</option>
+                                        <option value="vneck" data-price="1000">Elegant V-Neck (+₹1,000)</option>
+                                        <option value="boat" data-price="1200">Modern Boat Neck (+₹1,200)</option>
+                                        <option value="sweetheart" data-price="1400">Sweetheart Cut (+₹1,400)</option>
+                                        <option value="high" data-price="1500">Royal High Collar (+₹1,500)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small fw-semibold text-muted d-block mb-1">Sleeve Cut & Length</label>
+                                    <select class="form-select border-gold" id="blouse-sleeve" onchange="updatePrice()">
+                                        <option value="sleeveless" data-price="500">Sleeveless (+₹500)</option>
+                                        <option value="half" data-price="800">Classic Half Sleeves (+₹800)</option>
+                                        <option value="elbow" data-price="1000">Elbow Length Cut (+₹1,000)</option>
+                                        <option value="full" data-price="1500">Full Royal Sleeves (+₹1,500)</option>
+                                        <option value="puff" data-price="1800">Designer Puff Sleeves (+₹1,800)</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <label class="small fw-semibold text-muted d-block mb-1">Blouse Fabric Match</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="blouseFabricOpt" id="blouseF1" value="Matching" checked>
+                                        <label class="form-check-label small" for="blouseF1">Matching Saree Fabric</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="blouseFabricOpt" id="blouseF2" value="Contrast">
+                                        <label class="form-check-label small" for="blouseF2">Contrast Fabric</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="blouseFabricOpt" id="blouseF3" value="Heavy Golden">
+                                        <label class="form-check-label small" for="blouseF3">Heavy Golden Brocade</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- STEP 6: Embroidery Configuration -->
+                        <div class="wizard-step" id="step-6">
+                            <h4 class="display-font text-maroon mb-2">6. Artisan Embroidery Work</h4>
+                            <p class="small text-muted mb-4">Choose direct artisan embroidery to overlay across the saree body.</p>
+                            
+                            <div class="option-grid">
+                                <div class="option-card active" data-emb="None" data-price="0" onclick="selectEmbroidery(this)">
+                                    <i class="fas fa-ban"></i>
+                                    <span class="option-title">No Embroidery</span>
+                                    <span class="option-price">+₹0</span>
+                                </div>
+                                <div class="option-card" data-emb="Zari Work" data-price="3500" onclick="selectEmbroidery(this)">
+                                    <i class="fas fa-magic"></i>
+                                    <span class="option-title">Zari Thread</span>
+                                    <span class="option-price">+₹3,500</span>
+                                </div>
+                                <div class="option-card" data-emb="Mirror Work" data-price="4000" onclick="selectEmbroidery(this)">
+                                    <i class="fas fa-history"></i>
+                                    <span class="option-title">Mirror Work</span>
+                                    <span class="option-price">+₹4,000</span>
+                                </div>
+                                <div class="option-card" data-emb="Sequins" data-price="4500" onclick="selectEmbroidery(this)">
+                                    <i class="fas fa-sparkles"></i>
+                                    <span class="option-title">Sequins</span>
+                                    <span class="option-price">+₹4,500</span>
+                                </div>
+                                <div class="option-card" data-emb="Stone Work" data-price="5500" onclick="selectEmbroidery(this)">
+                                    <i class="fas fa-gem"></i>
+                                    <span class="option-title">Stone Work</span>
+                                    <span class="option-price">+₹5,500</span>
+                                </div>
+                                <div class="option-card" data-emb="Hand Crafted" data-price="7000" onclick="selectEmbroidery(this)">
+                                    <i class="fas fa-hand-holding-heart"></i>
+                                    <span class="option-title">Hand Crafted</span>
+                                    <span class="option-price">+₹7,000</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- STEP 7: Occasion Mapping -->
+                        <div class="wizard-step" id="step-7">
+                            <h4 class="display-font text-maroon mb-2">7. Select Target Occasion</h4>
+                            <p class="small text-muted mb-4">Indicate the type of celebration to help our stylist team customize trims.</p>
+                            
+                            <div class="option-grid">
+                                <div class="option-card active" data-occasion="Wedding" onclick="selectOccasion(this)">
+                                    <i class="fas fa-ring"></i>
+                                    <span class="option-title">Wedding Wear</span>
+                                </div>
+                                <div class="option-card" data-occasion="Reception" onclick="selectOccasion(this)">
+                                    <i class="fas fa-glass-cheers"></i>
+                                    <span class="option-title">Reception</span>
+                                </div>
+                                <div class="option-card" data-occasion="Festival" onclick="selectOccasion(this)">
+                                    <i class="fas fa-sun"></i>
+                                    <span class="option-title">Festival</span>
+                                </div>
+                                <div class="option-card" data-occasion="Party" onclick="selectOccasion(this)">
+                                    <i class="fas fa-cocktail"></i>
+                                    <span class="option-title">Party Wear</span>
+                                </div>
+                                <div class="option-card" data-occasion="Casual" onclick="selectOccasion(this)">
+                                    <i class="fas fa-couch"></i>
+                                    <span class="option-title">Casual Wear</span>
+                                </div>
+                                <div class="option-card" data-occasion="Office" onclick="selectOccasion(this)">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span class="option-title">Office Formal</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- STEP 8: Personal Contact & Submit -->
+                        <div class="wizard-step" id="step-8">
+                            <h4 class="display-font text-maroon mb-2">8. Sketch Submission & Address</h4>
+                            <p class="small text-muted mb-4">Submit your styling preferences to complete custom request.</p>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small text-muted">Full Name *</label>
+                                    <input type="text" class="form-control border-gold" id="cust-name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small text-muted">Phone Number *</label>
+                                    <input type="tel" class="form-control border-gold" id="cust-phone" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small text-muted">Email Address *</label>
+                                    <input type="email" class="form-control border-gold" id="cust-email" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small text-muted">Delivery Shipping Address *</label>
+                                    <textarea class="form-control border-gold" id="cust-address" rows="2" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small text-muted">Additional Bespoke Requirements / Styling Notes</label>
+                                    <textarea class="form-control border-gold" id="cust-notes" rows="3" placeholder="Describe neck cuts, specific borders length, zari motifs patterns..."></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small text-muted">Drag & Drop Reference Sketches / Images</label>
+                                    <div class="upload-zone" onclick="triggerFileUpload()">
+                                        <i class="fas fa-cloud-upload-alt text-maroon display-6 mb-2"></i>
+                                        <p class="small m-0 text-chocolate">Click to choose design files or drag references here</p>
+                                        <span class="small text-muted" id="uploaded-file-lbl">No file selected</span>
+                                        <input type="file" class="d-none" id="saree-upload-input" onchange="handleFileChoose(this)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Navigation controls footer inside wizard -->
+                        <div class="wizard-nav">
+                            <button type="button" class="btn btn-outline-secondary" id="btn-prev" onclick="prevStep()" disabled>Previous Step</button>
+                            <button type="button" class="btn btn-pavitra" id="btn-next" onclick="nextStep()">Next Step</button>
+                            <button type="submit" class="btn btn-pavitra d-none" id="btn-submit">Submit Couture Request</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+            
+            <!-- Saved Customs Section (Bonus Feature) -->
+            <div id="saved-designs-panel" class="mt-5 pt-4 border-top border-light d-none">
+                <h3 class="display-font text-maroon mb-3">Your Saved Saree Designs</h3>
+                <div class="row g-4" id="saved-designs-row"></div>
+            </div>
+            
+            <!-- ADMIN DASHBOARD PANEL (working via LocalStorage persistent requests) -->
+            <div class="admin-panel-card" id="admin-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="display-font text-maroon m-0">Admin Saree Request Dashboard</h4>
+                        <p class="small text-muted m-0">Review customized user orders persistent locally</p>
+                    </div>
+                    <button class="btn btn-outline-danger btn-sm" onclick="clearAllRequests()"><i class="fas fa-trash-alt me-1"></i> Clear database</button>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr class="small text-muted uppercase">
+                                <th>Ref ID</th>
+                                <th>Client Details</th>
+                                <th>Fabric & Accent</th>
+                                <th>Bespoke Details</th>
+                                <th>Estimated Value</th>
+                                <th>Order Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-requests-table-body" class="small text-chocolate">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Booking Styling Consultation Modal (Bonus Feature) -->
+    <div class="modal fade" id="consultationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-gold bg-cream">
+                <div class="modal-header border-bottom border-light">
+                    <h5 class="modal-title display-font text-maroon">Book Styling Consultation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-muted mb-3">Schedule a complimentary video call session with our Jaipur head designers to align details.</p>
+                    <form onsubmit="confirmConsultation(event)">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Preferred Date</label>
+                            <input type="date" class="form-control border-gold" required id="cons-date">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Preferred Time Slot</label>
+                            <select class="form-select border-gold" required id="cons-time">
+                                <option value="11:00 AM">11:00 AM - 12:00 PM</option>
+                                <option value="02:00 PM">02:00 PM - 03:00 PM</option>
+                                <option value="04:00 PM">04:00 PM - 05:00 PM</option>
+                                <option value="06:00 PM">06:00 PM - 07:00 PM</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Consultation Mode</label>
+                            <select class="form-select border-gold" id="cons-mode">
+                                <option value="WhatsApp Video">WhatsApp Video Call</option>
+                                <option value="Zoom Meeting">Zoom Video Conference</option>
+                                <option value="Voice Call">Voice Consultation</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-pavitra btn-sm w-100">Schedule Stylist Call</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel floating switcher -->
+    <button class="admin-toggle-btn" onclick="scrollToAdmin()"><i class="fas fa-lock"></i> Admin View</button>
+
+    <!-- Footer -->
+    <footer class="footer-pavitra mt-5">
+        <div class="container text-center">
+            <p class="small text-muted m-0">&copy; 2026 Pavitra Designer Saree. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp floating chat button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+    
+    <script>
+        // Saree state object
+        let sareeConfig = {
+            fabric: 'Silk',
+            fabricPrice: 8000,
+            colorName: 'Saffron Orange',
+            colorHex: '#E67E22',
+            colorStyle: 'solid',
+            colorStylePrice: 0,
+            border: 'Zari Border',
+            borderPrice: 2500,
+            pallu: 'Heavy Designer',
+            palluPrice: 3500,
+            neck: 'round',
+            neckPrice: 800,
+            sleeve: 'sleeveless',
+            sleevePrice: 500,
+            embroidery: 'None',
+            embroideryPrice: 0,
+            occasion: 'Wedding',
+            fileName: ''
+        };
+
+        let currentWizardStep = 1;
+        const totalWizardSteps = 8;
+        
+        // AI Recommendations Database
+        const aiSuggestions = {
+            'Silk': 'For luxurious Pure Silk, we recommend combining a Heavy Zari Border and Peacock Pallu to showcase royal Jaipur craftsmanship.',
+            'Cotton': 'Fine Cotton coordinates beautifully with a Minimalist Border and simple geometric pallus for formal or daily office wear.',
+            'Linen': 'Pure Linen matches perfectly with simple Border trims and thread embroidery to present a sleek, organic look.',
+            'Chiffon': 'Chiffon matches beautifully with Sequins or Mirror Embroidery work and boat neck blouses for cocktail parties.',
+            'Organza': 'Lightweight Organza pair-matches best with Temple Borders and Hand Crafted flower motif prints.',
+            'Georgette': 'Georgette is highly suited for Stone Work margins and Sweetheart cut neck designs for wedding receptions.',
+            'Banarasi Silk': 'Banarasi Silk deserves traditional Gold thread Zari and heavy Traditional pallus for bridal lookbooks.',
+            'Kanchipuram': 'Kanchipuram weaves are best complemented by heavy Zari border frames and traditional layouts.'
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Load persistent customizations
+            renderRequestsAdmin();
+            renderSavedCustoms();
+            updateLivePreview();
+        });
+
+        // Fabric handler
+        function selectFabric(element) {
+            document.querySelectorAll('#step-1 .option-card').forEach(c => c.classList.remove('active'));
+            element.classList.remove('active');
+            element.classList.add('active');
+            
+            sareeConfig.fabric = element.getAttribute('data-fabric');
+            sareeConfig.fabricPrice = parseInt(element.getAttribute('data-price'));
+            
+            document.getElementById('preview-fabric-val').innerText = sareeConfig.fabric;
+            
+            // Render AI Suggestion
+            if (aiSuggestions[sareeConfig.fabric]) {
+                document.getElementById('ai-suggestion-text').innerText = aiSuggestions[sareeConfig.fabric];
+            }
+            updateLivePreview();
+        }
+
+        // Color swatches handler
+        function selectColorSwatch(element) {
+            document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+            element.classList.add('active');
+            
+            sareeConfig.colorHex = element.getAttribute('data-hex');
+            sareeConfig.colorName = element.getAttribute('data-name');
+            document.getElementById('custom-color-picker').value = sareeConfig.colorHex;
+            document.getElementById('selected-hex-lbl').innerText = sareeConfig.colorHex;
+            
+            updateLivePreview();
+        }
+
+        // Custom color input handler
+        function pickCustomColor(val) {
+            document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+            sareeConfig.colorHex = val;
+            sareeConfig.colorName = 'Custom Dye';
+            document.getElementById('selected-hex-lbl').innerText = val;
+            updateLivePreview();
+        }
+
+        // Border handler
+        function selectBorder(element) {
+            document.querySelectorAll('#step-3 .option-card').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            
+            sareeConfig.border = element.getAttribute('data-border');
+            sareeConfig.borderPrice = parseInt(element.getAttribute('data-price'));
+            document.getElementById('preview-border-val').innerText = sareeConfig.border;
+            updateLivePreview();
+        }
+
+        // Pallu handler
+        function selectPallu(element) {
+            document.querySelectorAll('#step-4 .option-card').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            
+            sareeConfig.pallu = element.getAttribute('data-pallu');
+            sareeConfig.palluPrice = parseInt(element.getAttribute('data-price'));
+            updateLivePreview();
+        }
+
+        // Embroidery handler
+        function selectEmbroidery(element) {
+            document.querySelectorAll('#step-6 .option-card').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            
+            sareeConfig.embroidery = element.getAttribute('data-emb');
+            sareeConfig.embroideryPrice = parseInt(element.getAttribute('data-price'));
+            document.getElementById('preview-emb-val').innerText = sareeConfig.embroidery;
+            updateLivePreview();
+        }
+
+        // Occasion handler
+        function selectOccasion(element) {
+            document.querySelectorAll('#step-7 .option-card').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            sareeConfig.occasion = element.getAttribute('data-occasion');
+        }
+
+        // Dropzone upload simulation
+        function triggerFileUpload() {
+            document.getElementById('saree-upload-input').click();
+        }
+
+        function handleFileChoose(input) {
+            if (input.files && input.files[0]) {
+                sareeConfig.fileName = input.files[0].name;
+                document.getElementById('uploaded-file-lbl').innerText = `Selected: ${sareeConfig.fileName}`;
+            }
+        }
+
+        // Update live preview SVG shapes and colors
+        function updateLivePreview() {
+            // Apply color to body and pallu elements of SVG
+            document.getElementById('svg-body').setAttribute('fill', sareeConfig.colorHex);
+            document.getElementById('svg-pallu').setAttribute('fill', sareeConfig.colorHex);
+            document.getElementById('svg-blouse').setAttribute('fill', sareeConfig.colorHex);
+            
+            document.getElementById('preview-color-val').innerText = `${sareeConfig.colorName} (${sareeConfig.colorHex})`;
+
+            // Modify border colors or presence
+            const borderPath = document.getElementById('svg-border');
+            if (sareeConfig.border === 'No Border') {
+                borderPath.setAttribute('stroke', 'none');
+            } else if (sareeConfig.border === 'Temple Border') {
+                borderPath.setAttribute('stroke', '#d49b37');
+                borderPath.setAttribute('stroke-width', '4');
+            } else if (sareeConfig.border === 'Stone Work') {
+                borderPath.setAttribute('stroke', '#E2F0F9');
+                borderPath.setAttribute('stroke-width', '5.5');
+            } else {
+                borderPath.setAttribute('stroke', '#D4AF37'); // Gold trim
+                borderPath.setAttribute('stroke-width', '5');
+            }
+
+            // Show embroidery motifs if selected
+            const motifsGroup = document.getElementById('svg-motifs');
+            if (sareeConfig.embroidery !== 'None') {
+                motifsGroup.setAttribute('display', 'block');
+                if (sareeConfig.embroidery === 'Mirror Work') {
+                    motifsGroup.setAttribute('fill', '#e2f0f9');
+                } else {
+                    motifsGroup.setAttribute('fill', '#D4AF37');
+                }
+            } else {
+                motifsGroup.setAttribute('display', 'none');
+            }
+
+            updatePrice();
+        }
+
+        // Calculate pricing
+        function updatePrice() {
+            // Collect neck and sleeve selectors values
+            const neckVal = document.getElementById('blouse-neck');
+            const sleeveVal = document.getElementById('blouse-sleeve');
+            const styleVal = document.getElementById('color-style');
+
+            sareeConfig.neckPrice = neckVal ? parseInt(neckVal.options[neckVal.selectedIndex].getAttribute('data-price')) : 800;
+            sareeConfig.sleevePrice = sleeveVal ? parseInt(sleeveVal.options[sleeveVal.selectedIndex].getAttribute('data-price')) : 500;
+            sareeConfig.colorStylePrice = styleVal ? parseInt(styleVal.options[styleVal.selectedIndex].getAttribute('data-price')) : 0;
+
+            const total = sareeConfig.fabricPrice + sareeConfig.colorStylePrice + sareeConfig.borderPrice + sareeConfig.palluPrice + sareeConfig.neckPrice + sareeConfig.sleevePrice + sareeConfig.embroideryPrice;
+            document.getElementById('est-price').innerText = `₹${total.toLocaleString('en-IN')}.00`;
+            
+            // Adjust day estimations
+            let days = 10;
+            if (sareeConfig.embroidery !== 'None') days += 5;
+            if (sareeConfig.border === 'Stone Work') days += 3;
+            document.getElementById('est-days').innerText = `${days} Days`;
+        }
+
+        // Wizard controls
+        function nextStep() {
+            if (currentWizardStep < totalWizardSteps) {
+                document.getElementById(`step-${currentWizardStep}`).classList.remove('active');
+                currentWizardStep++;
+                document.getElementById(`step-${currentWizardStep}`).classList.add('active');
+                
+                updateWizardNav();
+            }
+        }
+
+        // Previous Wizard Controls
+        function prevStep() {
+            if (currentWizardStep > 1) {
+                document.getElementById(`step-${currentWizardStep}`).classList.remove('active');
+                currentWizardStep--;
+                document.getElementById(`step-${currentWizardStep}`).classList.add('active');
+                
+                updateWizardNav();
+            }
+        }
+
+        function updateWizardNav() {
+            document.getElementById('btn-prev').disabled = (currentWizardStep === 1);
+            
+            if (currentWizardStep === totalWizardSteps) {
+                document.getElementById('btn-next').classList.add('d-none');
+                document.getElementById('btn-submit').classList.remove('d-none');
+            } else {
+                document.getElementById('btn-next').classList.remove('d-none');
+                document.getElementById('btn-submit').classList.add('d-none');
+            }
+        }
+
+        // Submit customized saree order request
+        function submitCustomSaree(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const email = document.getElementById('cust-email').value;
+            const address = document.getElementById('cust-address').value;
+            const notes = document.getElementById('cust-notes').value;
+            
+            const price = document.getElementById('est-price').innerText;
+            const refId = "PAV-CUST-" + Math.floor(100000 + Math.random() * 900000);
+            
+            // Construct request payload
+            const request = {
+                id: refId,
+                name: name,
+                phone: phone,
+                email: email,
+                address: address,
+                notes: notes,
+                fabric: sareeConfig.fabric,
+                color: `${sareeConfig.colorName} (${sareeConfig.colorHex})`,
+                border: sareeConfig.border,
+                pallu: sareeConfig.pallu,
+                blouse: `Neck: ${document.getElementById('blouse-neck').value}, Sleeve: ${document.getElementById('blouse-sleeve').value}`,
+                embroidery: sareeConfig.embroidery,
+                occasion: sareeConfig.occasion,
+                price: price,
+                status: 'Pending',
+                date: new Date().toLocaleDateString(),
+                fileName: sareeConfig.fileName || 'No references'
+            };
+            
+            // Save request into database list
+            let list = JSON.parse(localStorage.getItem('custom_saree_requests')) || [];
+            list.push(request);
+            localStorage.setItem('custom_saree_requests', JSON.stringify(list));
+            
+            alert(`Couture Request Submitted Successfully!\nYour Reference ID is: ${refId}\nEstimated value is: ${price}`);
+            
+            // Clear input fields
+            document.getElementById('customSareeForm').reset();
+            currentWizardStep = 1;
+            document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step-1').classList.add('active');
+            updateWizardNav();
+            
+            // Refresh table list
+            renderRequestsAdmin();
+        }
+
+        // Admin dashboard functionalities
+        function renderRequestsAdmin() {
+            const list = JSON.parse(localStorage.getItem('custom_saree_requests')) || [];
+            const tbody = document.getElementById('admin-requests-table-body');
+            
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-4">No customized saree orders submitted yet.</td></tr>`;
+                return;
+            }
+            
+            tbody.innerHTML = list.map(req => {
+                let badgeClass = 'bg-secondary';
+                if (req.status === 'In Progress') badgeClass = 'bg-warning text-dark';
+                else if (req.status === 'Completed') badgeClass = 'bg-success';
+                else if (req.status === 'Delivered') badgeClass = 'bg-info text-dark';
+                
+                return `
+                    <tr>
+                        <td class="fw-bold">${req.id}<br><span class="text-muted" style="font-size:10px">${req.date}</span></td>
+                        <td>
+                            <strong>${req.name}</strong><br>
+                            <span class="text-muted">${req.phone}</span><br>
+                            <span class="text-muted" style="font-size:11px">${req.email}</span>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark">${req.fabric}</span><br>
+                            <span class="small text-muted">${req.color}</span>
+                        </td>
+                        <td>
+                            <div class="small">
+                                <strong>Occasion:</strong> ${req.occasion}<br>
+                                <strong>Trim:</strong> ${req.border} | <strong>Pallu:</strong> ${req.pallu}<br>
+                                <strong>Embroidery:</strong> ${req.embroidery}<br>
+                                <strong>File:</strong> <span class="text-maroon">${req.fileName}</span>
+                            </div>
+                        </td>
+                        <td class="fw-bold text-maroon">${req.price}</td>
+                        <td>
+                            <span class="badge ${badgeClass} mb-1 d-inline-block">${req.status}</span>
+                            <select class="form-select form-select-sm border-gold" style="width:120px; font-size:11px" onchange="updateRequestStatus('${req.id}', this.value)">
+                                <option value="Pending" ${req.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                                <option value="In Progress" ${req.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                                <option value="Completed" ${req.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                                <option value="Delivered" ${req.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-danger btn-sm" onclick="deleteRequest('${req.id}')" title="Delete"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateRequestStatus(id, newStatus) {
+            let list = JSON.parse(localStorage.getItem('custom_saree_requests')) || [];
+            list = list.map(req => {
+                if (req.id === id) {
+                    req.status = newStatus;
+                }
+                return req;
+            });
+            localStorage.setItem('custom_saree_requests', JSON.stringify(list));
+            renderRequestsAdmin();
+        }
+
+        function deleteRequest(id) {
+            if (confirm("Are you sure you want to delete this custom request?")) {
+                let list = JSON.parse(localStorage.getItem('custom_saree_requests')) || [];
+                list = list.filter(req => req.id !== id);
+                localStorage.setItem('custom_saree_requests', JSON.stringify(list));
+                renderRequestsAdmin();
+            }
+        }
+
+        function clearAllRequests() {
+            if (confirm("Are you sure you want to clear all requests from local database?")) {
+                localStorage.removeItem('custom_saree_requests');
+                renderRequestsAdmin();
+            }
+        }
+
+        // WhatsApp sharing text prefill (Bonus feature)
+        function shareDesignWhatsApp() {
+            const totalVal = document.getElementById('est-price').innerText;
+            const message = `Hi Pavitra Designers! I just designed a custom Saree:\n\n- Fabric: ${sareeConfig.fabric}\n- Accent Color: ${sareeConfig.colorName} (${sareeConfig.colorHex})\n- Trim Border: ${sareeConfig.border}\n- Pallu Weave: ${sareeConfig.pallu}\n- Embroidery Work: ${sareeConfig.embroidery}\n- Tailoring occasion: ${sareeConfig.occasion}\n- Estimated Quote: ${totalVal}\n\nPlease check my customization order. Thanks!`;
+            
+            const encoded = encodeURIComponent(message);
+            window.open(`https://wa.me/919876543210?text=${encoded}`, '_blank');
+        }
+
+        // Styling video consultation modal controls
+        function bookConsultation() {
+            const modal = new bootstrap.Modal(document.getElementById('consultationModal'));
+            modal.show();
+        }
+
+        // Confirm Stylist call
+        function confirmConsultation(e) {
+            e.preventDefault();
+            const date = document.getElementById('cons-date').value;
+            const time = document.getElementById('cons-time').value;
+            const mode = document.getElementById('cons-mode').value;
+            
+            alert(`Virtual Consultation Scheduled Successfully!\nDate: ${date}\nTime Slot: ${time}\nPlatform: ${mode}\nOur chief stylist will contact you via phone before the slot.`);
+            
+            // Save consultation
+            let list = JSON.parse(localStorage.getItem('designer_consultations')) || [];
+            list.push({ date, time, mode, created: new Date().toLocaleDateString() });
+            localStorage.setItem('designer_consultations', JSON.stringify(list));
+            
+            const modalEl = document.getElementById('consultationModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
+        }
+
+        // Scroll helper
+        function scrollToAdmin() {
+            document.getElementById('admin-panel').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Save design in account/wishlist
+        function saveCustomDesign() {
+            let list = JSON.parse(localStorage.getItem('saved_custom_designs')) || [];
+            const total = document.getElementById('est-price').innerText;
+            
+            const design = {
+                id: "CUST-SAV-" + Math.floor(1000 + Math.random() * 9000),
+                config: { ...sareeConfig },
+                price: total,
+                date: new Date().toLocaleDateString()
+            };
+            
+            list.push(design);
+            localStorage.setItem('saved_custom_designs', JSON.stringify(list));
+            alert("Custom saree design saved to your profile!");
+            renderSavedCustoms();
+        }
+        
+        function renderSavedCustoms() {
+            const list = JSON.parse(localStorage.getItem('saved_custom_designs')) || [];
+            const panel = document.getElementById('saved-designs-panel');
+            const row = document.getElementById('saved-designs-row');
+            
+            if (list.length === 0) {
+                panel.classList.add('d-none');
+                return;
+            }
+            
+            panel.classList.remove('d-none');
+            row.innerHTML = list.map(d => `
+                <div class="col-md-4">
+                    <div class="card border-gold bg-white p-3 shadow-sm position-relative">
+                        <button class="btn btn-sm btn-outline-danger position-absolute end-0 top-0 m-2 border-0" onclick="deleteSavedDesign('${d.id}')"><i class="fas fa-trash-alt"></i></button>
+                        <h5 class="fw-bold text-chocolate mb-2">${d.config.fabric} Custom</h5>
+                        <div class="small text-muted mb-2">
+                            Color: <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background-color:${d.config.colorHex}"></span> ${d.config.colorName}<br>
+                            Border: ${d.config.border}<br>
+                            Embroidery: ${d.config.embroidery}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-light">
+                            <span class="fw-bold text-maroon">${d.price}</span>
+                            <button class="btn btn-pavitra btn-sm" onclick="loadSavedDesign('${d.id}')">Load Saree</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function deleteSavedDesign(id) {
+            let list = JSON.parse(localStorage.getItem('saved_custom_designs')) || [];
+            list = list.filter(d => d.id !== id);
+            localStorage.setItem('saved_custom_designs', JSON.stringify(list));
+            renderSavedCustoms();
+        }
+        
+        function loadSavedDesign(id) {
+            const list = JSON.parse(localStorage.getItem('saved_custom_designs')) || [];
+            const design = list.find(d => d.id === id);
+            if (design) {
+                sareeConfig = { ...design.config };
+                
+                // Select indicators in tabs
+                document.getElementById('custom-color-picker').value = sareeConfig.colorHex;
+                document.getElementById('selected-hex-lbl').innerText = sareeConfig.colorHex;
+                document.getElementById('preview-fabric-val').innerText = sareeConfig.fabric;
+                document.getElementById('preview-border-val').innerText = sareeConfig.border;
+                document.getElementById('preview-emb-val').innerText = sareeConfig.embroidery;
+                
+                updateLivePreview();
+                alert("Custom design loaded to visualizer blueprint!");
+            }
+        }
+    </script>
+
+</body>
+</html>

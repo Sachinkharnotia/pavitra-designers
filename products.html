@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer Collection | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <div class="luxury-spinner"></div>
+    </div>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar text-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-prev"><i class="fas fa-chevron-left"></i></button>
+            <span id="announcement-text" class="mx-2"><i class="fas fa-truck me-2"></i> FREE SHIPPING ACROSS INDIA ON ALL ORDERS</span>
+            <button class="btn btn-sm text-gold p-0 border-0" id="ann-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-pavitra sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="logo.png" alt="Pavitra Designers logo" class="me-2" style="height: 105px; width: auto; max-width: 320px; object-fit: contain;">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="new-arrivals.html">New Arrivals</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-link-pavitra dropdown-toggle active" href="#" id="nav-sarees" data-bs-toggle="dropdown">Sarees</a>
+                        <ul class="dropdown-menu border-gold bg-cream">
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Banarasi">Banarasi Silk</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Kanjeevaram">Kanjeevaram Gold</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees&subcategory=Organza">Organza Floral</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=Sarees">View All Sarees</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="products.html?category=Lehengas">Lehengas</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="collections.html">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="customize.html">Customize Saree</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-pavitra" href="contact.html">Contact</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center">
+                    <form class="d-none d-md-flex me-3 position-relative" onsubmit="event.preventDefault(); triggerSearch();">
+                        <input class="form-control rounded-pill border-gold bg-cream-light" type="search" placeholder="Search sarees..." id="search-input" style="padding-right: 35px; font-size: 0.9rem;">
+                        <button class="btn position-absolute end-0 top-0 text-maroon" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                    
+                    <a href="auth.html" class="navbar-icon-btn" title="My Account"><i class="fas fa-user-circle"></i></a>
+                    <a href="wishlist.html" class="navbar-icon-btn" title="Wishlist">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="nav-wishlist-count" style="display:none">0</span>
+                    </a>
+                    <a href="cart.html" class="navbar-icon-btn text-maroon" title="Shopping Cart">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge" id="nav-cart-count" style="display:none">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-pavitra">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="collections.html">Collections</a></li>
+                <li class="breadcrumb-item active" id="breadcrumb-active" aria-current="page">All Products</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Page Banner -->
+    <div class="page-banner-luxury text-center">
+        <div class="container position-relative z-2">
+            <h1 class="page-banner-title" id="page-banner-title">Our Designer Collections</h1>
+            <p class="mb-0 text-gold-light">Handcrafted ethnic elegance from master artisans</p>
+        </div>
+    </div>
+
+    <!-- Products Grid & Filter Layout -->
+    <div class="container my-5">
+        <div class="row g-4">
+            <!-- Filter Sidebar -->
+            <div class="col-lg-3">
+                <div class="filter-sidebar shadow-sm rounded-0">
+                    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                        <h5 class="m-0 fw-bold text-maroon"><i class="fas fa-sliders-h me-2"></i>Filters</h5>
+                        <button class="btn btn-sm btn-link text-maroon p-0 text-decoration-none fw-bold" onclick="resetAllFilters()">Clear All</button>
+                    </div>
+
+                    <!-- Price Slider -->
+                    <div class="mb-4">
+                        <div class="filter-group-title">Price Range</div>
+                        <input type="range" class="form-range" min="1000" max="40000" step="1000" id="filter-price" value="40000" oninput="updatePriceLabel(this.value)" onchange="applySidebarFilters()">
+                        <div class="d-flex justify-content-between small text-muted mt-2">
+                            <span>Min: ₹1,000</span>
+                            <span class="fw-bold text-maroon" id="price-slider-val">Max: ₹40,000</span>
+                        </div>
+                    </div>
+
+                    <!-- Fabric Selection -->
+                    <div class="mb-4">
+                        <div class="filter-group-title">Fabric</div>
+                        <div id="fabric-filters-box">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="filter-fabric" value="Banarasi Silk" id="fab-banarasi" onchange="applySidebarFilters()">
+                                <label class="form-check-label small" for="fab-banarasi">Banarasi Silk</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="filter-fabric" value="Pure Silk" id="fab-pure" onchange="applySidebarFilters()">
+                                <label class="form-check-label small" for="fab-pure">Kanjeevaram Silk</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="filter-fabric" value="Sheer Organza" id="fab-organza" onchange="applySidebarFilters()">
+                                <label class="form-check-label small" for="fab-organza">Floral Organza</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="filter-fabric" value="Georgette" id="fab-georgette" onchange="applySidebarFilters()">
+                                <label class="form-check-label small" for="fab-georgette">Georgette</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="filter-fabric" value="Velvet" id="fab-velvet" onchange="applySidebarFilters()">
+                                <label class="form-check-label small" for="fab-velvet">Rich Velvet</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="filter-fabric" value="Chanderi Silk" id="fab-chanderi" onchange="applySidebarFilters()">
+                                <label class="form-check-label small" for="fab-chanderi">Chanderi Silk</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Colors Selection -->
+                    <div class="mb-4">
+                        <div class="filter-group-title">Shop By Color</div>
+                        <div class="d-flex flex-wrap gap-2" id="color-filter-palette">
+                            <!-- Handled in script -->
+                        </div>
+                    </div>
+
+                    <!-- Occasion -->
+                    <div class="mb-4">
+                        <div class="filter-group-title">Occasion</div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="filter-occasion" value="Bridal" id="occ-bridal" onchange="applySidebarFilters()">
+                            <label class="form-check-label small" for="occ-bridal">Bridal Wear</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="filter-occasion" value="Wedding" id="occ-wedding" onchange="applySidebarFilters()">
+                            <label class="form-check-label small" for="occ-wedding">Wedding/Ceremony</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="filter-occasion" value="Festival" id="occ-festive" onchange="applySidebarFilters()">
+                            <label class="form-check-label small" for="occ-festive">Festive Celebration</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="filter-occasion" value="Party Wear" id="occ-party" onchange="applySidebarFilters()">
+                            <label class="form-check-label small" for="occ-party">Party Cocktail</label>
+                        </div>
+                    </div>
+
+                    <!-- Availability -->
+                    <div>
+                        <div class="filter-group-title">Availability</div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="filter-stock" value="all" id="stock-all" checked onchange="applySidebarFilters()">
+                            <label class="form-check-label small" for="stock-all">All Products</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="filter-stock" value="in" id="stock-in" onchange="applySidebarFilters()">
+                            <label class="form-check-label small" for="stock-in">In Stock Only</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="filter-stock" value="low" id="stock-low" onchange="applySidebarFilters()">
+                            <label class="form-check-label small" for="stock-low">Limited Stock</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Listing Grid -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 border">
+                    <span class="small text-muted" id="products-count-label">Showing all products</span>
+                    
+                    <div class="d-flex align-items-center gap-2">
+                        <label class="small text-nowrap d-none d-sm-block m-0">Sort By:</label>
+                        <select class="form-select form-select-sm border-gold bg-cream w-auto" id="sort-select" onchange="applySidebarFilters()">
+                            <option value="newest">Newest Arrivals</option>
+                            <option value="popularity">Popularity / Review count</option>
+                            <option value="low-high">Price: Low to High</option>
+                            <option value="high-low">Price: High to Low</option>
+                            <option value="rating">Customer Rating</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Catalog Grid -->
+                <div class="row g-4" id="products-grid-row">
+                    <!-- Dynamically Rendered -->
+                </div>
+
+                <!-- Pagination Controls -->
+                <div id="pagination-controls"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Quick View Modal -->
+    <div class="modal fade" id="productQuickViewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content modal-content-pavitra">
+                <div class="modal-header modal-header-pavitra">
+                    <h5 class="modal-title">Quick Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4" id="modal-product-detail-body">
+                    <!-- Dynamic details loads here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-pavitra mt-5">
+        <div class="container">
+            <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-3">
+                    <h5 class="footer-title">Contact Us</h5>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Pavitra Designers</a></li>
+                        <li><a href="contact.html">Store locations</a></li>
+                        <li class="mt-3 text-muted small">
+                            <i class="fas fa-map-marker-alt me-1 text-gold"></i> 102, Badi Chopad Market, Jaipur
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <h5 class="footer-title">Main Menu</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html?category=Sarees">Saree Collection</a></li>
+                        <li><a href="products.html?category=Lehengas">Lehengas</a></li>
+                        <li><a href="collections.html">Wedding Catalog</a></li>
+                        <li><a href="blog.html">Fashion Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <h5 class="footer-title">Policy Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Privacy Statement</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="faq.html">FAQ Helpdesk</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <h5 class="footer-title">Subscribe</h5>
+                    <p class="small text-muted mb-3">Keep updated with Jaipur heritage style updates and seasonal discounts.</p>
+                    <form class="footer-subscribe" onsubmit="event.preventDefault(); alert('Subscribed successfully!'); this.reset();">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Email" required>
+                            <button class="btn btn-pavitra" type="submit"><i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="border-top border-secondary pt-3 text-center">
+                <p class="small text-muted m-0">&copy; 2026 Pavitra Designer Saree. All rights reserved. Designed for premium ethnic wear distribution.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp floating chat button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core State JavaScript -->
+    <script src="app.js"></script>
+    <script>
+        const COLORS = ["Royal Purple", "Crimson Red", "Maroon & Gold", "Mint Green", "Bridal Red", "Ivory White", "Yellow", "Emerald Green", "Midnight Black", "Peach Pink", "Prussian Blue", "Rose Gold"];
+        
+        let activeColorFilter = "";
+        let initialCategory = "";
+        let initialSubcategory = "";
+        let currentPage = 1;
+        const productsPerPage = 6;
+        let allFilteredProducts = [];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Read URL category configurations
+            initialCategory = FrontendHelpers.getQueryParam("category") || "";
+            initialSubcategory = FrontendHelpers.getQueryParam("subcategory") || "";
+            
+            // Adjust headings
+            if (initialSubcategory) {
+                document.getElementById("page-banner-title").textContent = `${initialSubcategory} Sarees`;
+                document.getElementById("breadcrumb-active").textContent = `${initialSubcategory} Collection`;
+            } else if (initialCategory) {
+                document.getElementById("page-banner-title").textContent = `${initialCategory} Collection`;
+                document.getElementById("breadcrumb-active").textContent = initialCategory;
+            }
+
+            // Sync query search parameter to input field
+            const initialSearch = FrontendHelpers.getQueryParam("search") || "";
+            const searchInput = document.getElementById("search-input");
+            if (searchInput && initialSearch) {
+                searchInput.value = initialSearch;
+            }
+
+            renderColorPalette();
+            applySidebarFilters();
+
+            // Set up announcement rotators
+            const announcements = [
+                "<i class='fas fa-truck me-2'></i> FREE SHIPPING ACROSS INDIA ON ALL ORDERS",
+                "<i class='fas fa-percent me-2'></i> FESTIVAL OFFER: USE CODE 'FESTIVE10' FOR 10% OFF",
+                "<i class='fas fa-user-tie me-2'></i> B2B DISTRIBUTORS: LOG IN TO UNLOCK BULK PRICING"
+            ];
+            let annIndex = 0;
+            const annText = document.getElementById("announcement-text");
+            document.getElementById("ann-prev").addEventListener("click", () => {
+                annIndex = (annIndex - 1 + announcements.length) % announcements.length;
+                annText.innerHTML = announcements[annIndex];
+            });
+            document.getElementById("ann-next").addEventListener("click", () => {
+                annIndex = (annIndex + 1) % announcements.length;
+                annText.innerHTML = announcements[annIndex];
+            });
+        });
+
+        function renderColorPalette() {
+            const box = document.getElementById("color-filter-palette");
+            const hexMap = {
+                "Royal Purple": "#7B1E3B", "Crimson Red": "#C62828", "Maroon & Gold": "#6b1d2f",
+                "Mint Green": "#A3E4D7", "Bridal Red": "#C0392B", "Ivory White": "#FFFFF0",
+                "Yellow": "#F9A825", "Emerald Green": "#27AE60", "Midnight Black": "#2D2D2D",
+                "Peach Pink": "#FADBD8", "Prussian Blue": "#1F618D", "Rose Gold": "#B7950B"
+            };
+
+            box.innerHTML = COLORS.map(c => {
+                const hex = hexMap[c] || "#ddd";
+                const border = c === "Ivory White" ? "border: 1px solid #757575;" : "";
+                return `<button class="btn btn-sm p-0 rounded-circle" style="width: 25px; height: 25px; background-color:${hex}; ${border}" title="${c}" onclick="toggleColorFilter('${c}', this)"></button>`;
+            }).join('');
+        }
+
+        function toggleColorFilter(color, btn) {
+            document.querySelectorAll("#color-filter-palette button").forEach(b => b.classList.remove("active-border"));
+            if (activeColorFilter === color) {
+                activeColorFilter = "";
+            } else {
+                activeColorFilter = color;
+                btn.classList.add("active-border");
+            }
+            applySidebarFilters();
+        }
+
+        function updatePriceLabel(val) {
+            document.getElementById("price-slider-val").textContent = `Max: ₹${parseFloat(val).toLocaleString('en-IN')}`;
+        }
+
+        function applySidebarFilters() {
+            let products = PavitraDB.getProducts();
+
+            // 1. Initial category mapping from URL query
+            if (initialCategory) {
+                products = products.filter(p => p.category === initialCategory);
+            }
+            if (initialSubcategory) {
+                products = products.filter(p => p.subcategory === initialSubcategory);
+            }
+
+            // 2. Search query filter
+            const searchVal = document.getElementById("search-input").value.trim().toLowerCase();
+            if (searchVal) {
+                products = products.filter(p => p.title.toLowerCase().includes(searchVal) || p.sku.toLowerCase().includes(searchVal));
+            }
+
+            // 3. Price Filter
+            const maxPrice = parseFloat(document.getElementById("filter-price").value);
+            const currentUser = PavitraDB.getCurrentUser();
+            const isB2B = currentUser && currentUser.role === "Retailer";
+            products = products.filter(p => (isB2B ? p.b2bPrice : p.retailPrice) <= maxPrice);
+
+            // 4. Fabric Filters
+            const selectedFabrics = Array.from(document.querySelectorAll('input[name="filter-fabric"]:checked')).map(el => el.value);
+            if (selectedFabrics.length > 0) {
+                products = products.filter(p => selectedFabrics.includes(p.fabric));
+            }
+
+            // 5. Color Filter
+            if (activeColorFilter) {
+                products = products.filter(p => p.color.includes(activeColorFilter) || p.title.includes(activeColorFilter));
+            }
+
+            // 6. Occasion Filters
+            const selectedOccasions = Array.from(document.querySelectorAll('input[name="filter-occasion"]:checked')).map(el => el.value);
+            if (selectedOccasions.length > 0) {
+                products = products.filter(p => selectedOccasions.includes(p.occasion));
+            }
+
+            // 7. Availability stock filter
+            const stockVal = document.querySelector('input[name="filter-stock"]:checked').value;
+            if (stockVal === "in") {
+                products = products.filter(p => p.stock > 5);
+            } else if (stockVal === "low") {
+                products = products.filter(p => p.stock <= 5 && p.stock > 0);
+            }
+
+            // 8. Sorting
+            const sortVal = document.getElementById("sort-select").value;
+            if (sortVal === "low-high") {
+                products.sort((a, b) => (isB2B ? a.b2bPrice : a.retailPrice) - (isB2B ? b.b2bPrice : b.retailPrice));
+            } else if (sortVal === "high-low") {
+                products.sort((a, b) => (isB2B ? b.b2bPrice : b.retailPrice) - (isB2B ? a.b2bPrice : a.retailPrice));
+            } else if (sortVal === "popularity") {
+                products.sort((a, b) => b.reviewsCount - a.reviewsCount);
+            } else if (sortVal === "rating") {
+                products.sort((a, b) => b.rating - a.rating);
+            }
+
+            // Reset to page 1 when filters change
+            currentPage = 1;
+            renderCatalog(products);
+        }
+
+        function renderCatalog(products) {
+            // Store all filtered products for pagination
+            allFilteredProducts = products;
+            
+            const grid = document.getElementById("products-grid-row");
+            const countLabel = document.getElementById("products-count-label");
+            
+            countLabel.textContent = `Showing ${products.length} product(s)`;
+
+            if (products.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-search-minus text-muted display-4 mb-3"></i>
+                        <p class="lead">No luxury products found matching active filters.</p>
+                    </div>
+                `;
+                document.getElementById("pagination-controls").innerHTML = "";
+                return;
+            }
+
+            // Calculate pagination
+            const totalPages = Math.ceil(products.length / productsPerPage);
+            const startIndex = (currentPage - 1) * productsPerPage;
+            const endIndex = startIndex + productsPerPage;
+            const paginatedProducts = products.slice(startIndex, endIndex);
+
+            const currentUser = PavitraDB.getCurrentUser();
+            const isB2B = currentUser && currentUser.role === "Retailer";
+            const wishlist = PavitraDB.getWishlist();
+
+            grid.innerHTML = paginatedProducts.map(p => {
+                const priceToShow = isB2B ? p.b2bPrice : p.retailPrice;
+                const isWishlisted = wishlist.includes(p.id) ? "active" : "";
+                const strikeText = isB2B ? `<span class="text-decoration-line-through text-muted small ms-2">₹${p.retailPrice.toLocaleString('en-IN')}</span>` : "";
+
+                return `
+                    <div class="col-sm-6 col-md-4 d-flex">
+                        <div class="product-card w-100 d-flex flex-column position-relative shadow-sm">
+                            ${p.stock <= 5 ? '<span class="product-badge bg-danger">Low Stock</span>' : (p.featured ? '<span class="product-badge">New Arrival</span>' : '')}
+                            <button class="product-wishlist-btn ${isWishlisted}" onclick="event.stopPropagation(); toggleWishlistItem('${p.id}')">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <div class="product-img-wrapper" style="cursor:pointer" onclick="window.location.href='product-details.html?id=${p.id}'">
+                                <img src="${p.imageUrl}" alt="${p.title}">
+                                <button class="btn btn-quickview" onclick="event.stopPropagation(); openQuickView('${p.id}')">Quick View</button>
+                            </div>
+                            <div class="product-info d-flex flex-column flex-grow-1 justify-content-between">
+                                <div>
+                                    <div class="product-category">${p.subcategory || p.category}</div>
+                                    <h5 class="product-title fw-bold" onclick="window.location.href='product-details.html?id=${p.id}'" style="cursor:pointer" title="${p.title}">${p.title}</h5>
+                                    <div class="d-flex text-warning mb-2 small">
+                                        ${Array.from({length: 5}, (_, i) => `<i class="${i < Math.floor(p.rating) ? 'fas' : 'far'} fa-star"></i>`).join('')}
+                                        <span class="text-muted ms-2" style="font-size:0.75rem">(${p.reviewsCount})</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="product-price-row">
+                                        <div class="product-price">
+                                            ₹${priceToShow.toLocaleString('en-IN')} ${strikeText}
+                                            ${isB2B ? '<div class="small fw-normal text-muted" style="font-size:0.7rem">B2B Wholesale Rate</div>' : ''}
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 d-flex gap-2">
+                                        <button class="btn btn-pavitra-outline btn-sm flex-grow-1" onclick="window.location.href='product-details.html?id=${p.id}'">View Details</button>
+                                        <button class="btn btn-pavitra btn-sm" onclick="CartAPI.addToCart('${p.id}', ${isB2B ? p.b2bMoq : p.moq}); alert('Product added to bag!')"><i class="fas fa-cart-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Render pagination controls
+            renderPaginationControls(totalPages, products.length);
+        }
+
+        function renderPaginationControls(totalPages, totalProducts) {
+            const paginationDiv = document.getElementById("pagination-controls");
+            
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = "";
+                return;
+            }
+
+            let paginationHTML = `
+                <div class="d-flex justify-content-center align-items-center gap-2 mt-5 pt-4 border-top">
+                    <button class="btn btn-sm btn-outline-maroon" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+            `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const isActive = i === currentPage ? 'active' : '';
+                paginationHTML += `<button class="btn btn-sm btn-outline-maroon ${isActive}" onclick="goToPage(${i})">${i}</button>`;
+            }
+
+            paginationHTML += `
+                    <button class="btn btn-sm btn-outline-maroon" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <span class="text-muted small ms-3">Page ${currentPage} of ${totalPages}</span>
+                </div>
+            `;
+
+            paginationDiv.innerHTML = paginationHTML;
+        }
+
+        function goToPage(pageNum) {
+            const totalPages = Math.ceil(allFilteredProducts.length / productsPerPage);
+            if (pageNum >= 1 && pageNum <= totalPages) {
+                currentPage = pageNum;
+                renderCatalog(allFilteredProducts);
+                // Scroll to top of products
+                document.getElementById("products-grid-row").scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function toggleWishlistItem(id) {
+            CartAPI.toggleWishlist(id);
+            applySidebarFilters();
+            updateNavbarBadges();
+        }
+
+        function triggerSearch() {
+            applySidebarFilters();
+        }
+
+        function resetAllFilters() {
+            document.getElementById("filter-price").value = 40000;
+            document.getElementById("price-slider-val").textContent = "Max: ₹40,000";
+            document.querySelectorAll('input[name="filter-fabric"]').forEach(el => el.checked = false);
+            document.querySelectorAll('input[name="filter-occasion"]').forEach(el => el.checked = false);
+            document.getElementById("stock-all").checked = true;
+            document.getElementById("search-input").value = "";
+            activeColorFilter = "";
+            document.querySelectorAll("#color-filter-palette button").forEach(b => b.classList.remove("active-border"));
+            applySidebarFilters();
+        }
+
+        function openQuickView(id) {
+            const products = PavitraDB.getProducts();
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+            
+            const currentUser = PavitraDB.getCurrentUser();
+            const isB2B = currentUser && currentUser.role === "Retailer";
+            const body = document.getElementById("modal-product-detail-body");
+            
+            const price = isB2B ? p.b2bPrice : p.retailPrice;
+            const moq = isB2B ? p.b2bMoq : p.moq;
+            
+            // Create image carousel
+            const images = p.images && p.images.length > 0 ? p.images : [p.imageUrl];
+            const imagesHTML = images.map((img, idx) => `
+                <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                    <img src="${img}" alt="${p.title}" class="d-block w-100" style="object-fit: cover; max-height:420px;">
+                </div>
+            `).join('');
+
+            const thumbnailsHTML = images.map((img, idx) => `
+                <img src="${img}" alt="Thumbnail ${idx + 1}" 
+                    onclick="document.querySelector('#quickViewCarousel .carousel-item.active').classList.remove('active'); document.querySelectorAll('#quickViewCarousel .carousel-item')[${idx}].classList.add('active')"
+                    style="width: 50px; height: 50px; cursor: pointer; border: ${idx === 0 ? '2px solid var(--pavitra-maroon)' : '1px solid #ddd'}; margin: 5px; object-fit: cover;">
+            `).join('');
+            
+            body.innerHTML = `
+                <div class="row g-4">
+                    <div class="col-md-5">
+                        <div id="quickViewCarousel" class="carousel slide">
+                            <div class="carousel-inner border border-gold">
+                                ${imagesHTML}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#quickViewCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#quickViewCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+                        </div>
+                        <div class="d-flex flex-wrap justify-content-center mt-3">
+                            ${thumbnailsHTML}
+                        </div>
+                    </div>
+                    <div class="col-md-7 d-flex flex-column justify-content-between">
+                        <div>
+                            <span class="badge bg-maroon text-gold-light mb-2">${p.subcategory || p.category}</span>
+                            <h3 class="text-maroon display-font mb-2">${p.title}</h3>
+                            <div class="d-flex text-warning mb-3 small">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-muted ms-2">(${p.reviewsCount} reviews)</span>
+                            </div>
+                            
+                            <h4 class="text-maroon fw-bold mb-3 fs-4">₹${price.toLocaleString('en-IN')}.00</h4>
+                            
+                            <table class="table table-sm table-bordered mt-3 text-start small">
+                                <tbody>
+                                    <tr><th class="bg-light w-35">SKU Code</th><td>${p.sku}</td></tr>
+                                    <tr><th class="bg-light">Fabric</th><td>${p.fabric}</td></tr>
+                                    <tr><th class="bg-light">Color</th><td>${p.color}</td></tr>
+                                    <tr><th class="bg-light">Dimensions</th><td>${p.dimensions}</td></tr>
+                                    <tr><th class="bg-light">Weight</th><td>${p.weight}</td></tr>
+                                    <tr><th class="bg-light">MOQ Requirement</th><td>${moq} unit(s)</td></tr>
+                                </tbody>
+                            </table>
+                            
+                            <p class="text-muted small mt-3">${p.description}</p>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="input-group" style="width: 140px;">
+                                    <span class="input-group-text bg-light">Qty</span>
+                                    <input type="number" class="form-control text-center" id="quickview-qty" value="${moq}" min="${moq}">
+                                </div>
+                                <button class="btn btn-pavitra flex-grow-1" onclick="addProductFromQuickview('${p.id}')">Add To Bag</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const modal = new bootstrap.Modal(document.getElementById('productQuickViewModal'));
+            modal.show();
+        }
+
+        function addProductFromQuickview(productId) {
+            const qty = document.getElementById("quickview-qty").value;
+            CartAPI.addToCart(productId, qty);
+            bootstrap.Modal.getInstance(document.getElementById('productQuickViewModal')).hide();
+            alert('Added to bag successfully.');
+            updateNavbarBadges();
+        }
+    </script>
+    <style>
+        .active-border {
+            border: 2px solid var(--pavitra-maroon) !important;
+            transform: scale(1.15);
+        }
+        .btn-outline-maroon {
+            color: var(--pavitra-maroon);
+            border-color: var(--pavitra-maroon);
+        }
+        .btn-outline-maroon:hover {
+            background-color: var(--pavitra-maroon);
+            color: white;
+        }
+        .btn-outline-maroon.active {
+            background-color: var(--pavitra-maroon);
+            color: white;
+            font-weight: bold;
+        }
+        .btn-outline-maroon:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</body>
+</html>

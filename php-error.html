@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Error | Pavitra Designers</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .error-page-container {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .error-card {
+            max-width: 550px;
+            background-color: var(--pavitra-white);
+            border-top: 5px solid var(--pavitra-maroon);
+            border-bottom: 2px solid var(--pavitra-gold);
+            padding: 40px;
+            box-shadow: var(--pavitra-shadow);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Persistent Interactive Role Switcher for Demos -->
+    <div id="demo-role-bar-container"></div>
+
+    <div class="container error-page-container">
+        <div class="error-card text-center">
+            <!-- Branded Logo Header -->
+            <div class="mb-4">
+                <img src="logo.png" alt="Pavitra Designers logo" style="height: 105px; width: auto; max-width: 320px; object-fit: contain;">
+            </div>
+
+            <i class="fas fa-exclamation-circle text-maroon display-3 mb-3"></i>
+            <h2 class="text-maroon mb-3">Server Execution Failed</h2>
+            <p class="text-muted">We apologize for the inconvenience. A backend script encountered an unexpected runtime exception. To prevent data leakage, detailed PHP stack traces are hidden from public view.</p>
+            
+            <div class="alert alert-light border small text-start my-4">
+                <div class="d-flex justify-content-between text-muted border-bottom pb-1 mb-2">
+                    <span>Incident ID: <strong>INC-55192</strong></span>
+                    <span>Status: <strong>Logged</strong></span>
+                </div>
+                Our engineering team has been automatically paged with the runtime stack trace. We will restore access shortly.
+            </div>
+
+            <div class="d-flex gap-2 justify-content-center">
+                <a href="index.html" class="btn btn-pavitra btn-sm"><i class="fas fa-home me-1"></i> Return Home</a>
+                <button class="btn btn-pavitra-outline btn-sm" onclick="toggleDeveloperPanel()"><i class="fas fa-terminal me-1"></i> Developer Panel</button>
+            </div>
+
+            <!-- Developer Debug Console Inspector -->
+            <div class="mt-4 text-start d-none" id="developer-debug-panel">
+                <hr class="border-gold">
+                <h6 class="text-maroon fw-bold mb-2"><i class="fas fa-bug"></i> Developer Log Inspector (Fatal Handler)</h6>
+                <div class="bg-dark text-success p-3 rounded font-monospace" style="font-size: 0.8rem; max-height: 250px; overflow-y: auto;">
+                    <div>[2026-07-07 15:44:40] PHP Fatal Error: Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, null given in /var/www/pavitra/controllers/DbController.php:48</div>
+                    <div class="mt-2 text-white border-top border-secondary pt-2">Mapped Logger Payload:</div>
+                    <div class="text-gold">• Error Message: <span class="text-white" id="dbg-msg">mysqli_query(): Argument #1 ($mysql) must be of type mysqli</span></div>
+                    <div class="text-gold">• URL Endpoint: <span class="text-white" id="dbg-url">/dashboard.html?action=save_settings</span></div>
+                    <div class="text-gold">• File Name: <span class="text-white" id="dbg-file">/var/www/pavitra/controllers/DbController.php</span></div>
+                    <div class="text-gold">• Line Number: <span class="text-white" id="dbg-line">48</span></div>
+                    <div class="text-gold">• User Account ID: <span class="text-white" id="dbg-user">u-admin</span></div>
+                    <div class="text-gold">• Remote IP Address: <span class="text-white">127.0.0.1</span></div>
+                    <div class="text-gold">• Client Browser: <span class="text-white">Mozilla/5.0 (Windows NT 10.0; Win64; x64)</span></div>
+                </div>
+
+                <div class="mt-3 p-3 border bg-light rounded text-center">
+                    <span class="small d-block text-muted mb-2">Want to simulate a new dynamic error and check if it logs to the Admin Dashboard?</span>
+                    <button class="btn btn-sm btn-danger w-100" onclick="simulateNewError()">Trigger & Log New Fatal Error</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (Matches Screenshot 2) -->
+    <footer class="footer-pavitra">
+        <div class="container text-center">
+            <p class="small text-muted m-0">&copy; 2026 Pavitra Designer Saree. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp floating chat button -->
+    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp chat"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core State Javascript -->
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentUser = PavitraDB.getCurrentUser();
+            const uId = currentUser ? currentUser.id : "Anonymous";
+            document.getElementById("dbg-user").textContent = uId;
+        });
+
+        function toggleDeveloperPanel() {
+            document.getElementById("developer-debug-panel").classList.toggle("d-none");
+        }
+
+        function simulateNewError() {
+            const errs = [
+                { msg: "Fatal: Out of memory (allocated 10223616 bytes)", file: "SettlementEngine.php", line: 204 },
+                { msg: "Warning: Cannot modify header information - headers already sent", file: "OrderController.php", line: 12 },
+                { msg: "Exception: Razorpay Gateway Signature Validation Failed", file: "PaymentGateway.php", line: 88 }
+            ];
+            const chosen = errs[Math.floor(Math.random() * errs.length)];
+            
+            const currentUser = PavitraDB.getCurrentUser();
+            const uId = currentUser ? currentUser.id : "Guest";
+
+            const logged = ErrorLogger.logError(
+                chosen.msg,
+                window.location.pathname + "?trigger=simulated_error",
+                "/var/www/pavitra/controllers/" + chosen.file,
+                chosen.line,
+                uId
+            );
+
+            // Update debug inspector display
+            document.getElementById("dbg-msg").textContent = logged.message;
+            document.getElementById("dbg-url").textContent = logged.url;
+            document.getElementById("dbg-file").textContent = logged.fileName;
+            document.getElementById("dbg-line").textContent = logged.lineNumber;
+
+            alert("Successfully simulated & logged new error! Check the Admin Dashboard logs to review.");
+        }
+    </script>
+</body>
+</html>

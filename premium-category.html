@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pavitra Designers | Premium Saree Edit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-b6GQw6J7gH8yDMSFjXxZzXLbNX/2+7Uw8Y3bg+MZkF9Kj5sDhgFWWPzwTgtD1F0C0+e5rzrjJgT97bN4hpcUVQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            pavitra: {
+              maroon: '#6d1737',
+              gold: '#b78b3c',
+              ivory: '#f7f2eb',
+              cream: '#fff7ef',
+              sand: '#e4d8ca',
+              slate: '#3e3242',
+            }
+          },
+          boxShadow: {
+            soft: '0 24px 60px rgba(109, 23, 55, 0.14)',
+            card: '0 20px 50px rgba(109, 23, 55, 0.08)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #3e3242;
+    }
+    .font-playfair { font-family: 'Playfair Display', serif; }
+    .glass-pane { background: rgba(255,255,255,0.88); backdrop-filter: blur(18px); }
+    .nav-pill { transition: all .25s ease; }
+    .nav-pill:hover { background: rgba(109,23,55,0.08); border-color: rgba(109,23,55,0.16); }
+    .filter-chip { transition: all .25s ease; }
+    .filter-chip:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(109, 23, 55, 0.08); }
+    .filter-chip.active { background: #6d1737; color: #fff; border-color: transparent; }
+    .image-zoom { transition: transform .5s ease; }
+    .product-card:hover .image-zoom { transform: scale(1.06); }
+    .skeleton { animation: pulse 1.6s ease-in-out infinite; background: linear-gradient(90deg, #f7f2eb 0%, #efe4d8 50%, #f7f2eb 100%); background-size: 200% 100%; }
+    .search-overlay { inset: 100%; }
+    @keyframes pulse { 0%, 100% { background-position: 200% 0; } 50% { background-position: -200% 0; } }
+    .swiper-pagination-bullet { background: rgba(255,255,255,0.55); opacity: 1; }
+    .swiper-pagination-bullet-active { background: #6d1737; }
+  </style>
+</head>
+<body class="bg-pavitra-ivory text-slate-900">
+  <div class="min-h-screen">
+    <header class="sticky top-0 z-50 border-b border-sand bg-white/95 backdrop-blur-md">
+      <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3">
+          <button aria-label="Open menu" class="h-12 w-12 rounded-3xl border border-sand bg-pavitra-ivory text-slate-700 shadow-sm transition hover:border-pavitra-maroon hover:text-pavitra-maroon">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="hidden md:flex items-center gap-2 rounded-3xl border border-sand bg-pavitra-ivory px-4 py-2 text-sm text-slate-600 shadow-sm">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="searchInput" type="search" placeholder="Search sarees, lehengas, kurtis..." class="w-56 border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400" />
+          </div>
+        </div>
+        <a href="index.html" class="flex items-center gap-3">
+          <div class="flex h-14 w-14 items-center justify-center rounded-[28px] border border-pavitra-gold bg-pavitra-ivory text-pavitra-gold text-xl font-bold shadow-soft">P</div>
+          <div class="hidden sm:block">
+            <p class="text-xs uppercase tracking-[0.35em] text-slate-500">Pavitra</p>
+            <h1 class="text-2xl font-playfair font-black text-pavitra-maroon">Designers</h1>
+          </div>
+        </a>
+        <div class="hidden md:flex items-center gap-3">
+          <button aria-label="Wishlist" class="h-12 w-12 rounded-3xl border border-sand bg-pavitra-ivory text-slate-700 transition hover:bg-pavitra-maroon hover:text-white"><i class="fa-regular fa-heart"></i></button>
+          <button aria-label="Cart" class="h-12 w-12 rounded-3xl border border-sand bg-pavitra-ivory text-slate-700 transition hover:bg-pavitra-maroon hover:text-white"><i class="fa-solid fa-bag-shopping"></i></button>
+          <button aria-label="Profile" class="h-12 w-12 rounded-3xl border border-sand bg-pavitra-ivory text-slate-700 transition hover:bg-pavitra-maroon hover:text-white"><i class="fa-regular fa-user"></i></button>
+        </div>
+      </div>
+      <nav class="border-t border-sand bg-pavitra-ivory/95 px-4 py-3 text-sm text-slate-600 shadow-sm sm:px-6 lg:px-8">
+        <div class="mx-auto flex max-w-7xl flex-wrap items-center gap-2 overflow-x-auto scrollbar-thin">
+          <a href="products.html?category=Women" class="nav-pill rounded-full border border-sand bg-white px-4 py-2">Women</a>
+          <a href="products.html?category=Men" class="nav-pill rounded-full border border-sand bg-white px-4 py-2">Men</a>
+          <a href="products.html?category=Kids" class="nav-pill rounded-full border border-sand bg-white px-4 py-2">Kids</a>
+          <a href="products.html?category=Sarees" class="nav-pill rounded-full border border-sand bg-pavitra-maroon px-4 py-2 text-white shadow-soft">Sarees</a>
+          <a href="products.html?category=Lehengas" class="nav-pill rounded-full border border-sand bg-white px-4 py-2">Lehengas</a>
+          <a href="products.html?category=Kurtis" class="nav-pill rounded-full border border-sand bg-white px-4 py-2">Kurtis</a>
+          <a href="products.html?category=Dresses" class="nav-pill rounded-full border border-sand bg-white px-4 py-2">Dresses</a>
+          <a href="new-arrivals.html" class="nav-pill rounded-full border border-sand bg-white px-4 py-2">New Arrivals</a>
+          <a href="collections.html" class="nav-pill rounded-full border border-sand bg-white px-4 py-2">Wedding Collection</a>
+          <a href="offers.html" class="nav-pill rounded-full border border-sand bg-white px-4 py-2">Sale</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <section class="mb-10 overflow-hidden rounded-[40px] bg-slate-950 text-white shadow-soft">
+        <div class="grid min-h-[92vh] items-center gap-10 lg:grid-cols-[1.4fr_1fr] p-8 sm:p-10 lg:p-16">
+          <div class="relative flex min-h-[58vh] flex-col justify-center gap-6 lg:min-h-full">
+            <span class="inline-flex rounded-full border border-pavitra-gold bg-[rgba(183,139,60,0.12)] px-4 py-2 text-xs uppercase tracking-[0.35em] text-pavitra-gold">Pavitra Premium Edit</span>
+            <h1 class="text-6xl font-playfair font-black uppercase tracking-[0.12em] leading-tight sm:text-7xl">Luxury Sarees for Signature Moments</h1>
+            <p class="max-w-3xl text-lg leading-9 text-slate-200 sm:text-xl">Celebratory elegance reimagined with hand-crafted weaves, couture finishes and refined silhouettes designed for weddings, receptions and destination soirées.</p>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div class="rounded-[28px] border border-white/10 bg-white/10 p-6 backdrop-blur-xl">
+                <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Crafted For</p>
+                <p class="mt-3 text-2xl font-semibold text-white">Bridal Heritage</p>
+              </div>
+              <div class="rounded-[28px] border border-white/10 bg-white/10 p-6 backdrop-blur-xl">
+                <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Experience</p>
+                <p class="mt-3 text-2xl font-semibold text-white">Private styling support</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-4 pt-4">
+              <a href="products.html?category=Sarees&subcategory=Banarasi" class="inline-flex items-center justify-center rounded-full bg-pavitra-maroon px-8 py-4 text-sm font-semibold text-white transition hover:bg-pavitra-gold hover:text-slate-900">Shop Luxury Drapes</a>
+              <a href="contact.html" class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-8 py-4 text-sm font-semibold text-white transition hover:border-pavitra-gold hover:bg-pavitra-gold/10">Book a Styling Call</a>
+            </div>
+          </div>
+          <div class="relative rounded-[32px] border border-white/10 bg-white/5 p-4 shadow-soft lg:h-[84vh]">
+            <div class="swiper mySwiper rounded-[28px] overflow-hidden h-full">
+              <div class="swiper-wrapper h-full">
+                <div class="swiper-slide relative h-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1200&q=80');">
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent"></div>
+                  <div class="absolute left-6 bottom-6 max-w-xs rounded-[28px] border border-white/20 bg-white/10 p-5 text-white backdrop-blur-xl">
+                    <p class="text-xs uppercase tracking-[0.35em]">Editorial Story</p>
+                    <p class="mt-3 text-xl font-semibold">Golden silk, rich heritage.</p>
+                  </div>
+                </div>
+                <div class="swiper-slide relative h-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=1200&q=80');">
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent"></div>
+                  <div class="absolute left-6 bottom-6 max-w-xs rounded-[28px] border border-white/20 bg-white/10 p-5 text-white backdrop-blur-xl">
+                    <p class="text-xs uppercase tracking-[0.35em]">Heritage Weave</p>
+                    <p class="mt-3 text-xl font-semibold">Opulent brocade, modern form.</p>
+                  </div>
+                </div>
+                <div class="swiper-slide relative h-full bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1523986371872-9d3ba2e2f10b?auto=format&fit=crop&w=1200&q=80');">
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent"></div>
+                  <div class="absolute left-6 bottom-6 max-w-xs rounded-[28px] border border-white/20 bg-white/10 p-5 text-white backdrop-blur-xl">
+                    <p class="text-xs uppercase tracking-[0.35em]">Signature Finish</p>
+                    <p class="mt-3 text-xl font-semibold">Luxe textures with a couture edge.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-next text-white"></div>
+              <div class="swiper-button-prev text-white"></div>
+            </div>
+            <div class="absolute left-6 top-6 rounded-full border border-white/20 bg-slate-950/80 px-4 py-3 text-xs uppercase tracking-[0.35em] text-white">Curated collection</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-8 rounded-[36px] bg-white p-8 shadow-soft">
+        <div class="grid gap-8 lg:grid-cols-[1.8fr_1fr] lg:items-center">
+          <div>
+            <div class="flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-slate-500">
+              <span>Home</span>
+              <span class="text-pavitra-maroon">›</span>
+              <span>Women</span>
+              <span class="text-pavitra-maroon">›</span>
+              <span class="font-semibold text-slate-900">Premium Edit</span>
+            </div>
+            <h2 class="mt-4 text-4xl font-playfair font-black tracking-tight text-pavitra-maroon sm:text-5xl">Curated for the bride, the guest and the gala.</h2>
+            <p class="mt-4 text-base leading-8 text-slate-600">Find handpicked sarees with premium craftsmanship, luxurious embroidery and editorial silhouettes designed to elevate every grand celebration.</p>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-3">
+            <div class="rounded-[28px] border border-sand bg-pavitra-ivory p-6">
+              <p class="text-xs uppercase tracking-[0.35em] text-slate-500">Expert styling</p>
+              <p class="mt-3 text-xl font-semibold text-slate-900">Private consultations</p>
+            </div>
+            <div class="rounded-[28px] border border-sand bg-pavitra-ivory p-6">
+              <p class="text-xs uppercase tracking-[0.35em] text-slate-500">Rare fabrics</p>
+              <p class="mt-3 text-xl font-semibold text-slate-900">Silk, organza, brocade</p>
+            </div>
+            <div class="rounded-[28px] border border-sand bg-pavitra-ivory p-6">
+              <p class="text-xs uppercase tracking-[0.35em] text-slate-500">Luxury details</p>
+              <p class="mt-3 text-xl font-semibold text-slate-900">Zari, embroidery, shimmer</p>
+            </div>
+          </div>
+        </div>
+        <button id="readMoreButton" class="mt-8 inline-flex items-center gap-2 rounded-full border border-pavitra-maroon bg-transparent px-6 py-3 text-sm font-semibold text-pavitra-maroon transition hover:bg-pavitra-maroon hover:text-white">
+          Read More
+          <i class="fa-solid fa-chevron-down transition"></i>
+        </button>
+        <div id="extraDescription" class="mt-6 hidden rounded-[32px] border border-sand bg-pavitra-ivory p-6 text-sm leading-7 text-slate-600">
+          <p>From pure silk weaves to ornate zari borders, this edit is made for the discerning customer seeking luxurious texture, heirloom motifs, and an elevated saree wardrobe.</p>
+          <p class="mt-4">Browse soft organza, bridal banarasi, embroidered chiffon and statement metallic jacquard, each style designed to feel premium and unforgettable.</p>
+        </div>
+      </section>
+
+      <section class="mb-8 overflow-hidden rounded-[36px] bg-white p-4 shadow-soft">
+        <div class="flex items-center gap-3 overflow-x-auto px-3 py-3 scrollbar-thin">
+          <button class="filter-chip active rounded-full border border-sand bg-pavitra-maroon px-5 py-3 text-sm font-semibold text-white">Cotton</button>
+          <button class="filter-chip rounded-full border border-sand bg-white px-5 py-3 text-sm font-medium text-slate-700">Silk</button>
+          <button class="filter-chip rounded-full border border-sand bg-white px-5 py-3 text-sm font-medium text-slate-700">Organza</button>
+          <button class="filter-chip rounded-full border border-sand bg-white px-5 py-3 text-sm font-medium text-slate-700">Party Wear</button>
+          <button class="filter-chip rounded-full border border-sand bg-white px-5 py-3 text-sm font-medium text-slate-700">Bridal</button>
+          <button class="filter-chip rounded-full border border-sand bg-white px-5 py-3 text-sm font-medium text-slate-700">Festival</button>
+          <button class="filter-chip rounded-full border border-sand bg-white px-5 py-3 text-sm font-medium text-slate-700">Wedding</button>
+          <button class="filter-chip rounded-full border border-sand bg-white px-5 py-3 text-sm font-medium text-slate-700">Printed</button>
+          <button class="filter-chip rounded-full border border-sand bg-white px-5 py-3 text-sm font-medium text-slate-700">Banarasi</button>
+          <button class="filter-chip rounded-full border border-sand bg-white px-5 py-3 text-sm font-medium text-slate-700">Linen</button>
+        </div>
+      </section>
+
+      <div class="grid gap-8 lg:grid-cols-[280px_minmax(0,1fr)]">
+        <aside class="sticky top-28 self-start space-y-5">
+          <div class="glass-pane rounded-[32px] border border-sand p-6 shadow-soft">
+            <div class="flex items-center justify-between pb-4">
+              <div>
+                <p class="text-sm uppercase tracking-[0.35em] text-slate-500">Filters</p>
+                <h3 class="mt-2 text-xl font-semibold text-slate-900">Refine Search</h3>
+              </div>
+              <button id="clearFilters" class="text-sm font-semibold text-pavitra-maroon transition hover:text-pavitra-gold">Clear all</button>
+            </div>
+            <div class="space-y-5">
+              <div class="rounded-[28px] border border-sand bg-white p-5">
+                <button class="accordion-header flex w-full items-center justify-between text-left text-sm font-semibold text-slate-900" data-accordion="Color">Color <i class="fa-solid fa-angle-down"></i></button>
+                <div class="accordion-panel mt-4 grid gap-3">
+                  <label class="flex items-center gap-3 rounded-2xl border border-sand bg-pavitra-ivory px-3 py-2 text-sm transition hover:border-pavitra-maroon"><input type="checkbox" class="h-4 w-4 accent-pavitra-maroon" /><span>Maroon</span></label>
+                  <label class="flex items-center gap-3 rounded-2xl border border-sand bg-pavitra-ivory px-3 py-2 text-sm transition hover:border-pavitra-maroon"><input type="checkbox" class="h-4 w-4 accent-pavitra-maroon" /><span>Gold</span></label>
+                  <label class="flex items-center gap-3 rounded-2xl border border-sand bg-pavitra-ivory px-3 py-2 text-sm transition hover:border-pavitra-maroon"><input type="checkbox" class="h-4 w-4 accent-pavitra-maroon" /><span>Ivory</span></label>
+                </div>
+              </div>
+              <div class="rounded-[28px] border border-sand bg-white p-5">
+                <button class="accordion-header flex w-full items-center justify-between text-left text-sm font-semibold text-slate-900" data-accordion="Price">Price <i class="fa-solid fa-angle-down"></i></button>
+                <div class="accordion-panel mt-4 space-y-4">
+                  <div class="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-slate-500"><span>₹999</span><span>₹24,999+</span></div>
+                  <input type="range" min="999" max="24999" value="9999" class="w-full accent-pavitra-maroon" />
+                </div>
+              </div>
+              <div class="rounded-[28px] border border-sand bg-white p-5">
+                <button class="accordion-header flex w-full items-center justify-between text-left text-sm font-semibold text-slate-900" data-accordion="Size">Size <i class="fa-solid fa-angle-down"></i></button>
+                <div class="accordion-panel mt-4 flex flex-wrap gap-2">
+                  <button class="rounded-full border border-sand bg-pavitra-ivory px-3 py-2 text-sm text-slate-700 transition hover:border-pavitra-maroon">XS</button>
+                  <button class="rounded-full border border-sand bg-pavitra-ivory px-3 py-2 text-sm text-slate-700 transition hover:border-pavitra-maroon">S</button>
+                  <button class="rounded-full border border-sand bg-pavitra-ivory px-3 py-2 text-sm text-slate-700 transition hover:border-pavitra-maroon">M</button>
+                  <button class="rounded-full border border-sand bg-pavitra-ivory px-3 py-2 text-sm text-slate-700 transition hover:border-pavitra-maroon">L</button>
+                </div>
+              </div>
+              <div class="rounded-[28px] border border-sand bg-white p-5">
+                <button class="accordion-header flex w-full items-center justify-between text-left text-sm font-semibold text-slate-900" data-accordion="Occasion">Occasion <i class="fa-solid fa-angle-down"></i></button>
+                <div class="accordion-panel mt-4 grid gap-3">
+                  <label class="flex items-center gap-3 rounded-2xl border border-sand bg-pavitra-ivory px-3 py-2 text-sm transition hover:border-pavitra-maroon"><input type="checkbox" class="h-4 w-4 accent-pavitra-maroon" /><span>Wedding</span></label>
+                  <label class="flex items-center gap-3 rounded-2xl border border-sand bg-pavitra-ivory px-3 py-2 text-sm transition hover:border-pavitra-maroon"><input type="checkbox" class="h-4 w-4 accent-pavitra-maroon" /><span>Festive</span></label>
+                  <label class="flex items-center gap-3 rounded-2xl border border-sand bg-pavitra-ivory px-3 py-2 text-sm transition hover:border-pavitra-maroon"><input type="checkbox" class="h-4 w-4 accent-pavitra-maroon" /><span>Party</span></label>
+                </div>
+              </div>
+              <div class="rounded-[28px] border border-sand bg-white p-5">
+                <button class="accordion-header flex w-full items-center justify-between text-left text-sm font-semibold text-slate-900" data-accordion="Fabric">Fabric <i class="fa-solid fa-angle-down"></i></button>
+                <div class="accordion-panel mt-4 grid gap-3">
+                  <label class="flex items-center gap-3 rounded-2xl border border-sand bg-pavitra-ivory px-3 py-2 text-sm transition hover:border-pavitra-maroon"><input type="checkbox" class="h-4 w-4 accent-pavitra-maroon" /><span>Silk</span></label>
+                  <label class="flex items-center gap-3 rounded-2xl border border-sand bg-pavitra-ivory px-3 py-2 text-sm transition hover:border-pavitra-maroon"><input type="checkbox" class="h-4 w-4 accent-pavitra-maroon" /><span>Organza</span></label>
+                  <label class="flex items-center gap-3 rounded-2xl border border-sand bg-pavitra-ivory px-3 py-2 text-sm transition hover:border-pavitra-maroon"><input type="checkbox" class="h-4 w-4 accent-pavitra-maroon" /><span>Chiffon</span></label>
+                </div>
+              </div>
+              <div class="rounded-[28px] border border-sand bg-white p-5">
+                <button class="accordion-header flex w-full items-center justify-between text-left text-sm font-semibold text-slate-900" data-accordion="Brand">Brand <i class="fa-solid fa-angle-down"></i></button>
+                <div class="accordion-panel mt-4 grid gap-3">
+                  <label class="flex items-center gap-3 rounded-2xl border border-sand bg-pavitra-ivory px-3 py-2 text-sm transition hover:border-pavitra-maroon"><input type="checkbox" class="h-4 w-4 accent-pavitra-maroon" /><span>Pavitra Originals</span></label>
+                  <label class="flex items-center gap-3 rounded-2xl border border-sand bg-pavitra-ivory px-3 py-2 text-sm transition hover:border-pavitra-maroon"><input type="checkbox" class="h-4 w-4 accent-pavitra-maroon" /><span>Heritage Weaves</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <section class="space-y-6">
+          <div class="rounded-[32px] border border-sand bg-white p-5 shadow-soft">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div class="flex flex-wrap items-center gap-3 text-sm text-slate-600">
+                <div class="inline-flex items-center gap-2 rounded-full border border-sand bg-pavitra-ivory px-4 py-3 text-sm shadow-sm">
+                  <button class="grid-btn active" data-grid="4" aria-label="4 columns"><i class="fa-solid fa-grip"></i></button>
+                  <button class="grid-btn" data-grid="3" aria-label="3 columns"><i class="fa-solid fa-border-all"></i></button>
+                  <button class="grid-btn" data-grid="2" aria-label="2 columns"><i class="fa-solid fa-table-cells"></i></button>
+                </div>
+                <span class="text-sm font-medium text-pavitra-maroon">1,248 Products</span>
+              </div>
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <label class="text-sm font-medium text-slate-600">Sort by</label>
+                <select id="sortSelect" class="rounded-3xl border border-sand bg-pavitra-ivory px-4 py-3 text-sm text-slate-800 outline-none transition hover:border-pavitra-maroon">
+                  <option>Featured</option>
+                  <option>Best Selling</option>
+                  <option>Newest</option>
+                  <option>Price Low to High</option>
+                  <option>Price High to Low</option>
+                  <option>Customer Rating</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="productGrid" class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4"></div>
+
+          <div class="flex justify-center">
+            <button id="loadMoreBtn" class="rounded-full border border-pavitra-maroon bg-pavitra-ivory px-8 py-3 text-sm font-semibold text-pavitra-maroon transition hover:bg-pavitra-maroon hover:text-white">Load More</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div id="quickViewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
+      <div class="w-full max-w-3xl rounded-[32px] bg-white p-6 shadow-soft">
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.35em] text-pavitra-maroon/70">Quick View</p>
+            <h2 id="quickViewTitle" class="mt-2 text-2xl font-semibold text-slate-900">Elegant Silk Saree</h2>
+          </div>
+          <button id="closeQuickView" class="h-12 w-12 rounded-3xl border border-sand text-slate-700 transition hover:bg-pavitra-ivory"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="mt-6 grid gap-6 lg:grid-cols-[2fr_1fr]">
+          <img id="quickViewImage" src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=900&q=80" alt="Quick view product" class="h-full w-full rounded-[28px] object-cover object-center" />
+          <div class="space-y-5 rounded-[32px] border border-sand bg-pavitra-ivory p-6">
+            <p id="quickViewDescription" class="text-sm leading-7 text-slate-600">A luxurious saree crafted with exquisite fabric and finishing, ideal for bridal celebrations and destination weddings.</p>
+            <div class="space-y-3 text-sm text-slate-600">
+              <div class="flex items-center gap-3"><span class="font-semibold text-slate-900">Fabric:</span><span>Silk blend</span></div>
+              <div class="flex items-center gap-3"><span class="font-semibold text-slate-900">Occasion:</span><span>Wedding, Festive, Party</span></div>
+              <div class="flex items-center gap-3"><span class="font-semibold text-slate-900">Colors:</span><span>Maroon, Gold, Ivory</span></div>
+            </div>
+            <button class="w-full rounded-full bg-pavitra-maroon px-5 py-3 text-sm font-semibold text-white transition hover:bg-pavitra-gold hover:text-slate-900">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script>
+    const readMoreButton = document.getElementById('readMoreButton');
+    const extraDescription = document.getElementById('extraDescription');
+    const searchInput = document.getElementById('searchInput');
+    const productGrid = document.getElementById('productGrid');
+    const gridButtons = document.querySelectorAll('.grid-btn');
+    const sortSelect = document.getElementById('sortSelect');
+    const quickViewModal = document.getElementById('quickViewModal');
+    const closeQuickView = document.getElementById('closeQuickView');
+    const quickViewTitle = document.getElementById('quickViewTitle');
+    const quickViewImage = document.getElementById('quickViewImage');
+    const quickViewDescription = document.getElementById('quickViewDescription');
+    const filterChips = document.querySelectorAll('.filter-chip');
+
+    const searchSuggestions = ['Silk saree', 'Banarasi bridal', 'Wedding drape', 'Premium lehenga', 'Festive organza'];
+    const suggestionBox = document.createElement('div');
+    suggestionBox.className = 'absolute left-0 top-full mt-2 w-full rounded-3xl border border-sand bg-white p-4 shadow-soft hidden';
+    suggestionBox.innerHTML = `<div class="text-xs uppercase tracking-[0.35em] text-slate-500">Trending Searches</div><div class="mt-3 grid gap-2"></div>`;
+    searchInput?.parentElement.appendChild(suggestionBox);
+
+    const products = [
+      { title: 'Royal Crimson Banarasi Saree', brand: 'Pavitra Originals', price: 12999, original: 18999, discount: 32, rating: 4.8, reviews: 182, colors: ['#6d1737', '#b78b3c', '#f7f2eb'], sizes: ['S','M','L'], badge: 'Bestseller', image: 'https://images.unsplash.com/photo-1533512189421-35f9682ee58e?auto=format&fit=crop&w=900&q=80', hover: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80' },
+      { title: 'Ivory Bridal Silk Saree', brand: 'Heritage Weaves', price: 15499, original: 21200, discount: 27, rating: 4.9, reviews: 214, colors: ['#ffffff', '#ddc38f', '#b78b3c'], sizes: ['S','M','L'], badge: 'Limited Edition', image: 'https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=900&q=80', hover: 'https://images.unsplash.com/photo-1523986371872-9d3ba2e2f10b?auto=format&fit=crop&w=900&q=80' },
+      { title: 'Midnight Blue Embroidered Saree', brand: 'Pavitra Luxe', price: 9999, original: 13999, discount: 29, rating: 4.7, reviews: 98, colors: ['#22334a', '#d8b58a', '#f8f2ea'], sizes: ['M','L'], badge: 'Trending', image: 'https://images.unsplash.com/photo-1517984923221-5738b2c3dc51?auto=format&fit=crop&w=900&q=80', hover: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80' },
+      { title: 'Festive Gold Zari Saree', brand: 'Rajsi Bridal', price: 17500, original: 23500, discount: 26, rating: 4.8, reviews: 134, colors: ['#b78b3c', '#6d1737', '#ffffff'], sizes: ['S','M','L'], badge: 'New Arrival', image: 'https://images.unsplash.com/photo-1520962915807-2d634be2d6c7?auto=format&fit=crop&w=900&q=80', hover: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80' },
+      { title: 'Blush Pink Organza Saree', brand: 'Pavitra Bloom', price: 8299, original: 10999, discount: 25, rating: 4.6, reviews: 76, colors: ['#f4c1c9', '#f8e0d8', '#b78b3c'], sizes: ['XS','S','M'], badge: 'Limited Stock', image: 'https://images.unsplash.com/photo-1514986888952-8cd320577b7c?auto=format&fit=crop&w=900&q=80', hover: 'https://images.unsplash.com/photo-1520962915807-2d634be2d6c7?auto=format&fit=crop&w=900&q=80' },
+      { title: 'Emerald Green Banarasi Saree', brand: 'Pavitra Heritage', price: 15999, original: 21500, discount: 26, rating: 4.9, reviews: 112, colors: ['#0b4f2b', '#b78b3c', '#ffffff'], sizes: ['M','L'], badge: 'Best Selling', image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=80', hover: 'https://images.unsplash.com/photo-1517984923221-5738b2c3dc51?auto=format&fit=crop&w=900&q=80' },
+      { title: 'Royal Velvet Bridal Saree', brand: 'Pavitra Couture', price: 18999, original: 24999, discount: 24, rating: 4.9, reviews: 168, colors: ['#781b33', '#f4e3cc', '#b78b3c'], sizes: ['S','M','L'], badge: 'Premium', image: 'https://images.unsplash.com/photo-1495121605193-b116b5b9c5d6?auto=format&fit=crop&w=900&q=80', hover: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80' },
+      { title: 'Peacock Green Party Saree', brand: 'Pavitra Sparkle', price: 12499, original: 16200, discount: 23, rating: 4.7, reviews: 89, colors: ['#1d4f5d', '#d7ab7c', '#f5f1eb'], sizes: ['M','L'], badge: 'Featured', image: 'https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=900&q=80', hover: 'https://images.unsplash.com/photo-1517984923221-5738b2c3dc51?auto=format&fit=crop&w=900&q=80' }
+    ];
+
+    function renderSkeleton() {
+      productGrid.innerHTML = Array.from({ length: 8 }).map(() => `
+        <div class="rounded-[32px] border border-sand bg-white p-6 shadow-card">
+          <div class="mb-5 h-[360px] rounded-[28px] skeleton"></div>
+          <div class="space-y-3">
+            <div class="h-4 w-2/5 rounded-full skeleton"></div>
+            <div class="h-5 w-3/4 rounded-full skeleton"></div>
+            <div class="grid gap-2 sm:grid-cols-2">
+              <div class="h-4 w-full rounded-full skeleton"></div>
+              <div class="h-4 w-full rounded-full skeleton"></div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderProducts(items = products) {
+      productGrid.innerHTML = items.map((product, index) => `
+        <article class="product-card overflow-hidden rounded-[32px] border border-sand bg-white shadow-card transition duration-300 hover:-translate-y-1">
+          <div class="relative overflow-hidden rounded-[32px]">
+            <img src="${product.image}" alt="${product.title}" loading="lazy" class="image-zoom h-[360px] w-full object-cover transition" />
+            <div class="absolute inset-x-0 top-4 px-4 flex items-start justify-between">
+              <span class="rounded-full bg-white/90 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-pavitra-maroon shadow-sm">${product.badge}</span>
+              <button class="h-11 w-11 rounded-3xl border border-white bg-white/90 text-pavitra-maroon transition hover:bg-pavitra-maroon hover:text-white" onclick="event.stopPropagation(); alert('Added to wishlist');"><i class="fa-regular fa-heart"></i></button>
+            </div>
+          </div>
+          <div class="space-y-4 p-6">
+            <div class="flex items-center justify-between text-xs uppercase tracking-[0.25em] text-slate-500"><span>${product.brand}</span><span class="rounded-full bg-pavitra-ivory px-3 py-1 text-pavitra-maroon">-${product.discount}%</span></div>
+            <div class="space-y-2">
+              <h3 class="text-xl font-semibold text-slate-900">${product.title}</h3>
+              <div class="flex items-center gap-2 text-sm text-slate-500"><span class="font-semibold text-pavitra-maroon">${product.rating.toFixed(1)} ⭐</span><span>(${product.reviews})</span></div>
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="text-2xl font-bold text-pavitra-maroon">₹${product.price.toLocaleString('en-IN')}</span>
+                <span class="text-sm text-slate-400 line-through">₹${product.original.toLocaleString('en-IN')}</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              ${product.colors.map(color => `<span class="h-3.5 w-3.5 rounded-full border border-slate-200" style="background:${color}"></span>`).join('')}
+            </div>
+            <div class="grid gap-3 sm:grid-cols-2">
+              <button class="inline-flex items-center justify-center rounded-full bg-pavitra-maroon px-4 py-3 text-sm font-semibold text-white transition hover:bg-pavitra-gold hover:text-slate-900" onclick="event.stopPropagation(); alert('Added to cart');">Quick Add</button>
+              <button class="inline-flex items-center justify-center rounded-full border border-sand bg-pavitra-ivory px-4 py-3 text-sm font-semibold text-slate-900 transition hover:border-pavitra-maroon hover:bg-pavitra-maroon hover:text-white" data-view-index="${index}">Quick View</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function showQuickView(index) {
+      const product = products[index];
+      quickViewTitle.textContent = product.title;
+      quickViewImage.src = product.image;
+      quickViewDescription.textContent = `${product.title} is a premium saree crafted for special celebrations, with rich texture, expert embellishment and timeless luxury.`;
+      quickViewModal.classList.remove('hidden');
+      document.body.classList.add('modal-open');
+    }
+
+    function hideQuickView() {
+      quickViewModal.classList.add('hidden');
+      document.body.classList.remove('modal-open');
+    }
+
+    function initGridButtons() {
+      gridButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const cols = button.dataset.grid;
+          productGrid.className = `grid gap-6 sm:grid-cols-2 xl:grid-cols-${cols}`;
+          gridButtons.forEach(btn => btn.classList.toggle('active', btn === button));
+        });
+      });
+    }
+
+    function initSearch() {
+      const suggestionList = suggestionBox.querySelector('div');
+      searchInput.addEventListener('focus', () => suggestionBox.classList.remove('hidden'));
+      searchInput.addEventListener('blur', () => setTimeout(() => suggestionBox.classList.add('hidden'), 150));
+      suggestionList.innerHTML = searchSuggestions.map(item => `<button class="w-full rounded-2xl px-4 py-3 text-left text-sm text-slate-700 transition hover:bg-pavitra-ivory">${item}</button>`).join('');
+    }
+
+    function initAccordions() {
+      document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const panel = header.closest('div').querySelector('.accordion-panel');
+          panel.classList.toggle('hidden');
+          header.querySelector('i').classList.toggle('fa-angle-down');
+          header.querySelector('i').classList.toggle('fa-angle-up');
+        });
+      });
+    }
+
+    function initFilterChips() {
+      filterChips.forEach(chip => {
+        chip.addEventListener('click', () => chip.classList.toggle('active'));
+      });
+    }
+
+    // Fixed typo in original source from 'closeQuickView.addEventListener'
+    function initQuickView() {
+      document.addEventListener('click', event => {
+        const button = event.target.closest('[data-view-index]');
+        if (!button) return;
+        event.stopPropagation();
+        showQuickView(button.dataset.viewIndex);
+      });
+      closeQuickView.addEventListener('click', hideQuickView);
+      quickViewModal.addEventListener('click', event => {
+        if (event.target === quickViewModal) hideQuickView();
+      });
+    }
+
+    function initSort() {
+      sortSelect.addEventListener('change', event => {
+        const value = event.target.value;
+        let sorted = [...products];
+        if (value === 'Price Low to High') sorted.sort((a, b) => a.price - b.price);
+        if (value === 'Price High to Low') sorted.sort((a, b) => b.price - a.price);
+        if (value === 'Newest') sorted.reverse();
+        if (value === 'Customer Rating') sorted.sort((a, b) => b.rating - a.rating);
+        if (value === 'Best Selling') sorted.sort((a, b) => b.reviews - a.reviews);
+        renderProducts(sorted);
+      });
+    }
+
+    function initReadMore() {
+      readMoreButton.addEventListener('click', () => {
+        extraDescription.classList.toggle('hidden');
+        readMoreButton.classList.toggle('bg-pavitra-maroon');
+        readMoreButton.classList.toggle('text-white');
+        readMoreButton.querySelector('i').classList.toggle('fa-chevron-down');
+        readMoreButton.querySelector('i').classList.toggle('fa-chevron-up');
+      });
+    }
+
+    function initSwiper() {
+      const swiper = new Swiper('.mySwiper', {
+        loop: true,
+        speed: 1200,
+        autoplay: { delay: 6500, disableOnInteraction: false },
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        effect: 'fade',
+      });
+    }
+
+    function initGsap() {
+      gsap.from('.swiper-slide .max-w-2xl', { opacity: 0, y: 40, duration: 1.2, ease: 'power3.out', stagger: 0.12 });
+    }
+
+    function initLoadMore() {
+      document.getElementById('loadMoreBtn').addEventListener('click', () => {
+        const extra = products.slice(0, 4);
+        renderProducts([...products, ...extra]);
+      });
+    }
+
+    renderSkeleton();
+    setTimeout(() => {
+      renderProducts();
+      initGridButtons();
+      initSort();
+      initQuickView();
+      initReadMore();
+      initAccordions();
+      initFilterChips();
+      initSearch();
+      initSwiper();
+      initLoadMore();
+      initGsap();
+    }, 650);
+  </script>
+</body>
+</html>
